@@ -1,0 +1,7 @@
+﻿  Scene.cpp
+c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\scene.cpp(22): warning C4244: 'argument': conversion from 'double' to 'GLuint', possible loss of data
+c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\scene.cpp(23): warning C4244: 'argument': conversion from 'double' to 'GLuint', possible loss of data
+c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\scene.cpp(24): warning C4244: 'argument': conversion from 'double' to 'GLuint', possible loss of data
+c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\scene.cpp(25): warning C4244: 'argument': conversion from 'double' to 'GLuint', possible loss of data
+c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\scene.cpp(26): warning C4244: 'argument': conversion from 'double' to 'GLuint', possible loss of data
+  IG1App.vcxproj -> C:\hlocal\ProyectosIG_VS17_GL_FG_GLM\ProyectosIG_VS17_GL_FG_GLM\bin\IG1AppDebug.exe
