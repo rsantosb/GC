@@ -1,6 +1,6 @@
 # GC
 Repositorio de practicas de la asignatura Gráficos por computadores. 
-Máster Ingeniería Informática, UCM.
+Máster en Ingeniería Informática, UCM.
 
 ---
 *Participantes:*
