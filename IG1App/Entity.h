@@ -51,5 +51,49 @@ public:
 };
 
 //-------------------------------------------------------------------------
+class Dragon : public Entity
+{
+public:
+	Dragon(GLuint l);
+	~Dragon();
+	virtual void render(Camera const& cam);
+};
+
+//-------------------------------------------------------------------------
+class Triangulo : public Entity
+{
+public:
+	Triangulo(GLdouble l);
+	~Triangulo();
+	virtual void render(Camera const& cam);
+};
+
+//-------------------------------------------------------------------------
+class TrianguloRGB : public Entity
+{
+public:
+	TrianguloRGB(GLdouble l);
+	~TrianguloRGB();
+	virtual void render(Camera const& cam);
+};
+
+
+//-------------------------------------------------------------------------
+class Rectangulo : public Entity
+{
+public:
+	Rectangulo(GLdouble w, GLdouble h);
+	~Rectangulo();
+	virtual void render(Camera const& cam);
+};
+
+//-------------------------------------------------------------------------
+class RectanguloRGB : public Entity
+{
+public:
+	RectanguloRGB(GLdouble w, GLdouble h);
+	~RectanguloRGB();
+	virtual void render(Camera const& cam);
+};
 
 #endif //_H_Entities_H_

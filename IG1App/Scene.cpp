@@ -19,12 +19,13 @@ void Scene::init()
   // Graphics objects (entities) of the scene
   // grObjects.push_back(new EjesRGB(200.0)); 
 
-  grObjects.push_back(new Poliespiral( dvec2(0,0) , 0.0, 160.0, 1.0, 1.0, 50.0 ) );
-  grObjects.push_back(new Poliespiral(dvec2(0, 50), 0.0, 72.0, 30.0, 0.001, 6.0));
-  grObjects.push_back(new Poliespiral(dvec2(-100, -100), 0.0, 60.0, 0.5, 0.5, 300.0));
-  grObjects.push_back(new Poliespiral(dvec2(50, 0), 0.0, 89.5, 0.5, 0.5, 100.0));
-  grObjects.push_back(new Poliespiral(dvec2(-50, 0), 0.0, 45.0, 1.0, 1.0, 50.0));
- 
+  //  grObjects.push_back(new Poliespiral( dvec2(0,0) , 0.0, 160.0, 1.0, 1.0, 50.0 ) );
+  //  grObjects.push_back(new Poliespiral(dvec2(0, 50), 0.0, 72.0, 30.0, 0.001, 6.0));
+   // grObjects.push_back(new Dragon(3000));
+
+//	grObjects.push_back(new TrianguloRGB(2));
+	grObjects.push_back(new RectanguloRGB(5,2));
+
 }
 //-------------------------------------------------------------------------
 
