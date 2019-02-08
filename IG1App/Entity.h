@@ -50,12 +50,28 @@ public:
 	virtual void render(Camera const& cam);
 };
 
+class Poliespiral2 : public Entity
+{
+public:
+	Poliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
+	~Poliespiral2();
+	virtual void render(Camera const& cam);
+};
 //-------------------------------------------------------------------------
 class Dragon : public Entity
 {
 public:
 	Dragon(GLuint l);
 	~Dragon();
+	virtual void render(Camera const& cam);
+};
+
+//-------------------------------------------------------------------------
+class Dragon2 : public Entity
+{
+public:
+	Dragon2(GLuint l);
+	~Dragon2();
 	virtual void render(Camera const& cam);
 };
 
@@ -93,6 +109,22 @@ class RectanguloRGB : public Entity
 public:
 	RectanguloRGB(GLdouble w, GLdouble h);
 	~RectanguloRGB();
+	virtual void render(Camera const& cam);
+};
+
+class Estrella3D : public Entity
+{
+public:
+	Estrella3D(GLdouble re, GLdouble np, GLdouble h);
+	~Estrella3D();
+	virtual void render(Camera const& cam);
+};
+
+class Cubo : public Entity
+{
+public:
+	Cubo(GLdouble l);
+	~Cubo();
 	virtual void render(Camera const& cam);
 };
 

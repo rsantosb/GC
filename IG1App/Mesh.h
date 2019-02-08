@@ -14,11 +14,15 @@ class Mesh
 public:
 	static Mesh* createRGBAxes(GLdouble l); // creates a new 3D RGB axes mesh
 	static Mesh* generaPoliespiral(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
+	static Mesh* generaPoliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
 	static Mesh* generaDragon(GLuint numVert);
+	static Mesh* generaDragon2(GLuint numVert);
 	static Mesh* generaTriangulo(GLdouble r);
 	static Mesh* generaTrianguloRGB(GLdouble r);
 	static Mesh* generaRectangulo(GLdouble w, GLdouble h);
 	static Mesh* generaRectanguloRGB(GLdouble w, GLdouble h);
+	static Mesh* generaEstrella3D(GLdouble re, GLdouble np, GLdouble h);
+	static Mesh* generaContCubo(GLdouble l);
 
 	Mesh(void) { };
 	~Mesh(void);

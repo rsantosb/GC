@@ -65,6 +65,31 @@ void Poliespiral::render(Camera const& cam)
 	}
 }
 
+
+Poliespiral2::Poliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert) : Entity()
+{
+	mesh = Mesh::generaPoliespiral2(verIni, angIni, incrAng, ladoIni, incrLado, numVert);
+}
+//-------------------------------------------------------------------------
+
+Poliespiral2::~Poliespiral2()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Poliespiral2::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.6, 0.2, 0.8);
+		glLineWidth(2);
+		mesh->render();
+		glLineWidth(1);
+
+	}
+}
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -86,11 +111,11 @@ void Dragon::render(Camera const& cam)
 
 		dmat4 matAux = cam.getViewMat();
 		
-		matAux = translate(matAux, dvec3(-40, -170, 0));
+		matAux = translate(matAux, dvec3(-40, -170, -40));
 		matAux = scale(matAux, dvec3(40, 40, 40));
 
 		uploadMvM(matAux);
-		glColor3d(0.25, 0.45, 0.35);
+		glColor3d(0.00, 0.00, 0.00);
 		glPointSize(2);
 		mesh->render();
 		glColor3d(0,0,0);
@@ -98,6 +123,38 @@ void Dragon::render(Camera const& cam)
 	}
 }
 
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Dragon2::Dragon2(GLuint l) : Entity()
+{
+	mesh = Mesh::generaDragon2(l);
+}
+//-------------------------------------------------------------------------
+
+Dragon2::~Dragon2()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Dragon2::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+
+		dmat4 matAux = cam.getViewMat();
+
+		matAux = translate(matAux, dvec3(-40, -170, 0));
+		matAux = scale(matAux, dvec3(40, 40, 40));
+
+		uploadMvM(matAux);
+		glColor3d(0.25, 0.45, 0.35);
+		glPointSize(2);
+		mesh->render();
+		glColor3d(0, 0, 0);
+		glPointSize(1);
+	}
+}
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -216,8 +273,8 @@ void RectanguloRGB::render(Camera const& cam)
 		matAux = scale(matAux, dvec3(40, 40, 40));
 
 		uploadMvM(matAux);
-		glPolygonMode(GL_FRONT, GL_LINE);
-		glPolygonMode(GL_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glPolygonMode(GL_BACK, GL_LINE);
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
 		mesh->render();
@@ -225,4 +282,63 @@ void RectanguloRGB::render(Camera const& cam)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
+
+Estrella3D::Estrella3D(GLdouble re, GLdouble np, GLdouble h) : Entity()
+{
+	mesh = Mesh::generaEstrella3D(re, np, h);
+}
+//-------------------------------------------------------------------------
+
+Estrella3D::~Estrella3D()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Estrella3D::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		//dmat4 matAux = cam.getViewMat();
+		//matAux = scale(matAux, dvec3(40, 40, 40));
+
+		//uploadMvM(matAux);
+
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.9, 0.6, 0.8);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glLineWidth(2);
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+Cubo::Cubo(GLdouble l) : Entity()
+{
+	mesh = Mesh::generaContCubo(l);
+}
+//-------------------------------------------------------------------------
+
+Cubo::~Cubo()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Cubo::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		//dmat4 matAux = cam.getViewMat();
+		//matAux = scale(matAux, dvec3(40, 40, 40));
+
+		//uploadMvM(matAux);
+
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.9, 0.6, 0.8);
+		//glPolygonMode(GL_FRONT, GL_LINE);
+		glLineWidth(2);
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
 
