@@ -319,14 +319,14 @@ Mesh * Mesh::generaContCubo(GLdouble l) {
 
 	m->vertices[0] = dvec3(-l/2, l/2, l/2); // v0
 	m->vertices[1] = dvec3(-l/2, -l/2, l/2); // v1
-	m->vertices[2] = dvec3(l/2, l/2, -l/2); // v2
-	m->vertices[3] = dvec3(l/2, -l/2, -l/2); // v3
-	m->vertices[4] = dvec3(l/2, l/2, l/2); //v4
-	m->vertices[5] = dvec3(l/2, -l/2, l/2); //v5
-	m->vertices[6] = dvec3(-l/2, l/2, l/2); //v6
-	m->vertices[7] = dvec3(-l/2, -l/2, l/2); //v7
-	m->vertices[8] = m->vertices[0]; //v8
-	m->vertices[9] = m->vertices[1]; //v9
+	//m->vertices[2] = dvec3(l/2, l/2, -l/2); // v2
+	//m->vertices[3] = dvec3(l/2, -l/2, -l/2); // v3
+	//m->vertices[4] = dvec3(l/2, l/2, l/2); //v4
+	//m->vertices[5] = dvec3(l/2, -l/2, l/2); //v5
+	//m->vertices[6] = dvec3(-l/2, l/2, l/2); //v6
+	//m->vertices[7] = dvec3(-l/2, -l/2, l/2); //v7
+	//m->vertices[8] = m->vertices[0]; //v8
+	//m->vertices[9] = m->vertices[1]; //v9
 	return m;
 
 }
