@@ -7,6 +7,10 @@ using namespace glm;
 
 //-------------------------------------------------------------------------
 
+void Entity::update()
+{
+}
+
 void Entity::uploadMvM(dmat4 const& modelViewMat) const
 { 
 	dmat4 aMat = modelViewMat * modelMat;
@@ -222,6 +226,51 @@ void TrianguloRGB::render(Camera const& cam)
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
+TrianguloAnimado::TrianguloAnimado(GLdouble r) : Entity()
+{
+	mesh = Mesh::generaTriangulo(r);
+}
+//-------------------------------------------------------------------------
+
+TrianguloAnimado::~TrianguloAnimado()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void TrianguloAnimado::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		dmat4 matAux = cam.getViewMat();
+		matAux = scale(matAux, dvec3(40, 40, 40));
+
+		uploadMvM(matAux);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_FILL);
+		glColor3d(0.33, 0.5, 0.9);
+		glLineWidth(2);
+		mesh->render();
+		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+}
+
+void TrianguloAnimado::update()
+{
+	dmat4 auxMat = modelMat;
+	
+	//rotación sobre su figura
+	modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
+	modelMat = rotate(modelMat, radians(20.0), dvec3(0.0, 0.0, 0.0));
+	modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
+
+	modelMat = auxMat;
+
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
 Rectangulo::Rectangulo(GLdouble w, GLdouble h) : Entity()
 {
 	mesh = Mesh::generaRectangulo(w,h);
@@ -270,11 +319,12 @@ void RectanguloRGB::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
 		dmat4 matAux = cam.getViewMat();
-		matAux = scale(matAux, dvec3(40, 40, 40));
+		
+		
+		matAux = rotate(matAux, radians(90.0), dvec3(1, 0, 0));
 
 		uploadMvM(matAux);
-		glPolygonMode(GL_FRONT, GL_FILL);
-		glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
 		mesh->render();
@@ -298,16 +348,25 @@ Estrella3D::~Estrella3D()
 void Estrella3D::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
-		//dmat4 matAux = cam.getViewMat();
-		//matAux = scale(matAux, dvec3(40, 40, 40));
-
-		//uploadMvM(matAux);
-
-		uploadMvM(cam.getViewMat());
+		dmat4 matAux = modelMat; // cam.getViewMat();
+		
+		modelMat = translate(modelMat, dvec3(0, 250.0, 0));
+		modelMat = scale(modelMat, dvec3(3, 3, 3));
+		uploadMvM(cam.getViewMat());  //
 		glColor3d(0.9, 0.6, 0.8);
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glLineWidth(2);
 		mesh->render();
+
+		modelMat = matAux;
+
+		modelMat = translate(modelMat, dvec3(0, 250.0, 0));
+		modelMat = rotate(modelMat, radians(180.0), dvec3(0, 1, 0));
+		modelMat = scale(modelMat, dvec3(3, 3, 3));
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+
+		modelMat = matAux;
 		glLineWidth(1);
 	}
 }
@@ -327,14 +386,14 @@ Cubo::~Cubo()
 void Cubo::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
-		//dmat4 matAux = cam.getViewMat();
+		dmat4 matAux = cam.getViewMat();
 		//matAux = scale(matAux, dvec3(40, 40, 40));
+		matAux = translate(matAux, dvec3(0, 150.0 / 2, 0));
+		uploadMvM(matAux);
 
-		//uploadMvM(matAux);
-
-		uploadMvM(cam.getViewMat());
+		//uploadMvM(cam.getViewMat());
 		glColor3d(0.9, 0.6, 0.8);
-		//glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);

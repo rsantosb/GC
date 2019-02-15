@@ -29,8 +29,11 @@ void Scene::init()
 //	grObjects.push_back(new TrianguloRGB(2));
   //grObjects.push_back(new RectanguloRGB(20,20));
   //grObjects.push_back(new Dragon(3000));
-  //grObjects.push_back(new Estrella3D(15, 3, 20));
-  grObjects.push_back(new Cubo(15));
+  //grObjects.push_back(new Estrella3D(15, 6,15 ));
+  //grObjects.push_back(new Cubo(150));
+  //grObjects.push_back(new RectanguloRGB(300, 200));
+
+  grObjects.push_back(new TrianguloAnimado(10));
 
 
 }
@@ -55,3 +58,8 @@ void Scene::render(Camera const& cam)
 }
 //-------------------------------------------------------------------------
 
+void Scene::update() {
+	for (Entity* entity : grObjects) {
+		entity->update();
+	}
+}

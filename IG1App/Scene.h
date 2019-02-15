@@ -21,6 +21,7 @@ public:
     void init(); 
 
     void render(Camera const& cam);
+	void update();
 	  
 protected:
 

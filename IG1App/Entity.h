@@ -22,6 +22,7 @@ public:
 	glm::dmat4 const& getModelMat() const { return modelMat; };
 
 	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
+	void update();
   
 protected:
 
@@ -93,6 +94,16 @@ public:
 	virtual void render(Camera const& cam);
 };
 
+//-------------------------------------------------------------------------
+class TrianguloAnimado : public Entity
+{
+public:
+	TrianguloAnimado(GLdouble l);
+	~TrianguloAnimado();
+	virtual void render(Camera const& cam);
+	virtual void update();
+};
+
 
 //-------------------------------------------------------------------------
 class Rectangulo : public Entity
@@ -118,6 +129,7 @@ public:
 	Estrella3D(GLdouble re, GLdouble np, GLdouble h);
 	~Estrella3D();
 	virtual void render(Camera const& cam);
+	
 };
 
 class Cubo : public Entity
