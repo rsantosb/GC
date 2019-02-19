@@ -22,7 +22,7 @@ public:
 	glm::dmat4 const& getModelMat() const { return modelMat; };
 
 	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
-	void update();
+	virtual void update() = 0;
   
 protected:
 
@@ -40,7 +40,9 @@ class EjesRGB : public Entity
 public:
 	EjesRGB(GLdouble l);
 	~EjesRGB();
-	virtual void render(Camera const& cam); 
+	virtual void render(Camera const& cam);
+	void update();
+
 };
 
 class Poliespiral : public Entity
@@ -49,6 +51,8 @@ public:
 	Poliespiral(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
 	~Poliespiral();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 class Poliespiral2 : public Entity
@@ -57,6 +61,8 @@ public:
 	Poliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
 	~Poliespiral2();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 //-------------------------------------------------------------------------
 class Dragon : public Entity
@@ -65,6 +71,8 @@ public:
 	Dragon(GLuint l);
 	~Dragon();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 //-------------------------------------------------------------------------
@@ -74,6 +82,8 @@ public:
 	Dragon2(GLuint l);
 	~Dragon2();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 //-------------------------------------------------------------------------
@@ -83,6 +93,8 @@ public:
 	Triangulo(GLdouble l);
 	~Triangulo();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 //-------------------------------------------------------------------------
@@ -92,6 +104,8 @@ public:
 	TrianguloRGB(GLdouble l);
 	~TrianguloRGB();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 //-------------------------------------------------------------------------
@@ -112,6 +126,8 @@ public:
 	Rectangulo(GLdouble w, GLdouble h);
 	~Rectangulo();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 //-------------------------------------------------------------------------
@@ -121,14 +137,30 @@ public:
 	RectanguloRGB(GLdouble w, GLdouble h);
 	~RectanguloRGB();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
+};
+
+class Suelo : public Entity
+{
+public:
+	Suelo(GLdouble w, GLdouble h);
+	~Suelo();
+	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 class Estrella3D : public Entity
 {
 public:
+	GLdouble anguloY = 10.0;
+	GLdouble anguloZ = 10.0;
 	Estrella3D(GLdouble re, GLdouble np, GLdouble h);
 	~Estrella3D();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 	
 };
 
@@ -138,6 +170,8 @@ public:
 	Cubo(GLdouble l);
 	~Cubo();
 	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 #endif //_H_Entities_H_

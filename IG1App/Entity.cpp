@@ -7,9 +7,6 @@ using namespace glm;
 
 //-------------------------------------------------------------------------
 
-void Entity::update()
-{
-}
 
 void Entity::uploadMvM(dmat4 const& modelViewMat) const
 { 
@@ -42,6 +39,7 @@ void EjesRGB::render(Camera const& cam)
 	}
 }
 
+void EjesRGB::update(){}
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -69,6 +67,9 @@ void Poliespiral::render(Camera const& cam)
 	}
 }
 
+void Poliespiral::update() {}
+
+
 
 Poliespiral2::Poliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert) : Entity()
 {
@@ -93,6 +94,9 @@ void Poliespiral2::render(Camera const& cam)
 
 	}
 }
+
+void Poliespiral2::update() {}
+
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -127,6 +131,8 @@ void Dragon::render(Camera const& cam)
 	}
 }
 
+void Dragon::update() {}
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -160,6 +166,9 @@ void Dragon2::render(Camera const& cam)
 	}
 }
 
+void Dragon2::update() {}
+
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -190,6 +199,9 @@ void Triangulo::render(Camera const& cam)
 
 	}
 }
+
+void Triangulo::update() {}
+
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -222,6 +234,8 @@ void TrianguloRGB::render(Camera const& cam)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
+
+void TrianguloRGB::update() {}
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -258,14 +272,13 @@ void TrianguloAnimado::render(Camera const& cam)
 void TrianguloAnimado::update()
 {
 	dmat4 auxMat = modelMat;
-	
+
 	//rotación sobre su figura
 	modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
-	modelMat = rotate(modelMat, radians(20.0), dvec3(0.0, 0.0, 0.0));
+	modelMat = rotate(modelMat, radians(20.0), dvec3(0.0, 0.0, 1.0));
 	modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
 
-	modelMat = auxMat;
-
+	setModelMat(modelMat);
 }
 
 //-------------------------------------------------------------------------
@@ -300,6 +313,8 @@ void Rectangulo::render(Camera const& cam)
 	}
 }
 
+void Rectangulo::update() {}
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -320,9 +335,7 @@ void RectanguloRGB::render(Camera const& cam)
 	if (mesh != nullptr) {
 		dmat4 matAux = cam.getViewMat();
 		
-		
-		matAux = rotate(matAux, radians(90.0), dvec3(1, 0, 0));
-
+		//matAux = rotate(matAux, radians(90.0), dvec3(1, 0, 0));
 		uploadMvM(matAux);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
@@ -332,6 +345,37 @@ void RectanguloRGB::render(Camera const& cam)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
+
+void RectanguloRGB::update() {}
+
+Suelo::Suelo(GLdouble w, GLdouble h) : Entity()
+{
+	mesh = Mesh::generaRectanguloRGB(w, h);
+}
+
+Suelo::~Suelo() 
+{
+	delete mesh; mesh = nullptr;
+};
+
+void Suelo::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		dmat4 matAux = modelMat;
+		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+		uploadMvM(cam.getViewMat());
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glColor3d(0.33, 0.5, 0.9);
+		glLineWidth(2);
+		mesh->render();
+		glLineWidth(1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		modelMat = matAux;
+
+	}
+}
+void Suelo::update() {}
 
 Estrella3D::Estrella3D(GLdouble re, GLdouble np, GLdouble h) : Entity()
 {
@@ -352,24 +396,36 @@ void Estrella3D::render(Camera const& cam)
 		
 		modelMat = translate(modelMat, dvec3(0, 250.0, 0));
 		modelMat = scale(modelMat, dvec3(3, 3, 3));
+
+		modelMat = rotate(modelMat, radians(anguloY), dvec3(0, 1, 0));
+		modelMat = rotate(modelMat, radians(anguloZ), dvec3(0, 0, 1));
+
+		
 		uploadMvM(cam.getViewMat());  //
 		glColor3d(0.9, 0.6, 0.8);
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glLineWidth(2);
 		mesh->render();
 
-		modelMat = matAux;
-
-		modelMat = translate(modelMat, dvec3(0, 250.0, 0));
+		// No recuperamos el modelMat para que siga teniendo lo mismo y solo tengamos que hacer una rotación con respecto a la original
 		modelMat = rotate(modelMat, radians(180.0), dvec3(0, 1, 0));
-		modelMat = scale(modelMat, dvec3(3, 3, 3));
+
 		uploadMvM(cam.getViewMat());
 		mesh->render();
+
 
 		modelMat = matAux;
 		glLineWidth(1);
 	}
 }
+
+void Estrella3D::update() {
+
+	anguloZ = anguloZ + 100.00;
+	anguloY = anguloY + 50.00;
+
+}
+
 
 Cubo::Cubo(GLdouble l) : Entity()
 {
@@ -400,4 +456,39 @@ void Cubo::render(Camera const& cam)
 	}
 }
 
+void Cubo::update() {}
 
+/*
+Caja::Caja(GLdouble l) : Entity()
+{
+	mesh = Mesh::generaContCubo(l);
+}
+//-------------------------------------------------------------------------
+
+Caja::~Caja()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Caja::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		dmat4 matAux = modelMat; // cam.getViewMat();
+	
+		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
+		uploadMvM(matAux);
+
+		glColor3d(0.9, 0.6, 0.8);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glLineWidth(2);
+		mesh->render();
+
+
+		glLineWidth(1);
+	}
+}
+
+void Caja::update() {}
+
+*/

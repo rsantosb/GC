@@ -1,9 +1,2 @@
-﻿  Mesh.cpp
-c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\mesh.cpp(77): warning C4018: '<': signed/unsigned mismatch
-c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\mesh.cpp(102): warning C4018: '<': signed/unsigned mismatch
-c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\mesh.cpp(128): warning C4018: '<': signed/unsigned mismatch
-c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\mesh.cpp(164): warning C4018: '<': signed/unsigned mismatch
-c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\mesh.cpp(201): warning C4018: '<': signed/unsigned mismatch
-c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\mesh.cpp(270): warning C4244: '=': conversion from 'GLdouble' to 'GLuint', possible loss of data
-c:\hlocal\proyectosig_vs17_gl_fg_glm\proyectosig_vs17_gl_fg_glm\ig1app\mesh.cpp(285): warning C4018: '<': signed/unsigned mismatch
-  IG1App.vcxproj -> C:\hlocal\ProyectosIG_VS17_GL_FG_GLM\ProyectosIG_VS17_GL_FG_GLM\bin\IG1AppDebug.exe
+﻿  Scene.cpp
+  IG1App.vcxproj -> C:\Users\Paloma\Documents\GitHub\GC\bin\IG1AppDebug.exe
