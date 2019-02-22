@@ -7,6 +7,7 @@
 
 #include "Camera.h"
 #include "Mesh.h"
+#include "Texture.h"
 
 //-------------------------------------------------------------------------
 
@@ -28,6 +29,8 @@ protected:
 
 	Mesh* mesh = nullptr;   // surface mesh
 	glm::dmat4 modelMat;    // modeling matrix
+
+	Texture texture; 
 
 	// transfers modelViewMat to the GPU
 	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
@@ -169,6 +172,16 @@ class Cubo : public Entity
 public:
 	Cubo(GLdouble l);
 	~Cubo();
+	virtual void render(Camera const& cam);
+	virtual void update();
+
+};
+
+class SueloTextura : public Entity
+{
+public:
+	SueloTextura(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	~SueloTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
 

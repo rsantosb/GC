@@ -1,2 +1,11 @@
-﻿  Scene.cpp
-  IG1App.vcxproj -> C:\Users\Paloma\Documents\GitHub\GC\bin\IG1AppDebug.exe
+﻿  Mesh.cpp
+c:\users\usuario_local\documents\visual studio 2017\gc-master\ig1app\mesh.cpp(82): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario_local\documents\visual studio 2017\gc-master\ig1app\mesh.cpp(107): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario_local\documents\visual studio 2017\gc-master\ig1app\mesh.cpp(133): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario_local\documents\visual studio 2017\gc-master\ig1app\mesh.cpp(169): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario_local\documents\visual studio 2017\gc-master\ig1app\mesh.cpp(206): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario_local\documents\visual studio 2017\gc-master\ig1app\mesh.cpp(276): warning C4244: '=': conversion from 'GLdouble' to 'GLuint', possible loss of data
+c:\users\usuario_local\documents\visual studio 2017\gc-master\ig1app\mesh.cpp(291): warning C4018: '<': signed/unsigned mismatch
+  Scene.cpp
+  Generating Code...
+  IG1App.vcxproj -> C:\Users\usuario_local\Documents\Visual Studio 2017\GC-master\bin\IG1AppDebug.exe

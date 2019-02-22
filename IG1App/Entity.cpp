@@ -404,6 +404,7 @@ void Estrella3D::render(Camera const& cam)
 		uploadMvM(cam.getViewMat());  //
 		glColor3d(0.9, 0.6, 0.8);
 		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);
 		glLineWidth(2);
 		mesh->render();
 
@@ -421,8 +422,8 @@ void Estrella3D::render(Camera const& cam)
 
 void Estrella3D::update() {
 
-	anguloZ = anguloZ + 100.00;
-	anguloY = anguloY + 50.00;
+	anguloZ = anguloZ + 10.00;
+	anguloY = anguloY + 25.00;
 
 }
 
@@ -457,6 +458,32 @@ void Cubo::render(Camera const& cam)
 }
 
 void Cubo::update() {}
+
+SueloTextura::SueloTextura(GLdouble w, GLdouble h, GLuint rw, GLuint rh) : Entity()
+{
+	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
+	texture.load("..\\Bmps\\BaldosaF.bmp"); // cargamos la imagen
+}
+
+SueloTextura::~SueloTextura()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void SueloTextura::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glLineWidth(2);
+		glColor3d(0.9, 0.6, 0.8);
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+void SueloTextura::update() {}
+
 
 /*
 Caja::Caja(GLdouble l) : Entity()

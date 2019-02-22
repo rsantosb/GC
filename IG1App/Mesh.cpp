@@ -20,6 +20,11 @@ void Mesh::render()
       glEnableClientState(GL_COLOR_ARRAY);
       glColorPointer(4, GL_DOUBLE, 0, colors);   // number of coordinates per color, type of each coordinate, stride, pointer 
     }
+
+	if (texture != nullptr) {
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glTexCoordPointer(2, GL_DOUBLE, 0, texture);   // number of coordinates per color, type of each coordinate, stride, pointer 
+	}
 	
     glDrawArrays(primitive, 0, numVertices);   // primitive graphic, first index and number of elements to be rendered
 
@@ -330,4 +335,19 @@ Mesh * Mesh::generaContCubo(GLdouble l) {
 	m->vertices[9] = m->vertices[1]; //v9
 	return m;
 
+}
+
+Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
+
+	Mesh* m = generaRectangulo(w, h);
+	
+	m->texture = new dvec2[m->numVertices];
+	m->texture[0] = dvec2(0, 0);
+	m->texture[1] = dvec2(0, rh);
+	m->texture[2] = dvec2(rw, 0);
+	m->texture[3] = dvec2(rw, rh);
+
+	
+	
+	return m;
 }
