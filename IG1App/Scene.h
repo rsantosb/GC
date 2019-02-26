@@ -19,9 +19,8 @@ public:
     Scene() { };
 	~Scene();
     void init(); 
-
-    void render(Camera const& cam);
 	void update();
+    void render(Camera const& cam);
 	  
 protected:
 
