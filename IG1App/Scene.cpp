@@ -11,68 +11,100 @@ void Scene::init()
 { // OpenGL basic setting
 	glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
-
+	glEnable(GL_TEXTURE_2D); // activa las texturas
+	glEnable(GL_CULL_FACE);
+     
 	// lights
 	// textures  
 	// meshes
 
 	// Graphics objects (entities) of the scene
-	grObjects.push_back(new EjesRGB(dvec2(0.0, 0.0), 200));
-	grObjects.push_back(new EjesRGB(dvec2(50.0,50.0), 2));
-	//grObjects.push_back(new Estrella3D(dvec3(0.0, 0.0, 0.0), 155.0, 6.0, 150.0));
 
-	/*grObjects.push_back(new Poliespiral(dvec2(-200.0, -150.0), 0.0, 160.0, 1.0, 1.0, 50));
-	grObjects.push_back(new Poliespiral(dvec2(-100.0, -150.0), 0.0, 72.0, 30.0, 0.001, 6));
-	grObjects.push_back(new Poliespiral(dvec2(0.0, -150.0), 0.0, 60.0, 0.5, 0.5, 100));
-	grObjects.push_back(new Poliespiral(dvec2(100.0, -150.0), 0.0, 89.5, 0.5, 0.5, 100));
-	grObjects.push_back(new Poliespiral(dvec2(200.0, -150.0), 0.0, 45, 1.0, 1.0, 50));
-	grObjects.push_back(new Dragon(dvec2(0.0, 0.0), 6000));
-	grObjects.push_back(new TrianguloRGB(dvec2(-300.0, -150.0), 50));*/
-	//grObjects.push_back(new Rectangulo(dvec2(0.0, 0.0), 100.0, 100.0));
-	//grObjects.push_back(new Cubo(dvec3(50.0, 50.0, 50.0), 100.0, 100.0));
+	//EjesRGB -> Ejemplo de clase
+	//grObjects.push_back(new EjesRGB(200.0)); 
+
+	/*
+		INICIO EN 2D
+	*/
+	//cambiar2D();
+
+	/*
+		Ejercicio 1 POLIESPIRAL
+	*/
 	
-	/*Entity * ent = new Cubo(dvec3(0.0, 0.0, 0.0), 50.0, 50.0);
-	ent->setModelMat(scale(ent->getModelMat(), dvec3(2.0, 2.0, 2.0)));
-	grObjects.push_back(ent);
+	//grObjects.push_back(new Poliespiral( dvec2(0,0) , 1.0, 50.0, 3.0, 4.0, 1000.0 ) );
+	//Cambios en el algoritmo de POLIESPIRAL generado POLIESPIRAL2
+	//grObjects.push_back(new Poliespiral2(dvec2(0, 0), 1.0, 100.0, 3.0, 4.0, 1000.0));
 
-	ent = new Cubo(dvec3(0.0, 0.0, 0.0), 50.0, 50.0);
-	ent->setModelMat(scale(ent->getModelMat(), dvec3(3.0, 3.0, 3.0)));
-	grObjects.push_back(ent);
 
-	ent = new Cubo(dvec3(0.0, 0.0, 0.0), 50.0, 50.0);
-	ent->setModelMat(scale(ent->getModelMat(), dvec3(4.0, 4.0, 4.0)));
-	grObjects.push_back(ent);
+	//grObjects.push_back(new Poliespiral(dvec2(0, 50), 0.0, 72.0, 30.0, 0.001, 6.0));
 
-	ent = new Cubo(dvec3(0.0, 0.0, 0.0), 50.0, 50.0);
-	ent->setModelMat(scale(ent->getModelMat(), dvec3(5.0, 5.0, 5.0)));
-	grObjects.push_back(ent);*/
+	/*
+		Ejercicio 2 DRAGON
+	*/
+   
+	//grObjects.push_back(new Dragon(3000));
 
-	/*Entity * ent = new Caja(dvec3(50.0, 50.0, 0.0), 100.0, 100.0);
-	grObjects.push_back(ent);*/
+	/*
+		Ejercicio 3 TRIANGULORGB
+	*/
 
-	//grObjects.push_back(new RectanguloRGB(dvec2(-300.0, 50.0), 100.0, 50.0));
-	
-	//grObjects.push_back(new RectanguloRGB(dvec2(200.0, 0.0), 50.0, 50.0));
+	//grObjects.push_back(new TrianguloRGB(2));
 
-	Entity * ent = new TrianguloAnimado(dvec3(50.0, 50.0, 0.0), 50.0, 0.0);
-	ent->setModelMat(scale(ent->getModelMat(), dvec3(2.0, 2.0, 2.0)));
-	grObjects.push_back(ent);
+	/*
+		Ejercicio 4 RECTANGULORGB
+	*/
+	//grObjects.push_back(new RectanguloRGB(20,20));
+
+	/*
+		Ejercicio 5 ESCENA 2D
+	*/
+	//grObjects.push_back(new Poliespiral(dvec2(0, 0), 1.0, 50.0, 3.0, 4.0, 1000.0) );
+	//grObjects.push_back(new Dragon(3000));
+	//grObjects.push_back(new TrianguloAnimado(10));
+
+	/*
+		Ejercicio 6 ESTRELLA 3D 
+		Ejercicio 9 Modificar estrella 3D
+	*/
+	//grObjects.push_back(new Estrella3D(15, 6,15 ));
+
+	/*
+		Ejercicio 7 Caja / Cubo
+		Ejercicio 10 Modificar Caja / Cubo
+	*/
+	//grObjects.push_back(new Cubo(150));
+	//grObjects.push_back(new Suelo(300, 200));
+
+	/*
+		Ejercicio 8 ESCENA 3D
+	*/
+	//grObjects.push_back(new Estrella3D(15, 6, 25));
+	//grObjects.push_back(new Cubo(150));
+	//grObjects.push_back(new Suelo(300, 200));
+
+	/*
+		Ejercicio 12 TEXTURAS
+	*/
+	//grObjects.push_back(new SueloTextura(75, 55, 7, 5));
+	//grObjects.push_back(new EstrellaTextura(15, 6, 25));
+	//grObjects.push_back(new CajaTextura(20));
 }
 //-------------------------------------------------------------------------
 
 Scene::~Scene()
 { // free memory and resources   
-
-	for (Entity* el : grObjects)
-	{
-		delete el;
-	}
+  
+  for (Entity* el: grObjects)
+  {
+	  delete el;  el = nullptr;
+  }
 }
 //-------------------------------------------------------------------------
 
 void Scene::render(Camera const& cam)
 {
-	for (Entity* el : grObjects)
+	for (Entity* el: grObjects)
 	{
 		el->render(cam);
 	}
@@ -84,4 +116,20 @@ void Scene::update() {
 		entity->update();
 	}
 }
+
 //-------------------------------------------------------------------------
+
+void Scene::cambiar2D() {
+	Scene::~Scene();
+	grObjects.push_back(new Poliespiral(dvec2(0, 0), 1.0, 50.0, 3.0, 4.0, 1000.0));
+	grObjects.push_back(new Dragon(3000));
+	grObjects.push_back(new TrianguloAnimado(10));
+}
+
+//-------------------------------------------------------------------------
+
+void Scene::cambiar3D() {
+	Scene::~Scene();
+	grObjects.push_back(new CajaTextura(20));
+
+}

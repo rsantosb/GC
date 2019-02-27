@@ -7,29 +7,31 @@
 
 #include "Camera.h"
 #include "Mesh.h"
+#include "Texture.h"
 
 //-------------------------------------------------------------------------
 
-class Entity
+class Entity 
 {
 public:
-	Entity() : modelMat(1.0) { };
+	Entity() : modelMat(1.0) { }; 
 	virtual ~Entity() { };
 
 	virtual void render(Camera const& cam) = 0;
-	virtual void update() = 0;
 
 	// modeling matrix
 	glm::dmat4 const& getModelMat() const { return modelMat; };
 
 	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
-
+	virtual void update() = 0;
+  
 protected:
 
 	Mesh* mesh = nullptr;   // surface mesh
-	Mesh* meshP0 = nullptr;
-	Mesh* meshP1 = nullptr;
 	glm::dmat4 modelMat;    // modeling matrix
+
+	Texture tex1; 
+	Texture tex2; 
 
 	// transfers modelViewMat to the GPU
 	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
@@ -37,121 +39,173 @@ protected:
 
 //-------------------------------------------------------------------------
 
-class EjesRGB : public Entity
+class EjesRGB : public Entity 
 {
 public:
-	EjesRGB(glm::dvec2 center, GLdouble l);
-	~EjesRGB() { delete mesh; };
+	EjesRGB(GLdouble l);
+	~EjesRGB();
 	virtual void render(Camera const& cam);
-	virtual void update();
+	void update();
+
 };
-
-//-------------------------------------------------------------------------
-
 
 class Poliespiral : public Entity
 {
 public:
-	Poliespiral(glm::dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
-	~Poliespiral() { delete mesh; };
+	Poliespiral(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
+	~Poliespiral();
 	virtual void render(Camera const& cam);
 	virtual void update();
 
 };
 
+class Poliespiral2 : public Entity
+{
+public:
+	Poliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
+	~Poliespiral2();
+	virtual void render(Camera const& cam);
+	virtual void update();
+
+};
 //-------------------------------------------------------------------------
-
-
 class Dragon : public Entity
 {
 public:
-	Dragon(glm::dvec2 center, GLint l);
-	~Dragon() { delete mesh; };
+	Dragon(GLuint l);
+	~Dragon();
 	virtual void render(Camera const& cam);
 	virtual void update();
 
 };
 
 //-------------------------------------------------------------------------
+class Dragon2 : public Entity
+{
+public:
+	Dragon2(GLuint l);
+	~Dragon2();
+	virtual void render(Camera const& cam);
+	virtual void update();
 
+};
 
+//-------------------------------------------------------------------------
+class Triangulo : public Entity
+{
+public:
+	Triangulo(GLdouble l);
+	~Triangulo();
+	virtual void render(Camera const& cam);
+	virtual void update();
+
+};
+
+//-------------------------------------------------------------------------
 class TrianguloRGB : public Entity
 {
 public:
-	TrianguloRGB(glm::dvec2 center, GLint l);
-	~TrianguloRGB() { delete mesh; };
+	TrianguloRGB(GLdouble l);
+	~TrianguloRGB();
 	virtual void render(Camera const& cam);
 	virtual void update();
 
 };
 
 //-------------------------------------------------------------------------
+class TrianguloAnimado : public Entity
+{
+public:
+	TrianguloAnimado(GLdouble l);
+	~TrianguloAnimado();
+	virtual void render(Camera const& cam);
+	virtual void update();
+};
 
+
+//-------------------------------------------------------------------------
 class Rectangulo : public Entity
 {
 public:
-	glm::dvec2  center;
-	Rectangulo(glm::dvec2 center, GLdouble w, GLdouble h);
-	~Rectangulo() { delete mesh; };
+	Rectangulo(GLdouble w, GLdouble h);
+	~Rectangulo();
 	virtual void render(Camera const& cam);
 	virtual void update();
 
 };
 
 //-------------------------------------------------------------------------
-
 class RectanguloRGB : public Entity
 {
 public:
-	glm::dvec2  center;
-	RectanguloRGB(glm::dvec2 center, GLdouble w, GLdouble h);
-	~RectanguloRGB() { delete mesh; };
+	RectanguloRGB(GLdouble w, GLdouble h);
+	~RectanguloRGB();
 	virtual void render(Camera const& cam);
 	virtual void update();
 
 };
-//-------------------------------------------------------------------------
 
-class TrianguloAnimado : public Entity {
+class Suelo : public Entity
+{
 public:
+	Suelo(GLdouble w, GLdouble h);
+	~Suelo();
+	virtual void render(Camera const& cam);
+	virtual void update();
+
+};
+
+class Estrella3D : public Entity
+{
+public:
+	GLdouble anguloY = 10.0;
+	GLdouble anguloZ = 10.0;
+	Estrella3D(GLdouble re, GLdouble np, GLdouble h);
+	~Estrella3D();
+	virtual void render(Camera const& cam);
+	virtual void update();
+
 	
-	TrianguloAnimado(glm::dvec2 center, GLint l, GLdouble angle);
-	~TrianguloAnimado() { delete mesh; };
-	virtual void render(Camera const& cam);
-	virtual void update();
-	void incrAngle() { angle = (GLint(angle) + 20); }
-
-protected:
-
-	GLint r;
-	GLdouble angle;
-	glm::dvec2 center;
 };
 
-class Estrella3D : public Entity {
+class Cubo : public Entity
+{
 public:
-	Estrella3D(glm::dvec2 center, GLdouble re, GLdouble np, GLdouble h);
-	~Estrella3D() { delete mesh; delete meshP0; delete meshP1; };
+	Cubo(GLdouble l);
+	~Cubo();
 	virtual void render(Camera const& cam);
 	virtual void update();
+
 };
 
-class Cubo : public Entity {
+class SueloTextura : public Entity
+{
 public:
-	Cubo(glm::dvec3 center, GLdouble w, GLdouble h);
-	~Cubo() { delete mesh; };
+	SueloTextura(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	~SueloTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
+
 };
 
-class Caja : public Entity {
+class EstrellaTextura : public Entity
+{
 public:
-	glm::dvec2 center;
-	GLdouble w;
-	Caja(glm::dvec3 center, GLdouble w, GLdouble h);
-	~Caja() { delete mesh; };
+	EstrellaTextura(GLdouble r, GLdouble nL, GLdouble h);
+	~EstrellaTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
+
+};
+
+class CajaTextura : public Entity
+{
+public:
+	CajaTextura(GLdouble l);
+	~CajaTextura();
+	virtual void render(Camera const& cam);
+	virtual void update();
+
 };
 
 #endif //_H_Entities_H_

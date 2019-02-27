@@ -1,3 +1,3 @@
 ﻿  Scene.cpp
-c:\hlocal\gc\ig1app\scene.cpp(57): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-  IG1App.vcxproj -> C:\hlocal\GC\bin\IG1AppDebug.exe
+c:\users\usuario_local\downloads\gc-e57206c0585287843887c72e60f83c0bec53a323\gc-e57206c0585287843887c72e60f83c0bec53a323\ig1app\scene.cpp(124): warning C4244: 'argument': conversion from 'double' to 'GLuint', possible loss of data
+  IG1App.vcxproj -> C:\Users\usuario_local\Downloads\GC-e57206c0585287843887c72e60f83c0bec53a323\GC-e57206c0585287843887c72e60f83c0bec53a323\bin\IG1AppDebug.exe

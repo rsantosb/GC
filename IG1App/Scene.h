@@ -19,8 +19,11 @@ public:
     Scene() { };
 	~Scene();
     void init(); 
-	void update();
+
     void render(Camera const& cam);
+	void update();
+	void cambiar2D();
+	void cambiar3D();
 	  
 protected:
 
