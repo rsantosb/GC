@@ -120,9 +120,11 @@ void key(unsigned char key, int x, int y)
     scene.update();
 	break;
   case '2':
+	scene.~Scene();
 	scene.cambiar2D();
 	break;
   case '3':
+	scene.~Scene();
 	scene.cambiar3D();
 	break;
   default:

@@ -79,9 +79,9 @@ void Scene::init()
 	/*
 		Ejercicio 8 ESCENA 3D
 	*/
-	//grObjects.push_back(new Estrella3D(15, 6, 25));
-	//grObjects.push_back(new Cubo(150));
-	//grObjects.push_back(new Suelo(300, 200));
+	grObjects.push_back(new Estrella3D(15, 6, 25));
+	grObjects.push_back(new Cubo(150));
+	grObjects.push_back(new Suelo(300, 200));
 
 	/*
 		Ejercicio 12 TEXTURAS
@@ -109,6 +109,7 @@ void Scene::render(Camera const& cam)
 		el->render(cam);
 	}
 }
+
 //-------------------------------------------------------------------------
 
 void Scene::update() {
@@ -120,16 +121,15 @@ void Scene::update() {
 //-------------------------------------------------------------------------
 
 void Scene::cambiar2D() {
-	Scene::~Scene();
-	grObjects.push_back(new Poliespiral(dvec2(0, 0), 1.0, 50.0, 3.0, 4.0, 1000.0));
+	// OJO DESAPARECE EL TRIANG ANIMADO si no hay animacion en la 3D!!!!
+	grObjects.push_back(new TrianguloAnimado(5));
 	grObjects.push_back(new Dragon(3000));
-	grObjects.push_back(new TrianguloAnimado(10));
 }
 
 //-------------------------------------------------------------------------
 
 void Scene::cambiar3D() {
-	Scene::~Scene();
-	grObjects.push_back(new CajaTextura(20));
-
+	grObjects.push_back(new Estrella3D(15, 6, 15));
+	grObjects.push_back(new Cubo(150));
+	grObjects.push_back(new Suelo(300, 200));
 }

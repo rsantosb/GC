@@ -46,8 +46,9 @@ public:
 	~EjesRGB();
 	virtual void render(Camera const& cam);
 	void update();
-
 };
+
+//-------------------------------------------------------------------------
 
 class Poliespiral : public Entity
 {
@@ -56,8 +57,9 @@ public:
 	~Poliespiral();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
+
+//-------------------------------------------------------------------------
 
 class Poliespiral2 : public Entity
 {
@@ -66,9 +68,10 @@ public:
 	~Poliespiral2();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
+
 //-------------------------------------------------------------------------
+
 class Dragon : public Entity
 {
 public:
@@ -76,10 +79,10 @@ public:
 	~Dragon();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
 
 //-------------------------------------------------------------------------
+
 class Dragon2 : public Entity
 {
 public:
@@ -87,10 +90,10 @@ public:
 	~Dragon2();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
 
 //-------------------------------------------------------------------------
+
 class Triangulo : public Entity
 {
 public:
@@ -98,10 +101,10 @@ public:
 	~Triangulo();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
 
 //-------------------------------------------------------------------------
+
 class TrianguloRGB : public Entity
 {
 public:
@@ -109,10 +112,10 @@ public:
 	~TrianguloRGB();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
 
 //-------------------------------------------------------------------------
+
 class TrianguloAnimado : public Entity
 {
 public:
@@ -124,6 +127,7 @@ public:
 
 
 //-------------------------------------------------------------------------
+
 class Rectangulo : public Entity
 {
 public:
@@ -131,10 +135,10 @@ public:
 	~Rectangulo();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
 
 //-------------------------------------------------------------------------
+
 class RectanguloRGB : public Entity
 {
 public:
@@ -142,8 +146,9 @@ public:
 	~RectanguloRGB();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
+
+//-------------------------------------------------------------------------
 
 class Suelo : public Entity
 {
@@ -152,8 +157,9 @@ public:
 	~Suelo();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
+
+//-------------------------------------------------------------------------
 
 class Estrella3D : public Entity
 {
@@ -164,9 +170,9 @@ public:
 	~Estrella3D();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
-	
 };
+
+//-------------------------------------------------------------------------
 
 class Cubo : public Entity
 {
@@ -175,8 +181,9 @@ public:
 	~Cubo();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
+
+//-------------------------------------------------------------------------
 
 class SueloTextura : public Entity
 {
@@ -185,8 +192,9 @@ public:
 	~SueloTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
+
+//-------------------------------------------------------------------------
 
 class EstrellaTextura : public Entity
 {
@@ -195,8 +203,9 @@ public:
 	~EstrellaTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
+
+//-------------------------------------------------------------------------
 
 class CajaTextura : public Entity
 {
@@ -205,7 +214,6 @@ public:
 	~CajaTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
-
 };
 
 #endif //_H_Entities_H_

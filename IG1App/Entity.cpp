@@ -68,8 +68,8 @@ void Poliespiral::render(Camera const& cam)
 }
 
 void Poliespiral::update() {}
-
-
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 Poliespiral2::Poliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert) : Entity()
 {
@@ -195,6 +195,7 @@ void Triangulo::render(Camera const& cam)
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
 		mesh->render();
+		glColor3d(0, 0, 0);
 		glLineWidth(1);
 
 	}
@@ -231,6 +232,7 @@ void TrianguloRGB::render(Camera const& cam)
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
+		glColor3d(0, 0, 0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
@@ -265,6 +267,7 @@ void TrianguloAnimado::render(Camera const& cam)
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
+		glColor3d(0, 0, 0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
@@ -309,6 +312,7 @@ void Rectangulo::render(Camera const& cam)
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
+		glColor3d(0, 0, 0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
@@ -342,21 +346,29 @@ void RectanguloRGB::render(Camera const& cam)
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
+		glColor3d(0, 0, 0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 
 void RectanguloRGB::update() {}
 
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
 Suelo::Suelo(GLdouble w, GLdouble h) : Entity()
 {
 	mesh = Mesh::generaRectanguloRGB(w, h);
 }
 
+//-------------------------------------------------------------------------
+
 Suelo::~Suelo() 
 {
 	delete mesh; mesh = nullptr;
 };
+
+//-------------------------------------------------------------------------
 
 void Suelo::render(Camera const& cam)
 {
@@ -368,6 +380,7 @@ void Suelo::render(Camera const& cam)
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
 		mesh->render();
+		glColor3d(0, 0, 0);
 		glLineWidth(1);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -376,6 +389,9 @@ void Suelo::render(Camera const& cam)
 	}
 }
 void Suelo::update() {}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 Estrella3D::Estrella3D(GLdouble re, GLdouble np, GLdouble h) : Entity()
 {
@@ -404,7 +420,7 @@ void Estrella3D::render(Camera const& cam)
 		uploadMvM(cam.getViewMat());  //
 		glColor3d(0.9, 0.6, 0.8);
 		glPolygonMode(GL_FRONT, GL_LINE);
-		glPolygonMode(GL_BACK, GL_LINE);
+		//glPolygonMode(GL_BACK, GL_LINE);
 		glLineWidth(2);
 		mesh->render();
 
@@ -417,8 +433,11 @@ void Estrella3D::render(Camera const& cam)
 
 		modelMat = matAux;
 		glLineWidth(1);
+		glColor3d(0, 0, 0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
+//-------------------------------------------------------------------------
 
 void Estrella3D::update() {
 
@@ -427,6 +446,8 @@ void Estrella3D::update() {
 
 }
 
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 Cubo::Cubo(GLdouble l) : Entity()
 {
@@ -459,11 +480,52 @@ void Cubo::render(Camera const& cam)
 
 void Cubo::update() {}
 
+
+
+/*
+Caja::Caja(GLdouble l) : Entity()
+{
+	mesh = Mesh::generaContCubo(l);
+}
+//-------------------------------------------------------------------------
+
+Caja::~Caja()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Caja::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		dmat4 matAux = modelMat; // cam.getViewMat();
+
+		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
+		uploadMvM(matAux);
+
+		glColor3d(0.9, 0.6, 0.8);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glLineWidth(2);
+		mesh->render();
+
+
+		glLineWidth(1);
+	}
+}
+
+void Caja::update() {}
+
+*/
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
 SueloTextura::SueloTextura(GLdouble w, GLdouble h, GLuint rw, GLuint rh) : Entity()
 {
 	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
 	tex1.load("..\\Bmps\\BaldosaF.bmp"); // cargamos la imagen
 }
+//-------------------------------------------------------------------------
 
 SueloTextura::~SueloTextura()
 {
@@ -480,17 +542,23 @@ void SueloTextura::render(Camera const& cam)
 		glColor3d(0.9, 0.6, 0.8);
 		mesh->render();
 		glLineWidth(1);
+		glColor3d(0, 0, 0);
 		tex1.unbind();
 	}
 }
+//-------------------------------------------------------------------------
 
 void SueloTextura::update() {}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 EstrellaTextura::EstrellaTextura(GLdouble r, GLdouble nL, GLdouble h) : Entity()
 {
 	mesh = Mesh::generaEstrellaTexCor(r, nL, h);
 	tex1.load("..\\Bmps\\BaldosaP.bmp"); // cargamos la imagen
 }
+//-------------------------------------------------------------------------
 
 EstrellaTextura::~EstrellaTextura()
 {
@@ -507,12 +575,16 @@ void EstrellaTextura::render(Camera const& cam)
 		glColor3d(0.9, 0.6, 0.8);
 		mesh->render();
 		glLineWidth(1);
+		glColor3d(0, 0, 0);
 		tex1.unbind();
 	}
 }
+//-------------------------------------------------------------------------
 
 void EstrellaTextura::update() {}
 
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 CajaTextura::CajaTextura(GLdouble l) : Entity()
 {
@@ -520,6 +592,7 @@ CajaTextura::CajaTextura(GLdouble l) : Entity()
 	tex1.load("..\\Bmps\\BaldosaP.bmp"); // cargamos la imagen
 	tex2.load("..\\Bmps\\BaldosaF.bmp"); // cargamos otra imagen
 }
+//-------------------------------------------------------------------------
 
 CajaTextura::~CajaTextura()
 {
@@ -549,41 +622,6 @@ void CajaTextura::render(Camera const& cam)
 		
 	}
 }
+//-------------------------------------------------------------------------
 
 void CajaTextura::update() {}
-
-
-/*
-Caja::Caja(GLdouble l) : Entity()
-{
-	mesh = Mesh::generaContCubo(l);
-}
-//-------------------------------------------------------------------------
-
-Caja::~Caja()
-{
-	delete mesh; mesh = nullptr;
-};
-//-------------------------------------------------------------------------
-
-void Caja::render(Camera const& cam)
-{
-	if (mesh != nullptr) {
-		dmat4 matAux = modelMat; // cam.getViewMat();
-	
-		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
-		uploadMvM(matAux);
-
-		glColor3d(0.9, 0.6, 0.8);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glLineWidth(2);
-		mesh->render();
-
-
-		glLineWidth(1);
-	}
-}
-
-void Caja::update() {}
-
-*/

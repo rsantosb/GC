@@ -4,15 +4,16 @@ using namespace glm;
 
 //-------------------------------------------------------------------------
 
-Mesh ::~Mesh(void) 
-{
+Mesh ::~Mesh(void) {
+
   delete[] vertices;  vertices = nullptr;
   delete[] colors;    colors = nullptr;
+  delete[] texture;    texture = nullptr;
 }
 //-------------------------------------------------------------------------
 
-void Mesh::render()
-{
+void Mesh::render() {
+
   if (vertices != nullptr) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_DOUBLE, 0, vertices);  // number of coordinates per vertex, type of each coordinate, stride, pointer 
@@ -34,8 +35,8 @@ void Mesh::render()
 }
 //-------------------------------------------------------------------------
 
-Mesh * Mesh::createRGBAxes(GLdouble l)
-{
+Mesh * Mesh::createRGBAxes(GLdouble l) {
+
   Mesh* m = new Mesh();
   m->primitive = GL_LINES;
   m->numVertices = 6;
@@ -64,9 +65,9 @@ Mesh * Mesh::createRGBAxes(GLdouble l)
  
   return m; 
 }
+//-------------------------------------------------------------------------
 
-Mesh * Mesh::generaPoliespiral(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert)
-{
+Mesh * Mesh::generaPoliespiral(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert) {
 	Mesh* m = new Mesh();
 	m->primitive = GL_LINE_STRIP;
 	m->numVertices = numVert;
@@ -89,9 +90,9 @@ Mesh * Mesh::generaPoliespiral(dvec2 verIni, GLdouble angIni, GLdouble incrAng, 
 	}
 	return m;
 }
+//-------------------------------------------------------------------------
 
-Mesh * Mesh::generaPoliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert)
-{
+Mesh * Mesh::generaPoliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert) {
 	Mesh* m = new Mesh();
 	m->primitive = GL_LINE_STRIP;
 	m->numVertices = numVert;
@@ -114,8 +115,8 @@ Mesh * Mesh::generaPoliespiral2(dvec2 verIni, GLdouble angIni, GLdouble incrAng,
 	}
 	return m;
 }
-
 //-------------------------------------------------------------------------
+
 Mesh * Mesh::generaDragon(GLuint numVert) {
 
 	Mesh* m = new Mesh();
@@ -150,8 +151,8 @@ Mesh * Mesh::generaDragon(GLuint numVert) {
 
 	return m; 
 }
-
 //-------------------------------------------------------------------------
+
 Mesh * Mesh::generaDragon2(GLuint numVert) {
 
 	Mesh* m = new Mesh();
@@ -187,6 +188,7 @@ Mesh * Mesh::generaDragon2(GLuint numVert) {
 	return m;
 }
 //-------------------------------------------------------------------------
+
 Mesh * Mesh::generaTriangulo(GLdouble r) {
 
 	Mesh* m = new Mesh();
@@ -214,9 +216,8 @@ Mesh * Mesh::generaTriangulo(GLdouble r) {
 	}
 	return m;
 }
-
-
 //-------------------------------------------------------------------------
+
 Mesh * Mesh::generaTrianguloRGB(GLdouble r) {
 
 	Mesh* m = generaTriangulo(r);
@@ -233,9 +234,8 @@ Mesh * Mesh::generaTrianguloRGB(GLdouble r) {
 
 	return m;
 }
-
-
 //-------------------------------------------------------------------------
+
 Mesh * Mesh::generaRectangulo(GLdouble w, GLdouble h) {
 
 	Mesh* m = new Mesh();
@@ -251,9 +251,8 @@ Mesh * Mesh::generaRectangulo(GLdouble w, GLdouble h) {
 
 	return m;
 }
-
-
 //-------------------------------------------------------------------------
+
 Mesh * Mesh::generaRectanguloRGB(GLdouble w, GLdouble h) {
 
 	Mesh* m = generaRectangulo(w,h);
@@ -266,11 +265,9 @@ Mesh * Mesh::generaRectanguloRGB(GLdouble w, GLdouble h) {
 
 	return m;
 }
+//-------------------------------------------------------------------------
 
-
-
-Mesh * Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h)
-{
+Mesh * Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h) {
 	Mesh* m = new Mesh();
 	m->primitive = GL_TRIANGLE_FAN;
 	m->numVertices = 2*np + 2;
@@ -314,7 +311,7 @@ Mesh * Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h)
 	m->vertices[m->numVertices - 1] = m->vertices[1];
 	return m;
 }
-
+//-------------------------------------------------------------------------
 
 Mesh * Mesh::generaContCubo(GLdouble l) {
 	Mesh* m = new Mesh();
@@ -334,8 +331,8 @@ Mesh * Mesh::generaContCubo(GLdouble l) {
 	m->vertices[8] = m->vertices[0]; //v8
 	m->vertices[9] = m->vertices[1]; //v9
 	return m;
-
 }
+//-------------------------------------------------------------------------
 
 Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
 
@@ -346,11 +343,10 @@ Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh
 	m->texture[1] = dvec2(0, rh);
 	m->texture[2] = dvec2(rw, 0);
 	m->texture[3] = dvec2(rw, rh);
-
-	
 	
 	return m;
 }
+//-------------------------------------------------------------------------
 
 Mesh * Mesh::generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h) {
 
@@ -393,7 +389,7 @@ Mesh * Mesh::generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h) {
 	m->texture[m->numVertices - 1] = m->texture[1];
 	return m;
 }
-
+//-------------------------------------------------------------------------
 
 Mesh * Mesh::generaCajaTexCor(GLdouble l) {
 
@@ -412,8 +408,4 @@ Mesh * Mesh::generaCajaTexCor(GLdouble l) {
 	m->texture[8] = m->texture[0]; //v8
 	m->texture[9] = m->texture[1]; //v9
 	return m;
-
-
 }
-
-
