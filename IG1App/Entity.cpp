@@ -195,7 +195,7 @@ void Triangulo::render(Camera const& cam)
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
 		mesh->render();
-		glColor3d(0, 0, 0);
+		//glColor3d(0, 0, 0);
 		glLineWidth(1);
 
 	}
@@ -420,7 +420,7 @@ void Estrella3D::render(Camera const& cam)
 		uploadMvM(cam.getViewMat());  //
 		glColor3d(0.9, 0.6, 0.8);
 		glPolygonMode(GL_FRONT, GL_LINE);
-		//glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);
 		glLineWidth(2);
 		mesh->render();
 
@@ -433,8 +433,8 @@ void Estrella3D::render(Camera const& cam)
 
 		modelMat = matAux;
 		glLineWidth(1);
-		glColor3d(0, 0, 0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glColor3d(0, 0, 0);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 //-------------------------------------------------------------------------

@@ -80,7 +80,7 @@ void Scene::init()
 		Ejercicio 8 ESCENA 3D
 	*/
 	grObjects.push_back(new Estrella3D(15, 6, 25));
-	grObjects.push_back(new Cubo(150));
+	//grObjects.push_back(new Cubo(150));
 	grObjects.push_back(new Suelo(300, 200));
 
 	/*
@@ -88,7 +88,8 @@ void Scene::init()
 	*/
 	//grObjects.push_back(new SueloTextura(75, 55, 7, 5));
 	//grObjects.push_back(new EstrellaTextura(15, 6, 25));
-	//grObjects.push_back(new CajaTextura(20));
+	grObjects.push_back(new CajaTextura(20));
+	glDisable(GL_CULL_FACE);
 }
 //-------------------------------------------------------------------------
 
