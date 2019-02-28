@@ -417,7 +417,7 @@ void Estrella3D::render(Camera const& cam)
 		modelMat = rotate(modelMat, radians(anguloZ), dvec3(0, 0, 1));
 
 		
-		uploadMvM(cam.getViewMat());  //
+		uploadMvM(cam.getViewMat());
 		glColor3d(0.9, 0.6, 0.8);
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_LINE);
@@ -429,7 +429,6 @@ void Estrella3D::render(Camera const& cam)
 
 		uploadMvM(cam.getViewMat());
 		mesh->render();
-
 
 		modelMat = matAux;
 		glLineWidth(1);
@@ -475,6 +474,7 @@ void Cubo::render(Camera const& cam)
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
+		
 	}
 }
 
@@ -523,7 +523,7 @@ void Caja::update() {}
 SueloTextura::SueloTextura(GLdouble w, GLdouble h, GLuint rw, GLuint rh) : Entity()
 {
 	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
-	tex1.load("..\\Bmps\\BaldosaF.bmp"); // cargamos la imagen
+	tex1.load("..\\Bmps\\BaldosaC.bmp"); // cargamos la imagen
 }
 //-------------------------------------------------------------------------
 
@@ -537,10 +537,16 @@ void SueloTextura::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
 		tex1.bind();
+
+		dmat4 matAux = modelMat;
+		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+		
 		uploadMvM(cam.getViewMat());
 		glLineWidth(2);
 		glColor3d(0.9, 0.6, 0.8);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mesh->render();
+		modelMat = matAux;
 		glLineWidth(1);
 		glColor3d(0, 0, 0);
 		tex1.unbind();
@@ -589,7 +595,7 @@ void EstrellaTextura::update() {}
 CajaTextura::CajaTextura(GLdouble l) : Entity()
 {
 	mesh = Mesh::generaCajaTexCor(l);
-	tex1.load("..\\Bmps\\BaldosaP.bmp"); // cargamos la imagen
+	tex1.load("..\\Bmps\\Container.bmp"); // cargamos la imagen
 	tex2.load("..\\Bmps\\BaldosaF.bmp"); // cargamos otra imagen
 }
 //-------------------------------------------------------------------------
@@ -603,7 +609,8 @@ CajaTextura::~CajaTextura()
 void CajaTextura::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
-		
+		dmat4 matAux = modelMat; // cam.getViewMat();
+		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
 		uploadMvM(cam.getViewMat());
 
 		tex1.bind();
@@ -611,15 +618,14 @@ void CajaTextura::render(Camera const& cam)
 		mesh->render();
 		tex1.unbind();
 		
-		
 		tex2.bind();
 		glCullFace(GL_BACK);
 		mesh->render();
 		tex2.unbind();
-		
+
+		modelMat = matAux;
 		glCullFace(GL_FRONT_AND_BACK);
 		glLineWidth(1);
-		
 	}
 }
 //-------------------------------------------------------------------------

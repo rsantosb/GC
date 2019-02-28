@@ -12,8 +12,7 @@ void Scene::init()
 	glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D); // activa las texturas
-	glEnable(GL_CULL_FACE);
-     
+
 	// lights
 	// textures  
 	// meshes
@@ -26,7 +25,7 @@ void Scene::init()
 	/*
 		INICIO EN 2D
 	*/
-	//cambiar2D();
+	cambiar2D();
 
 	/*
 		Ejercicio 1 POLIESPIRAL
@@ -79,17 +78,19 @@ void Scene::init()
 	/*
 		Ejercicio 8 ESCENA 3D
 	*/
-	grObjects.push_back(new Estrella3D(15, 6, 25));
+	//grObjects.push_back(new Estrella3D(15, 6, 25));
 	//grObjects.push_back(new Cubo(150));
-	grObjects.push_back(new Suelo(300, 200));
+	//grObjects.push_back(new Suelo(300, 200));
 
 	/*
 		Ejercicio 12 TEXTURAS
 	*/
 	//grObjects.push_back(new SueloTextura(75, 55, 7, 5));
 	//grObjects.push_back(new EstrellaTextura(15, 6, 25));
-	grObjects.push_back(new CajaTextura(20));
-	glDisable(GL_CULL_FACE);
+	//grObjects.push_back(new CajaTextura(20));
+
+
+	//glDisable(GL_CULL_FACE);
 }
 //-------------------------------------------------------------------------
 
@@ -122,7 +123,6 @@ void Scene::update() {
 //-------------------------------------------------------------------------
 
 void Scene::cambiar2D() {
-	// OJO DESAPARECE EL TRIANG ANIMADO si no hay animacion en la 3D!!!!
 	grObjects.push_back(new TrianguloAnimado(5));
 	grObjects.push_back(new Dragon(3000));
 }
@@ -130,7 +130,15 @@ void Scene::cambiar2D() {
 //-------------------------------------------------------------------------
 
 void Scene::cambiar3D() {
-	grObjects.push_back(new Estrella3D(15, 6, 15));
-	grObjects.push_back(new Cubo(150));
-	grObjects.push_back(new Suelo(300, 200));
+	glEnable(GL_CULL_FACE);
+	//BaldosaP para Estrella3DMovimiento
+	//Container para fuera
+	//BaldosaF para dentro
+
+	//grObjects.push_back(new Estrella3D(15, 6, 15));
+	//grObjects.push_back(new SueloTextura(1500, 1500, 20, 10));
+	//grObjects.push_back(new EstrellaTextura(15, 6, 25));
+	grObjects.push_back(new CajaTextura(150));
+
+	glDisable(GL_CULL_FACE);
 }
