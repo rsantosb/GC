@@ -123,6 +123,7 @@ void Scene::update() {
 //-------------------------------------------------------------------------
 
 void Scene::cambiar2D() {
+	grObjects.push_back(new Poliespiral(dvec2(0, 0), 1.0, 50.0, 3.0, 4.0, 1000.0));
 	grObjects.push_back(new TrianguloAnimado(5));
 	grObjects.push_back(new Dragon(3000));
 }
@@ -130,15 +131,9 @@ void Scene::cambiar2D() {
 //-------------------------------------------------------------------------
 
 void Scene::cambiar3D() {
-	glEnable(GL_CULL_FACE);
-	//BaldosaP para Estrella3DMovimiento
-	//Container para fuera
-	//BaldosaF para dentro
 
-	//grObjects.push_back(new Estrella3D(15, 6, 15));
-	//grObjects.push_back(new SueloTextura(1500, 1500, 20, 10));
-	//grObjects.push_back(new EstrellaTextura(15, 6, 25));
+	grObjects.push_back(new SueloTextura(1500, 1500, 20, 10));
+	grObjects.push_back(new EstrellaTexturaAnimada(15, 6, 15));
 	grObjects.push_back(new CajaTextura(150));
 
-	glDisable(GL_CULL_FACE);
 }

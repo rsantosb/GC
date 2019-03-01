@@ -59,7 +59,7 @@ void Poliespiral::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
 		uploadMvM(cam.getViewMat());
-		glColor3d(0.33, 0.5, 0.9);
+		glColor3d(0.45, 0.7, 0.1);
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
@@ -537,10 +537,8 @@ void SueloTextura::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
 		tex1.bind();
-
 		dmat4 matAux = modelMat;
 		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
-		
 		uploadMvM(cam.getViewMat());
 		glLineWidth(2);
 		glColor3d(0.9, 0.6, 0.8);
@@ -550,6 +548,7 @@ void SueloTextura::render(Camera const& cam)
 		glLineWidth(1);
 		glColor3d(0, 0, 0);
 		tex1.unbind();
+
 	}
 }
 //-------------------------------------------------------------------------
@@ -576,18 +575,74 @@ void EstrellaTextura::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
 		tex1.bind();
+
+		dmat4 matAux = modelMat;
+		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+
 		uploadMvM(cam.getViewMat());
-		glLineWidth(2);
-		glColor3d(0.9, 0.6, 0.8);
+
 		mesh->render();
-		glLineWidth(1);
-		glColor3d(0, 0, 0);
+		
 		tex1.unbind();
 	}
 }
 //-------------------------------------------------------------------------
 
 void EstrellaTextura::update() {}
+
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+EstrellaTexturaAnimada::EstrellaTexturaAnimada(GLdouble r, GLdouble nL, GLdouble h) : Entity()
+{
+	mesh = Mesh::generaEstrellaTexCor(r, nL, h);
+	tex1.load("..\\Bmps\\BaldosaP.bmp"); // cargamos la imagen
+}
+//-------------------------------------------------------------------------
+
+EstrellaTexturaAnimada::~EstrellaTexturaAnimada()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void EstrellaTexturaAnimada::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+
+		tex1.bind();
+
+		dmat4 matAux = modelMat;
+		modelMat = translate(modelMat, dvec3(0, 250.0, 0));
+		modelMat = scale(modelMat, dvec3(3, 3, 3));
+		modelMat = translate(modelMat, dvec3(10.0, 0, 0));
+
+		modelMat = rotate(modelMat, radians(anguloY), dvec3(0, 1, 0));
+		modelMat = rotate(modelMat, radians(anguloZ), dvec3(0, 0, 1));
+
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+
+		// No recupetamos el modelMat para que siga teniendo las mismas rotaciones y traslaciones
+		modelMat = rotate(modelMat, radians(180.0), dvec3(0, 1, 0));
+
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+
+		modelMat = matAux;
+		tex1.unbind();
+	}
+}
+//-------------------------------------------------------------------------
+
+void EstrellaTexturaAnimada::update() {
+	anguloZ = anguloZ + 10.00;
+	anguloY = anguloY + 25.00;
+}
+
+
+
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -609,6 +664,9 @@ CajaTextura::~CajaTextura()
 void CajaTextura::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
+
+		glEnable(GL_CULL_FACE);
+
 		dmat4 matAux = modelMat; // cam.getViewMat();
 		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
 		uploadMvM(cam.getViewMat());
@@ -626,6 +684,9 @@ void CajaTextura::render(Camera const& cam)
 		modelMat = matAux;
 		glCullFace(GL_FRONT_AND_BACK);
 		glLineWidth(1);
+
+
+		glDisable(GL_CULL_FACE);
 	}
 }
 //-------------------------------------------------------------------------

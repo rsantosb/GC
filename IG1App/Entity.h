@@ -205,6 +205,17 @@ public:
 	virtual void update();
 };
 
+class EstrellaTexturaAnimada : public Entity
+{
+public:
+	EstrellaTexturaAnimada(GLdouble r, GLdouble nL, GLdouble h);
+	~EstrellaTexturaAnimada();
+	virtual void render(Camera const& cam);
+	virtual void update();
+	GLdouble anguloY = 10.0;
+	GLdouble anguloZ = 10.0;
+
+};
 //-------------------------------------------------------------------------
 
 class CajaTextura : public Entity
