@@ -306,7 +306,6 @@ void TrianguloAnimado::update()
 
 void TrianguloAnimado::update(GLuint timeElapsed) 
 {
-	cout << timeElapsed << '\n';
 	if (timeElapsed >= 27)
 		update();
 
