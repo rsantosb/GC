@@ -137,3 +137,9 @@ void Scene::cambiar3D() {
 	grObjects.push_back(new CajaTextura(150));
 
 }
+
+void Scene::update(GLuint timeElapsed) {
+	for (Entity* entity : grObjects) {
+		entity->update(timeElapsed);
+	}
+}

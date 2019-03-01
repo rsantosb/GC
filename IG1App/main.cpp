@@ -25,13 +25,17 @@ Camera camera(&viewPort);
 // Graphics objects of the scene
 Scene scene;   
 
+GLuint last_updated_tick = 0;
+
+bool animacion = true;
+
 //----------- Callbacks ----------------------------------------------------
 
 void display();
 void resize(int newWidth, int newHeight);
 void key(unsigned char key, int x, int y);
 void specialKey(int key, int x, int y);
-
+void update();
 //-------------------------------------------------------------------------
 
 int main(int argc, char *argv[])
@@ -59,7 +63,8 @@ int main(int argc, char *argv[])
   glutKeyboardFunc(key);
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);
- 
+  glutIdleFunc(update);
+
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
 
@@ -85,6 +90,22 @@ void display()   // double buffering
   glutSwapBuffers();  
 }
 //-------------------------------------------------------------------------
+
+void update()
+{
+
+	bool need_redisplay = true;
+	GLuint tiempo = glutGet(GLUT_ELAPSED_TIME)- last_updated_tick;
+
+	if (animacion == true && tiempo > 50 ) {
+		scene.update(glutGet(GLUT_ELAPSED_TIME) - last_updated_tick);
+		last_updated_tick = glutGet(GLUT_ELAPSED_TIME);
+	}
+	
+	if(need_redisplay)
+		glutPostRedisplay();
+
+}
 
 void resize(int newWidth, int newHeight)
 {
@@ -119,6 +140,13 @@ void key(unsigned char key, int x, int y)
   case 'u':
     scene.update();
 	break;
+  case 'U': {
+	  if (animacion == true)
+		  animacion = false;
+	  else
+		  animacion = true;
+	  break;
+  }
   case '2':
 	scene.~Scene();
 	scene.cambiar2D();

@@ -22,6 +22,7 @@ public:
 
     void render(Camera const& cam);
 	void update();
+	void update(GLuint timeElapsed);
 	void cambiar2D();
 	void cambiar3D();
 	  

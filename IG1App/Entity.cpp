@@ -5,6 +5,10 @@
 
 using namespace glm;
 
+#include <iostream>
+
+using namespace std;
+
 //-------------------------------------------------------------------------
 
 
@@ -40,6 +44,9 @@ void EjesRGB::render(Camera const& cam)
 }
 
 void EjesRGB::update(){}
+
+void EjesRGB::update(GLuint timeElapsed) {}
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -68,6 +75,8 @@ void Poliespiral::render(Camera const& cam)
 }
 
 void Poliespiral::update() {}
+
+void Poliespiral::update(GLuint timeElapsed) {}
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -96,6 +105,8 @@ void Poliespiral2::render(Camera const& cam)
 }
 
 void Poliespiral2::update() {}
+
+void Poliespiral2::update(GLuint timeElapsed) {}
 
 
 //-------------------------------------------------------------------------
@@ -133,6 +144,8 @@ void Dragon::render(Camera const& cam)
 
 void Dragon::update() {}
 
+void Dragon::update(GLuint timeElapsed) {}
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -167,6 +180,9 @@ void Dragon2::render(Camera const& cam)
 }
 
 void Dragon2::update() {}
+
+void Dragon2::update(GLuint timeElapsed) {}
+
 
 
 //-------------------------------------------------------------------------
@@ -203,6 +219,8 @@ void Triangulo::render(Camera const& cam)
 
 void Triangulo::update() {}
 
+void Triangulo::update(GLuint timeElapsed) {}
+
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -238,6 +256,8 @@ void TrianguloRGB::render(Camera const& cam)
 }
 
 void TrianguloRGB::update() {}
+
+void TrianguloRGB::update(GLuint timeElapsed) {}
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -284,6 +304,13 @@ void TrianguloAnimado::update()
 	setModelMat(modelMat);
 }
 
+void TrianguloAnimado::update(GLuint timeElapsed) 
+{
+	cout << timeElapsed << '\n';
+	if (timeElapsed >= 27)
+		update();
+
+}
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -319,6 +346,8 @@ void Rectangulo::render(Camera const& cam)
 
 void Rectangulo::update() {}
 
+void Rectangulo::update(GLuint timeElapsed) {}
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -352,6 +381,8 @@ void RectanguloRGB::render(Camera const& cam)
 }
 
 void RectanguloRGB::update() {}
+
+void RectanguloRGB::update(GLuint timeElapsed) {}
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -390,6 +421,7 @@ void Suelo::render(Camera const& cam)
 }
 void Suelo::update() {}
 
+void Suelo::update(GLuint timeElapsed) {}
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -445,6 +477,12 @@ void Estrella3D::update() {
 
 }
 
+void Estrella3D::update(GLuint timeElapsed) 
+{
+	if (timeElapsed >= 27)
+		update();
+}
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -479,6 +517,8 @@ void Cubo::render(Camera const& cam)
 }
 
 void Cubo::update() {}
+
+void Cubo::update(GLuint timeElapsed) {}
 
 
 
@@ -555,6 +595,8 @@ void SueloTextura::render(Camera const& cam)
 
 void SueloTextura::update() {}
 
+void SueloTextura::update(GLuint timeElapsed) {}
+
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
@@ -589,6 +631,8 @@ void EstrellaTextura::render(Camera const& cam)
 //-------------------------------------------------------------------------
 
 void EstrellaTextura::update() {}
+
+void EstrellaTextura::update(GLuint timeElapsed) {}
 
 
 //-------------------------------------------------------------------------
@@ -641,8 +685,11 @@ void EstrellaTexturaAnimada::update() {
 	anguloY = anguloY + 25.00;
 }
 
-
-
+void EstrellaTexturaAnimada::update(GLuint timeElapsed) 
+{
+	if (timeElapsed >= 27)
+		update();
+}
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -692,3 +739,5 @@ void CajaTextura::render(Camera const& cam)
 //-------------------------------------------------------------------------
 
 void CajaTextura::update() {}
+
+void CajaTextura::update(GLuint timeElapsed) {}

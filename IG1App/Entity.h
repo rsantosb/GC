@@ -24,6 +24,7 @@ public:
 
 	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
 	virtual void update() = 0;
+	virtual void update(GLuint timeElapsed) = 0;
   
 protected:
 
@@ -46,6 +47,8 @@ public:
 	~EjesRGB();
 	virtual void render(Camera const& cam);
 	void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -57,6 +60,8 @@ public:
 	~Poliespiral();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -68,6 +73,8 @@ public:
 	~Poliespiral2();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -79,6 +86,7 @@ public:
 	~Dragon();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	void update(GLuint timeElapsed);
 };
 
 //-------------------------------------------------------------------------
@@ -90,6 +98,8 @@ public:
 	~Dragon2();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -101,6 +111,8 @@ public:
 	~Triangulo();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -112,6 +124,8 @@ public:
 	~TrianguloRGB();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -123,6 +137,8 @@ public:
 	~TrianguloAnimado();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 
@@ -135,6 +151,8 @@ public:
 	~Rectangulo();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -146,6 +164,8 @@ public:
 	~RectanguloRGB();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -157,6 +177,8 @@ public:
 	~Suelo();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -170,6 +192,8 @@ public:
 	~Estrella3D();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -181,6 +205,8 @@ public:
 	~Cubo();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 //-------------------------------------------------------------------------
@@ -192,6 +218,7 @@ public:
 	~SueloTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
 };
 
 //-------------------------------------------------------------------------
@@ -203,6 +230,8 @@ public:
 	~EstrellaTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 class EstrellaTexturaAnimada : public Entity
@@ -214,6 +243,8 @@ public:
 	virtual void update();
 	GLdouble anguloY = 10.0;
 	GLdouble anguloZ = 10.0;
+	virtual void update(GLuint timeElapsed);
+
 
 };
 //-------------------------------------------------------------------------
@@ -225,6 +256,8 @@ public:
 	~CajaTextura();
 	virtual void render(Camera const& cam);
 	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
 };
 
 #endif //_H_Entities_H_
