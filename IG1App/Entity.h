@@ -33,6 +33,7 @@ protected:
 
 	Texture tex1; 
 	Texture tex2; 
+	Texture texBase;
 
 	// transfers modelViewMat to the GPU
 	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
@@ -133,6 +134,9 @@ public:
 class TrianguloAnimado : public Entity
 {
 public:
+	double ang = 0.0;
+	double angy = 0.0;
+
 	TrianguloAnimado(GLdouble l);
 	~TrianguloAnimado();
 	virtual void render(Camera const& cam);
@@ -252,6 +256,7 @@ public:
 class CajaTextura : public Entity
 {
 public:
+	Mesh* base = nullptr;   // Base mesh
 	CajaTextura(GLdouble l);
 	~CajaTextura();
 	virtual void render(Camera const& cam);

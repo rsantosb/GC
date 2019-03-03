@@ -1,1 +1,19 @@
-﻿
+﻿  Camera.cpp
+  Entity.cpp
+  main.cpp
+  Mesh.cpp
+c:\users\paloma\documents\github\gc\ig1app\mesh.cpp(83): warning C4018: '<': no coinciden signed/unsigned
+c:\users\paloma\documents\github\gc\ig1app\mesh.cpp(108): warning C4018: '<': no coinciden signed/unsigned
+c:\users\paloma\documents\github\gc\ig1app\mesh.cpp(134): warning C4018: '<': no coinciden signed/unsigned
+c:\users\paloma\documents\github\gc\ig1app\mesh.cpp(170): warning C4018: '<': no coinciden signed/unsigned
+c:\users\paloma\documents\github\gc\ig1app\mesh.cpp(208): warning C4018: '<': no coinciden signed/unsigned
+c:\users\paloma\documents\github\gc\ig1app\mesh.cpp(273): warning C4244: '=': conversión de 'GLdouble' a 'GLuint'; posible pérdida de datos
+c:\users\paloma\documents\github\gc\ig1app\mesh.cpp(288): warning C4018: '<': no coinciden signed/unsigned
+c:\users\paloma\documents\github\gc\ig1app\mesh.cpp(368): warning C4018: '<': no coinciden signed/unsigned
+  Pixmap32RGBA.cpp
+  Scene.cpp
+c:\users\paloma\documents\github\gc\ig1app\scene.cpp(126): warning C4244: 'argumento': conversión de 'double' a 'GLuint'; posible pérdida de datos
+  Texture.cpp
+  Viewport.cpp
+  Generando código...
+  IG1App.vcxproj -> C:\Users\Paloma\Documents\GitHub\GC\bin\IG1AppDebug.exe

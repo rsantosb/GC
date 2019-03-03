@@ -409,3 +409,17 @@ Mesh * Mesh::generaCajaTexCor(GLdouble l) {
 	m->texture[9] = m->texture[1]; //v9
 	return m;
 }
+//-------------------------------------------------------------------------
+
+Mesh * Mesh::generaBaseTexCor(GLdouble l) {
+
+	Mesh* m = generaRectangulo(l,l);
+
+	m->texture = new dvec2[m->numVertices];
+
+	m->texture[0] = dvec2(0, 1); // v0
+	m->texture[1] = dvec2(0, 0); // v1
+	m->texture[2] = dvec2(1, 1); // v2
+	m->texture[3] = dvec2(1, 0); // v3
+	return m;
+}

@@ -128,17 +128,19 @@ void Dragon::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
 
-		dmat4 matAux = cam.getViewMat();
+		dmat4 matAux = modelMat;
 		
-		matAux = translate(matAux, dvec3(-40, -170, -40));
-		matAux = scale(matAux, dvec3(40, 40, 40));
+		modelMat = translate(modelMat, dvec3(-40, -170, -40));
+		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(matAux);
+		uploadMvM(cam.getViewMat());
+
 		glColor3d(0.00, 0.00, 0.00);
 		glPointSize(2);
 		mesh->render();
 		glColor3d(0,0,0);
 		glPointSize(1);
+		modelMat = matAux;
 	}
 }
 
@@ -165,17 +167,18 @@ void Dragon2::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
 
-		dmat4 matAux = cam.getViewMat();
+		dmat4 matAux = modelMat;
+		
+		modelMat = translate(modelMat, dvec3(-40, -170, 0));
+		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		matAux = translate(matAux, dvec3(-40, -170, 0));
-		matAux = scale(matAux, dvec3(40, 40, 40));
-
-		uploadMvM(matAux);
+		uploadMvM(cam.getViewMat());
 		glColor3d(0.25, 0.45, 0.35);
 		glPointSize(2);
 		mesh->render();
 		glColor3d(0, 0, 0);
 		glPointSize(1);
+		modelMat = matAux;
 	}
 }
 
@@ -203,17 +206,17 @@ Triangulo::~Triangulo()
 void Triangulo::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
-		dmat4 matAux = cam.getViewMat();
-		matAux = scale(matAux, dvec3(40, 40, 40));
+		dmat4 matAux = modelMat;
+		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(matAux);
+		uploadMvM(cam.getViewMat());
 
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
 		mesh->render();
-		//glColor3d(0, 0, 0);
+		glColor3d(0, 0, 0);
 		glLineWidth(1);
-
+		modelMat = matAux;
 	}
 }
 
@@ -240,10 +243,10 @@ TrianguloRGB::~TrianguloRGB()
 void TrianguloRGB::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
-		dmat4 matAux = cam.getViewMat();
-		matAux = scale(matAux, dvec3(40, 40, 40));
+		dmat4 matAux = modelMat;
+		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(matAux);
+		uploadMvM(cam.getViewMat());
 		glPolygonMode(GL_FRONT,GL_LINE);
 		glPolygonMode(GL_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
@@ -252,6 +255,7 @@ void TrianguloRGB::render(Camera const& cam)
 		glLineWidth(1);
 		glColor3d(0, 0, 0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		modelMat = matAux;
 	}
 }
 
@@ -277,10 +281,20 @@ TrianguloAnimado::~TrianguloAnimado()
 void TrianguloAnimado::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
-		dmat4 matAux = cam.getViewMat();
-		matAux = scale(matAux, dvec3(40, 40, 40));
+		dmat4 auxMat = modelMat;
 
-		uploadMvM(matAux);
+		modelMat = scale(modelMat, dvec3(40, 40, 40));
+	
+
+		// con esto tenemos la rotación respecto del centro (0,0)
+		modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
+		modelMat = translate(modelMat, dvec3(25.0 * cos(radians(ang)), 25.0 * sin(radians(ang)), 0.0));
+
+		//Gira sobre si mismo
+		modelMat = rotate(modelMat, radians(ang), dvec3(0.0, 0.0, 1.0));
+		//auxMat = translate(auxMat, dvec3(-center.x, -center.y, 0.0));
+
+		uploadMvM(cam.getViewMat());
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
@@ -289,19 +303,15 @@ void TrianguloAnimado::render(Camera const& cam)
 		glLineWidth(1);
 		glColor3d(0, 0, 0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		modelMat = auxMat;
 	}
 }
 
 void TrianguloAnimado::update()
 {
-	dmat4 auxMat = modelMat;
+	this->ang = this->ang + 5.0;
 
-	//rotación sobre su figura
-	modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
-	modelMat = rotate(modelMat, radians(20.0), dvec3(0.0, 0.0, 1.0));
-	modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
-
-	setModelMat(modelMat);
 }
 
 void TrianguloAnimado::update(GLuint timeElapsed) 
@@ -328,10 +338,10 @@ Rectangulo::~Rectangulo()
 void Rectangulo::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
-		dmat4 matAux = cam.getViewMat();
-		matAux = scale(matAux, dvec3(40, 40, 40));
+		dmat4 matAux = modelMat;
+		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(matAux);
+		uploadMvM(cam.getViewMat());
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
@@ -340,6 +350,7 @@ void Rectangulo::render(Camera const& cam)
 		glLineWidth(1);
 		glColor3d(0, 0, 0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		modelMat = matAux;
 	}
 }
 
@@ -365,10 +376,10 @@ RectanguloRGB::~RectanguloRGB()
 void RectanguloRGB::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
-		dmat4 matAux = cam.getViewMat();
+		//dmat4 matAux = modelMat;
 		
 		//matAux = rotate(matAux, radians(90.0), dvec3(1, 0, 0));
-		uploadMvM(matAux);
+		uploadMvM(cam.getViewMat());
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
@@ -576,16 +587,27 @@ void SueloTextura::render(Camera const& cam)
 {
 	if (mesh != nullptr) {
 		tex1.bind();
+
 		dmat4 matAux = modelMat;
+
 		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+
 		uploadMvM(cam.getViewMat());
+
 		glLineWidth(2);
+
 		glColor3d(0.9, 0.6, 0.8);
+		
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
 		mesh->render();
+		
 		modelMat = matAux;
+		
 		glLineWidth(1);
+		
 		glColor3d(0, 0, 0);
+		
 		tex1.unbind();
 
 	}
@@ -696,8 +718,10 @@ void EstrellaTexturaAnimada::update(GLuint timeElapsed)
 CajaTextura::CajaTextura(GLdouble l) : Entity()
 {
 	mesh = Mesh::generaCajaTexCor(l);
+	base = Mesh::generaBaseTexCor(l);
 	tex1.load("..\\Bmps\\Container.bmp"); // cargamos la imagen
 	tex2.load("..\\Bmps\\BaldosaF.bmp"); // cargamos otra imagen
+	texBase.load("..\\Bmps\\PapelE.bmp"); // cargamos la imagen
 }
 //-------------------------------------------------------------------------
 
@@ -714,6 +738,7 @@ void CajaTextura::render(Camera const& cam)
 		glEnable(GL_CULL_FACE);
 
 		dmat4 matAux = modelMat; // cam.getViewMat();
+///		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
 		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
 		uploadMvM(cam.getViewMat());
 
@@ -721,19 +746,36 @@ void CajaTextura::render(Camera const& cam)
 		glCullFace(GL_FRONT);
 		mesh->render();
 		tex1.unbind();
-		
+
 		tex2.bind();
 		glCullFace(GL_BACK);
 		mesh->render();
+		//base->render();
 		tex2.unbind();
 
 		modelMat = matAux;
 		glCullFace(GL_FRONT_AND_BACK);
 		glLineWidth(1);
 
-
 		glDisable(GL_CULL_FACE);
 	}
+	
+	if (base != nullptr) {
+		texBase.bind();
+		dmat4 matAux = modelMat;
+		modelMat = translate(modelMat, dvec3(0, 1, 0));
+		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+		uploadMvM(cam.getViewMat());
+		glLineWidth(2);
+		glColor3d(0.9, 0.6, 0.8);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		base->render();
+		modelMat = matAux;
+		glLineWidth(1);
+		//glColor3d(0, 0, 0);
+		texBase.unbind();
+	}
+	
 }
 //-------------------------------------------------------------------------
 

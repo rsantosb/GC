@@ -124,7 +124,7 @@ void Scene::update() {
 
 void Scene::cambiar2D() {
 	grObjects.push_back(new Poliespiral(dvec2(0, 0), 1.0, 50.0, 3.0, 4.0, 1000.0));
-	grObjects.push_back(new TrianguloAnimado(5));
+	grObjects.push_back(new TrianguloAnimado(15));
 	grObjects.push_back(new Dragon(3000));
 }
 
