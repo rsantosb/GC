@@ -9,7 +9,7 @@ using namespace glm;
 
 void Scene::init()
 { // OpenGL basic setting
-	glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
+	glClearColor(0.6f, 0.7f, 0.8f, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D); // activa las texturas
 
@@ -104,11 +104,11 @@ Scene::~Scene()
 }
 //-------------------------------------------------------------------------
 
-void Scene::render(Camera const& cam)
+void Scene::render(dmat4 const& modelViewMat)
 {
 	for (Entity* el: grObjects)
 	{
-		el->render(cam);
+		el->render(modelViewMat);
 	}
 }
 

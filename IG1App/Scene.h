@@ -20,7 +20,7 @@ public:
 	~Scene();
     void init(); 
 
-    void render(Camera const& cam);
+    void render(dmat4 const& modelViewMat);
 	void update();
 	void update(GLuint timeElapsed);
 	void cambiar2D();

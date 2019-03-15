@@ -33,10 +33,10 @@ EjesRGB::~EjesRGB()
 };
 //-------------------------------------------------------------------------
 
-void EjesRGB::render(Camera const& cam)
+void EjesRGB::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
-		uploadMvM(cam.getViewMat()); 
+		uploadMvM(modelViewMat); 
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
@@ -62,10 +62,10 @@ Poliespiral::~Poliespiral()
 };
 //-------------------------------------------------------------------------
 
-void Poliespiral::render(Camera const& cam)
+void Poliespiral::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glColor3d(0.45, 0.7, 0.1);
 		glLineWidth(2);
 		mesh->render();
@@ -92,10 +92,10 @@ Poliespiral2::~Poliespiral2()
 };
 //-------------------------------------------------------------------------
 
-void Poliespiral2::render(Camera const& cam)
+void Poliespiral2::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glColor3d(0.6, 0.2, 0.8);
 		glLineWidth(2);
 		mesh->render();
@@ -124,7 +124,7 @@ Dragon::~Dragon()
 };
 //-------------------------------------------------------------------------
 
-void Dragon::render(Camera const& cam)
+void Dragon::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 
@@ -133,7 +133,7 @@ void Dragon::render(Camera const& cam)
 		modelMat = translate(modelMat, dvec3(-40, -170, -40));
 		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 
 		glColor3d(0.00, 0.00, 0.00);
 		glPointSize(2);
@@ -163,7 +163,7 @@ Dragon2::~Dragon2()
 };
 //-------------------------------------------------------------------------
 
-void Dragon2::render(Camera const& cam)
+void Dragon2::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 
@@ -172,7 +172,7 @@ void Dragon2::render(Camera const& cam)
 		modelMat = translate(modelMat, dvec3(-40, -170, 0));
 		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glColor3d(0.25, 0.45, 0.35);
 		glPointSize(2);
 		mesh->render();
@@ -203,13 +203,13 @@ Triangulo::~Triangulo()
 };
 //-------------------------------------------------------------------------
 
-void Triangulo::render(Camera const& cam)
+void Triangulo::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		dmat4 matAux = modelMat;
 		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
@@ -240,13 +240,13 @@ TrianguloRGB::~TrianguloRGB()
 };
 //-------------------------------------------------------------------------
 
-void TrianguloRGB::render(Camera const& cam)
+void TrianguloRGB::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		dmat4 matAux = modelMat;
 		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glPolygonMode(GL_FRONT,GL_LINE);
 		glPolygonMode(GL_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
@@ -278,7 +278,7 @@ TrianguloAnimado::~TrianguloAnimado()
 };
 //-------------------------------------------------------------------------
 
-void TrianguloAnimado::render(Camera const& cam)
+void TrianguloAnimado::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		dmat4 auxMat = modelMat;
@@ -294,7 +294,7 @@ void TrianguloAnimado::render(Camera const& cam)
 		modelMat = rotate(modelMat, radians(ang), dvec3(0.0, 0.0, 1.0));
 		//auxMat = translate(auxMat, dvec3(-center.x, -center.y, 0.0));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
@@ -335,13 +335,13 @@ Rectangulo::~Rectangulo()
 };
 //-------------------------------------------------------------------------
 
-void Rectangulo::render(Camera const& cam)
+void Rectangulo::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		dmat4 matAux = modelMat;
 		modelMat = scale(modelMat, dvec3(40, 40, 40));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
@@ -373,13 +373,13 @@ RectanguloRGB::~RectanguloRGB()
 };
 //-------------------------------------------------------------------------
 
-void RectanguloRGB::render(Camera const& cam)
+void RectanguloRGB::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		//dmat4 matAux = modelMat;
 		
 		//matAux = rotate(matAux, radians(90.0), dvec3(1, 0, 0));
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
@@ -411,12 +411,12 @@ Suelo::~Suelo()
 
 //-------------------------------------------------------------------------
 
-void Suelo::render(Camera const& cam)
+void Suelo::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		dmat4 matAux = modelMat;
 		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(0.33, 0.5, 0.9);
 		glLineWidth(2);
@@ -447,7 +447,7 @@ Estrella3D::~Estrella3D()
 };
 //-------------------------------------------------------------------------
 
-void Estrella3D::render(Camera const& cam)
+void Estrella3D::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		dmat4 matAux = modelMat; // cam.getViewMat();
@@ -459,7 +459,7 @@ void Estrella3D::render(Camera const& cam)
 		modelMat = rotate(modelMat, radians(anguloZ), dvec3(0, 0, 1));
 
 		
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glColor3d(0.9, 0.6, 0.8);
 		glPolygonMode(GL_FRONT, GL_LINE);
 		glPolygonMode(GL_BACK, GL_LINE);
@@ -469,7 +469,7 @@ void Estrella3D::render(Camera const& cam)
 		// No recuperamos el modelMat para que siga teniendo lo mismo y solo tengamos que hacer una rotación con respecto a la original
 		modelMat = rotate(modelMat, radians(180.0), dvec3(0, 1, 0));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		mesh->render();
 
 		modelMat = matAux;
@@ -508,10 +508,10 @@ Cubo::~Cubo()
 };
 //-------------------------------------------------------------------------
 
-void Cubo::render(Camera const& cam)
+void Cubo::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
-		dmat4 matAux = cam.getViewMat();
+		dmat4 matAux = modelViewMat;
 		//matAux = scale(matAux, dvec3(40, 40, 40));
 		matAux = translate(matAux, dvec3(0, 150.0 / 2, 0));
 		uploadMvM(matAux);
@@ -583,7 +583,7 @@ SueloTextura::~SueloTextura()
 };
 //-------------------------------------------------------------------------
 
-void SueloTextura::render(Camera const& cam)
+void SueloTextura::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		tex1.bind();
@@ -592,7 +592,7 @@ void SueloTextura::render(Camera const& cam)
 
 		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 
 		glLineWidth(2);
 
@@ -634,7 +634,7 @@ EstrellaTextura::~EstrellaTextura()
 };
 //-------------------------------------------------------------------------
 
-void EstrellaTextura::render(Camera const& cam)
+void EstrellaTextura::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		tex1.bind();
@@ -642,7 +642,7 @@ void EstrellaTextura::render(Camera const& cam)
 		dmat4 matAux = modelMat;
 		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 
 		mesh->render();
 		
@@ -672,7 +672,7 @@ EstrellaTexturaAnimada::~EstrellaTexturaAnimada()
 };
 //-------------------------------------------------------------------------
 
-void EstrellaTexturaAnimada::render(Camera const& cam)
+void EstrellaTexturaAnimada::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 
@@ -686,13 +686,13 @@ void EstrellaTexturaAnimada::render(Camera const& cam)
 		modelMat = rotate(modelMat, radians(anguloY), dvec3(0, 1, 0));
 		modelMat = rotate(modelMat, radians(anguloZ), dvec3(0, 0, 1));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		mesh->render();
 
 		// No recupetamos el modelMat para que siga teniendo las mismas rotaciones y traslaciones
 		modelMat = rotate(modelMat, radians(180.0), dvec3(0, 1, 0));
 
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		mesh->render();
 
 		modelMat = matAux;
@@ -731,7 +731,7 @@ CajaTextura::~CajaTextura()
 };
 //-------------------------------------------------------------------------
 
-void CajaTextura::render(Camera const& cam)
+void CajaTextura::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 
@@ -740,7 +740,7 @@ void CajaTextura::render(Camera const& cam)
 		dmat4 matAux = modelMat; // cam.getViewMat();
 ///		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
 		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 
 		tex1.bind();
 		glCullFace(GL_FRONT);
@@ -765,7 +765,7 @@ void CajaTextura::render(Camera const& cam)
 		dmat4 matAux = modelMat;
 		modelMat = translate(modelMat, dvec3(0, 1, 0));
 		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
-		uploadMvM(cam.getViewMat());
+		uploadMvM(modelViewMat);
 		glLineWidth(2);
 		glColor3d(0.9, 0.6, 0.8);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

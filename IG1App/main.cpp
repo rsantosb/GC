@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
   cout << glGetString(GL_VENDOR) << '\n';
 
   // after creating the context
-  camera.set2D();
+  camera.set3D();
   scene.init();    
   
   glutMainLoop(); 
@@ -85,7 +85,7 @@ void display()   // double buffering
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   
   
-  scene.render(camera);   
+  scene.render(camera.getViewMat());   
     
   glutSwapBuffers();  
 }
