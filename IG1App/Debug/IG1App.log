@@ -1,3 +1,1 @@
-﻿  Scene.cpp
-c:\hlocal\practica1\ig1app\scene.cpp(59): warning C4244: 'argument': conversion from 'double' to 'GLuint', possible loss of data
-  IG1App.vcxproj -> C:\hlocal\practica1\bin\IG1AppDebug.exe
+﻿

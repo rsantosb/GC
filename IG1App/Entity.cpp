@@ -876,9 +876,12 @@ Cangilon::~Cangilon()
 void Cangilon::update() {
 
 	anguloGiro = anguloGiro + 10;
-	modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
-	modelMat = translate(modelMat, dvec3(40, 0, 0));
-	modelMat = rotate(modelMat, radians(-anguloGiro), dvec3(0, 0, 1));
+	dmat4 m = dmat4(1.0);
+	m = rotate(m, radians(anguloGiro), dvec3(0, 0, 1));
+	m = translate(m, dvec3(400, 0, 0));
+	m = rotate(m, radians(-anguloGiro), dvec3(0, 0, 1));
+	modelMat = m;
+	//modelMat = translate(modelMat, dvec3(-400, 0, 0));
 	
 	
 }

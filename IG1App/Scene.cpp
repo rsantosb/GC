@@ -80,7 +80,7 @@ void Scene::update(GLuint timeElapsed) {
 void Scene::aspaNoria() {
 	Entity* c = new Cangilon(100);
 	c->modelMat = rotate(c->modelMat, 0.0, dvec3(0, 0, 1));
-	c->modelMat = translate(c->modelMat, dvec3(40, 0, 0));
+	c->modelMat = translate(c->modelMat, dvec3(400, 0, 0));
 
 	c->modelMat = rotate(c->modelMat, 0.0, dvec3(0, 0, 1));
 	grObjects.push_back(c);
