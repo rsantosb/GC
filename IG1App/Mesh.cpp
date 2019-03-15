@@ -423,3 +423,37 @@ Mesh * Mesh::generaBaseTexCor(GLdouble l) {
 	m->texture[3] = dvec2(1, 0); // v3
 	return m;
 }
+
+Mesh * Mesh::generaCajaLateral(GLdouble l, GLdouble h) {
+
+	Mesh* m = new Mesh();
+	m->primitive = GL_TRIANGLE_STRIP;
+	m->numVertices = 10;
+
+	m->vertices = new dvec3[m->numVertices];
+
+	m->vertices[0] = dvec3(-l / 2, l / 2, l / 2); // v0
+	m->vertices[1] = dvec3(-l / 2, -l / 2, l / 2); // v1
+	m->vertices[2] = dvec3(l / 2, l / 2, l / 2); // v2
+	m->vertices[3] = dvec3(l / 2, -l / 2, l / 2); // v3
+	m->vertices[4] = dvec3(l / 2, l / 2, -l / 2); //v4
+	m->vertices[5] = dvec3(l / 2, -l / 2, -l / 2); //v5
+	m->vertices[6] = dvec3(-l / 2, l / 2, -l / 2); //v6
+	m->vertices[7] = dvec3(-l / 2, -l / 2, -l / 2); //v7
+	m->vertices[8] = m->vertices[0]; //v8
+	m->vertices[9] = m->vertices[1]; //v9
+
+	m->texture = new dvec2[m->numVertices];
+
+	m->texture[0] = dvec2(0, 1); // v0
+	m->texture[1] = dvec2(0, 0); // v1
+	m->texture[2] = dvec2(1, 1); // v2
+	m->texture[3] = dvec2(1, 0); // v3
+	m->texture[4] = dvec2(0, 1); //v4
+	m->texture[5] = dvec2(0, 0); //v5
+	m->texture[6] = dvec2(1, 1); //v6
+	m->texture[7] = dvec2(1, 0); //v7
+	m->texture[8] = m->texture[0]; //v8
+	m->texture[9] = m->texture[1]; //v9
+	return m;
+}

@@ -25,6 +25,7 @@ public:
 	void update(GLuint timeElapsed);
 	void cambiar2D();
 	void cambiar3D();
+	void aspaNoria();
 	  
 protected:
 

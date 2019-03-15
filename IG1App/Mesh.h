@@ -27,6 +27,8 @@ public:
 	static Mesh* generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h);
 	static Mesh* generaCajaTexCor(GLdouble l);
 	static Mesh* generaBaseTexCor(GLdouble l);
+	static Mesh* generaCajaLateral(GLdouble l, GLdouble h);
+
 
 	Mesh(void) { };
 	~Mesh(void);

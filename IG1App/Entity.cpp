@@ -722,6 +722,7 @@ CajaTextura::CajaTextura(GLdouble l) : Entity()
 	tex1.load("..\\Bmps\\Container.bmp"); // cargamos la imagen
 	tex2.load("..\\Bmps\\BaldosaF.bmp"); // cargamos otra imagen
 	texBase.load("..\\Bmps\\PapelE.bmp"); // cargamos la imagen
+	lado = l;
 }
 //-------------------------------------------------------------------------
 
@@ -739,7 +740,7 @@ void CajaTextura::render(dmat4 const& modelViewMat)
 
 		dmat4 matAux = modelMat; // cam.getViewMat();
 ///		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
-		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
+		modelMat = translate(modelMat, dvec3(0, lado / 2, 0));
 		uploadMvM(modelViewMat);
 
 		tex1.bind();
@@ -782,3 +783,208 @@ void CajaTextura::render(dmat4 const& modelViewMat)
 void CajaTextura::update() {}
 
 void CajaTextura::update(GLuint timeElapsed) {}
+
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+/*CajaLateral::CajaLateral(GLdouble l, GLdouble h) : Entity()
+{
+	mesh = Mesh::generaCajaLateral(l,h);
+	base = Mesh::generaBaseTexCor(l);
+	
+}
+//-------------------------------------------------------------------------
+
+CajaLateral::~CajaLateral()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void CajaLateral::render(dmat4 const& modelViewMat)
+{
+	if (mesh != nullptr) {
+
+		glEnable(GL_CULL_FACE);
+
+		dmat4 matAux = modelMat; // cam.getViewMat();
+///		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+		modelMat = translate(modelMat, dvec3(0, 150.0 / 2, 0));
+		uploadMvM(modelViewMat);
+
+		tex1.bind();
+		glCullFace(GL_FRONT);
+		mesh->render();
+		tex1.unbind();
+
+		tex2.bind();
+		glCullFace(GL_BACK);
+		mesh->render();
+		//base->render();
+		tex2.unbind();
+
+		modelMat = matAux;
+		glCullFace(GL_FRONT_AND_BACK);
+		glLineWidth(1);
+
+		glDisable(GL_CULL_FACE);
+	}
+
+	if (base != nullptr) {
+		texBase.bind();
+		dmat4 matAux = modelMat;
+		modelMat = translate(modelMat, dvec3(0, 1, 0));
+		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+		uploadMvM(modelViewMat);
+		glLineWidth(2);
+		glColor3d(0.9, 0.6, 0.8);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		base->render();
+		modelMat = matAux;
+		glLineWidth(1);
+		//glColor3d(0, 0, 0);
+		texBase.unbind();
+	}
+
+}
+//-------------------------------------------------------------------------
+
+void CajaLateral::update() {}
+
+void CajaLateral::update(GLuint timeElapsed) {}
+*/
+ // ----------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------
+//-----------------------------------------------------------------
+
+Cangilon::Cangilon(GLdouble l) : CajaTextura(l)
+{
+	
+	lado = l;
+	//modelMat = translate(modelMat, dvec3(400, 0, 0));
+
+}
+//-------------------------------------------------------------------------
+
+Cangilon::~Cangilon()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+
+void Cangilon::update() {
+
+	anguloGiro = anguloGiro + 10;
+	modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+	modelMat = translate(modelMat, dvec3(40, 0, 0));
+	modelMat = rotate(modelMat, radians(-anguloGiro), dvec3(0, 0, 1));
+	
+	
+}
+
+//void Cangilon::update(GLuint timeElapsed) {}
+
+
+TableroIzq::TableroIzq(GLdouble l) : Entity()
+{
+	mesh = Mesh::generaContCubo(l);
+	lado = l;
+}
+//-------------------------------------------------------------------------
+
+TableroIzq::~TableroIzq()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void TableroIzq::render(dmat4 const& modelViewMat)
+{
+	if (mesh != nullptr) {
+
+		
+		dmat4 matAux = modelMat; // cam.getViewMat();
+///		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+		glColor4d(0.0, 0.0, 0.0, 1);
+		
+		modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+
+		modelMat = translate(modelMat, dvec3(400/2, 0, lado/2));
+		
+		modelMat = scale(modelMat, dvec3((425/lado), 0.5, 0.1));
+		
+		uploadMvM(modelViewMat);
+		mesh->render();
+
+		//modelMat = translate(modelMat, dvec3(0, 0 , -lado*(lado*0.1)));
+
+		//uploadMvM(modelViewMat);
+		//mesh->render();
+		
+
+		modelMat = matAux;
+		
+	}
+
+	
+
+}
+
+void TableroIzq::update() {
+
+	anguloGiro = anguloGiro + 10;
+}
+
+void TableroIzq::update(GLuint timeElapsed) {}
+
+TableroDch::TableroDch(GLdouble l) : Entity()
+{
+	mesh = Mesh::generaContCubo(l);
+	lado = l;
+}
+//-------------------------------------------------------------------------
+
+TableroDch::~TableroDch()
+{
+	delete mesh; mesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void TableroDch::render(dmat4 const& modelViewMat)
+{
+	if (mesh != nullptr) {
+
+
+		dmat4 matAux = modelMat; // cam.getViewMat();
+///		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+		glColor4d(0.0, 0.0, 0.0, 1);
+
+		modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+		//modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
+		modelMat = translate(modelMat, dvec3(400 / 2, 0,- lado / 2));
+
+		modelMat = scale(modelMat, dvec3((425 / lado), 0.5, 0.1));
+
+		
+		
+
+		uploadMvM(modelViewMat);
+		mesh->render();
+
+		
+
+		modelMat = matAux;
+
+	}
+
+
+
+}
+
+void TableroDch::update() {
+
+	anguloGiro = anguloGiro + 10;
+}
+
+void TableroDch::update(GLuint timeElapsed) {}

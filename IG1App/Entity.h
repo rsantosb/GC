@@ -17,6 +17,8 @@ public:
 	Entity() : modelMat(1.0) { }; 
 	virtual ~Entity() { };
 
+	glm::dmat4 modelMat;    // modeling matrix
+
 	virtual void render(dmat4 const& modelViewMat) = 0;
 
 	// modeling matrix
@@ -29,7 +31,7 @@ public:
 protected:
 
 	Mesh* mesh = nullptr;   // surface mesh
-	glm::dmat4 modelMat;    // modeling matrix
+	
 
 	Texture tex1; 
 	Texture tex2; 
@@ -262,6 +264,49 @@ public:
 	virtual void render(dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint timeElapsed);
+	GLdouble lado = 0;
+
+};
+
+
+
+class Cangilon : public CajaTextura
+{
+public:
+	//Mesh* base = nullptr;   // Base mesh
+	Cangilon(GLdouble l);
+	~Cangilon();
+	//virtual void render(dmat4 const& modelViewMat);
+	virtual void update();
+	//virtual void update(GLuint timeElapsed);
+	GLdouble lado = 0;
+	GLdouble anguloGiro = 0;
+
+};
+
+class TableroIzq : public Entity
+{
+public:
+	TableroIzq(GLdouble l);
+	~TableroIzq();
+	virtual void render(dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+	GLdouble lado = 0;
+	GLdouble anguloGiro = 0;
+
+};
+
+class TableroDch : public Entity
+{
+public:
+	TableroDch(GLdouble l);
+	~TableroDch();
+	virtual void render(dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+	GLdouble lado = 0;
+	GLdouble anguloGiro = 0;
 
 };
 
