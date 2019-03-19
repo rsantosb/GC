@@ -499,6 +499,7 @@ void Estrella3D::update(GLuint timeElapsed)
 Cubo::Cubo(GLdouble l) : Entity()
 {
 	mesh = Mesh::generaContCubo(l);
+	lateral = l;
 }
 //-------------------------------------------------------------------------
 
@@ -513,12 +514,12 @@ void Cubo::render(dmat4 const& modelViewMat)
 	if (mesh != nullptr) {
 		dmat4 matAux = modelViewMat;
 		//matAux = scale(matAux, dvec3(40, 40, 40));
-		matAux = translate(matAux, dvec3(0, 150.0 / 2, 0));
+		matAux = translate(matAux, dvec3(0, lateral / 2, 0));
 		uploadMvM(matAux);
 
 		//uploadMvM(cam.getViewMat());
-		glColor3d(0.9, 0.6, 0.8);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glColor3d(0, 0, 0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
@@ -720,7 +721,7 @@ CajaTextura::CajaTextura(GLdouble l) : Entity()
 	mesh = Mesh::generaCajaTexCor(l);
 	base = Mesh::generaBaseTexCor(l);
 	tex1.load("..\\Bmps\\Container.bmp"); // cargamos la imagen
-	tex2.load("..\\Bmps\\BaldosaF.bmp"); // cargamos otra imagen
+	tex2.load("..\\Bmps\\Container.bmp"); // cargamos otra imagen
 	texBase.load("..\\Bmps\\PapelE.bmp"); // cargamos la imagen
 	lado = l;
 }
@@ -862,6 +863,21 @@ Cangilon::Cangilon(GLdouble l) : CajaTextura(l)
 	
 	lado = l;
 	//modelMat = translate(modelMat, dvec3(400, 0, 0));
+	modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+	modelMat = translate(modelMat, dvec3(300, 0, 0));
+
+	modelMat = rotate(modelMat, radians(-anguloGiro), dvec3(0, 0, 1));
+
+}
+
+Cangilon::Cangilon(GLdouble l, GLdouble angulo) : CajaTextura(l)
+{
+	lado = l;
+	anguloGiro = angulo;
+
+	modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+	modelMat = translate(modelMat, dvec3(300, 0, 0));
+	modelMat = rotate(modelMat, radians(-anguloGiro), dvec3(0, 0, 1));
 
 }
 //-------------------------------------------------------------------------
@@ -878,23 +894,39 @@ void Cangilon::update() {
 	anguloGiro = anguloGiro + 10;
 	dmat4 m = dmat4(1.0);
 	m = rotate(m, radians(anguloGiro), dvec3(0, 0, 1));
-	m = translate(m, dvec3(400, 0, 0));
+	m = translate(m, dvec3(300, 0, 0));
 	m = rotate(m, radians(-anguloGiro), dvec3(0, 0, 1));
 	modelMat = m;
-	//modelMat = translate(modelMat, dvec3(-400, 0, 0));
-	
-	
+
 }
 
-//void Cangilon::update(GLuint timeElapsed) {}
+void Cangilon::update(GLuint timeElapsed) {
+
+	if (timeElapsed >= 27)
+		update();
+}
 
 
-TableroIzq::TableroIzq(GLdouble l) : Entity()
+TableroIzq::TableroIzq(GLdouble l) : Cubo(l)
 {
-	mesh = Mesh::generaContCubo(l);
 	lado = l;
+	modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+	modelMat = translate(modelMat, dvec3(300 / 2, 0, lado / 2));
+	modelMat = scale(modelMat, dvec3((325 / lado), 0.5, 0.1));
+
 }
 //-------------------------------------------------------------------------
+
+TableroIzq::TableroIzq(GLdouble l, GLdouble angulo) : Cubo(l)
+{
+	lado = l;
+	anguloGiro = angulo;
+
+	modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+	modelMat = translate(modelMat, dvec3(300 / 2, 0, lado / 2));
+	modelMat = scale(modelMat, dvec3((325 / lado), 0.5, 0.1));
+	
+}
 
 TableroIzq::~TableroIzq()
 {
@@ -902,49 +934,44 @@ TableroIzq::~TableroIzq()
 };
 //-------------------------------------------------------------------------
 
-void TableroIzq::render(dmat4 const& modelViewMat)
-{
-	if (mesh != nullptr) {
-
-		
-		dmat4 matAux = modelMat; // cam.getViewMat();
-///		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
-		glColor4d(0.0, 0.0, 0.0, 1);
-		
-		modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
-
-		modelMat = translate(modelMat, dvec3(400/2, 0, lado/2));
-		
-		modelMat = scale(modelMat, dvec3((425/lado), 0.5, 0.1));
-		
-		uploadMvM(modelViewMat);
-		mesh->render();
-
-		//modelMat = translate(modelMat, dvec3(0, 0 , -lado*(lado*0.1)));
-
-		//uploadMvM(modelViewMat);
-		//mesh->render();
-		
-
-		modelMat = matAux;
-		
-	}
-
-	
-
-}
 
 void TableroIzq::update() {
 
 	anguloGiro = anguloGiro + 10;
+	dmat4 m = dmat4(1.0);
+
+	m = rotate(m, radians(anguloGiro), dvec3(0, 0, 1));
+	m = translate(m, dvec3(300 / 2, 0, lado / 2));
+	m = scale(m, dvec3((325 / lado), 0.5, 0.1));
+
+	modelMat = m;
+
 }
 
-void TableroIzq::update(GLuint timeElapsed) {}
+void TableroIzq::update(GLuint timeElapsed) {
 
-TableroDch::TableroDch(GLdouble l) : Entity()
+	if (timeElapsed >= 27)
+		update();
+}
+
+TableroDch::TableroDch(GLdouble l) : Cubo(l)
 {
-	mesh = Mesh::generaContCubo(l);
+	//mesh = Mesh::generaContCubo(l);
 	lado = l;
+
+	modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+	modelMat = translate(modelMat, dvec3(300 / 2, 0, -lado / 2));
+	modelMat = scale(modelMat, dvec3((325 / lado), 0.5, 0.1));
+}
+
+TableroDch::TableroDch(GLdouble l, GLdouble angulo) : Cubo(l)
+{
+	lado = l;
+	anguloGiro = angulo;
+
+	modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
+	modelMat = translate(modelMat, dvec3(300 / 2, 0, -lado / 2));
+	modelMat = scale(modelMat, dvec3((325 / lado), 0.5, 0.1));
 }
 //-------------------------------------------------------------------------
 
@@ -954,40 +981,22 @@ TableroDch::~TableroDch()
 };
 //-------------------------------------------------------------------------
 
-void TableroDch::render(dmat4 const& modelViewMat)
-{
-	if (mesh != nullptr) {
-
-
-		dmat4 matAux = modelMat; // cam.getViewMat();
-///		modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
-		glColor4d(0.0, 0.0, 0.0, 1);
-
-		modelMat = rotate(modelMat, radians(anguloGiro), dvec3(0, 0, 1));
-		//modelMat = translate(modelMat, dvec3(0.0, 0.0, 0.0));
-		modelMat = translate(modelMat, dvec3(400 / 2, 0,- lado / 2));
-
-		modelMat = scale(modelMat, dvec3((425 / lado), 0.5, 0.1));
-
-		
-		
-
-		uploadMvM(modelViewMat);
-		mesh->render();
-
-		
-
-		modelMat = matAux;
-
-	}
-
-
-
-}
 
 void TableroDch::update() {
 
 	anguloGiro = anguloGiro + 10;
+
+	dmat4 m = dmat4(1.0);
+	
+	m = rotate(m, radians(anguloGiro), dvec3(0, 0, 1));
+	m = translate(m, dvec3(300 / 2, 0, -lado / 2));
+	m = scale(m, dvec3((325 / lado), 0.5, 0.1));
+
+	modelMat = m;
 }
 
-void TableroDch::update(GLuint timeElapsed) {}
+void TableroDch::update(GLuint timeElapsed) {
+
+	if (timeElapsed >= 27)
+		update();
+}

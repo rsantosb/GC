@@ -22,7 +22,8 @@ void Scene::init()
 	//EjesRGB -> Ejemplo de clase
 	grObjects.push_back(new EjesRGB(200.0));
 
-	aspaNoria();
+	//aspaNoria();
+	noria(10);
 
 }
 //-------------------------------------------------------------------------
@@ -78,12 +79,23 @@ void Scene::update(GLuint timeElapsed) {
 }
 
 void Scene::aspaNoria() {
-	Entity* c = new Cangilon(100);
-	c->modelMat = rotate(c->modelMat, 0.0, dvec3(0, 0, 1));
-	c->modelMat = translate(c->modelMat, dvec3(400, 0, 0));
-
-	c->modelMat = rotate(c->modelMat, 0.0, dvec3(0, 0, 1));
-	grObjects.push_back(c);
+	
+	grObjects.push_back(new Cangilon(100));
 	grObjects.push_back(new TableroIzq(100));
 	grObjects.push_back(new TableroDch(100));
+
+}
+
+void Scene::noria(GLuint aspas) {
+
+	GLdouble angulo = 360 / aspas;
+	GLdouble ang = 0;
+
+	for (GLuint i = 0; i < aspas; i++) {
+		grObjects.push_back(new Cangilon(100, ang));
+		grObjects.push_back(new TableroIzq(100, ang));
+		grObjects.push_back(new TableroDch(100, ang));
+		ang = ang + angulo;
+	}
+
 }

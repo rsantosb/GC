@@ -26,6 +26,7 @@ public:
 	void cambiar2D();
 	void cambiar3D();
 	void aspaNoria();
+	void noria(GLuint aspas);
 	  
 protected:
 

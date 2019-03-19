@@ -212,6 +212,7 @@ public:
 	virtual void render(dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint timeElapsed);
+	GLdouble lateral = 0;
 
 };
 
@@ -275,21 +276,9 @@ class Cangilon : public CajaTextura
 public:
 	//Mesh* base = nullptr;   // Base mesh
 	Cangilon(GLdouble l);
+	Cangilon(GLdouble l, GLdouble angulo);
 	~Cangilon();
 	//virtual void render(dmat4 const& modelViewMat);
-	virtual void update();
-	//virtual void update(GLuint timeElapsed);
-	GLdouble lado = 0;
-	GLdouble anguloGiro = 0;
-
-};
-
-class TableroIzq : public Entity
-{
-public:
-	TableroIzq(GLdouble l);
-	~TableroIzq();
-	virtual void render(dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint timeElapsed);
 	GLdouble lado = 0;
@@ -297,12 +286,27 @@ public:
 
 };
 
-class TableroDch : public Entity
+class TableroIzq : public Cubo
+{
+public:
+	TableroIzq(GLdouble l);
+	TableroIzq(GLdouble l, GLdouble angulo);
+	~TableroIzq();
+	//virtual void render(dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+	GLdouble lado = 0;
+	GLdouble anguloGiro = 0;
+
+};
+
+class TableroDch : public Cubo
 {
 public:
 	TableroDch(GLdouble l);
+	TableroDch(GLdouble l, GLdouble angulo);
 	~TableroDch();
-	virtual void render(dmat4 const& modelViewMat);
+	//virtual void render(dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint timeElapsed);
 	GLdouble lado = 0;
