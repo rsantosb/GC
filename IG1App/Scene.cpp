@@ -22,8 +22,10 @@ void Scene::init()
 	//EjesRGB -> Ejemplo de clase
 	grObjects.push_back(new EjesRGB(200.0));
 
+	//grObjects.push_back(new Cylinder(100, 100, 50, 200, 10));
+	grObjects.push_back(new Rotor(100));
 	//aspaNoria();
-	noria(10);
+	//noria(15);
 
 }
 //-------------------------------------------------------------------------

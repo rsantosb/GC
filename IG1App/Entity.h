@@ -314,4 +314,81 @@ public:
 
 };
 
+class QuadricEntity : public Entity {
+public:
+	QuadricEntity();
+	~QuadricEntity() { gluDeleteQuadric(q); };
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+protected:
+	GLUquadricObj* q;
+};
+
+class Sphere : public QuadricEntity {
+public:
+	Sphere(GLdouble r); // r is the radius of the sphere
+	void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+protected:
+	GLdouble r;
+};
+
+class Cylinder : public QuadricEntity {
+public:
+	Cylinder(GLdouble rbase, GLdouble rtop, GLdouble altura, GLuint numLados, GLuint rodajas); 
+	void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+protected:
+	GLuint ro;
+	GLdouble rb;
+	GLdouble rt;
+	GLdouble h; 
+	GLuint nl; 
+	
+};
+
+class Disk : public QuadricEntity {
+public:
+	Disk(GLdouble rInterno, GLdouble rExterno, GLint numLados, GLint anillos); // r is the radius of the sphere
+	void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+protected:
+	GLdouble rInt; 
+	GLdouble rExt; 
+	GLint nL; 
+	GLint a;
+};
+
+class PartialDisk : public QuadricEntity {
+public:
+	PartialDisk(GLdouble rInterno, GLdouble rExterno, GLint numLados, GLint anillos, GLdouble anguloIni, GLdouble anguloBarrido); // r is the radius of the sphere
+	void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+protected:
+	GLdouble rInt;
+	GLdouble rExt; 
+	GLint nL; 
+	GLint a; 
+	GLdouble angIni; 
+	GLdouble angBarrido;
+};
+
+class Rotor : public Entity {
+public:
+	Rotor(GLdouble r);
+	virtual void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+protected: 
+	Cylinder* base;
+	Rectangulo* rectangulo; 
+	GLdouble radio;
+	GLdouble anguloGiro = 0;
+};
+
+
 #endif //_H_Entities_H_

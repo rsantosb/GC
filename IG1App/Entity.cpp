@@ -11,7 +11,6 @@ using namespace std;
 
 //-------------------------------------------------------------------------
 
-
 void Entity::uploadMvM(dmat4 const& modelViewMat) const
 { 
 	dmat4 aMat = modelViewMat * modelMat;
@@ -339,12 +338,12 @@ void Rectangulo::render(dmat4 const& modelViewMat)
 {
 	if (mesh != nullptr) {
 		dmat4 matAux = modelMat;
-		modelMat = scale(modelMat, dvec3(40, 40, 40));
+		//modelMat = scale(modelMat, dvec3(40, 40, 40));
 
 		uploadMvM(modelViewMat);
-		glPolygonMode(GL_FRONT, GL_LINE);
-		glPolygonMode(GL_BACK, GL_FILL);
-		glColor3d(0.33, 0.5, 0.9);
+		//glPolygonMode(GL_FRONT, GL_LINE);
+		//glPolygonMode(GL_BACK, GL_FILL);
+		glColor3d(0, 0, 0);
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
@@ -1000,3 +999,119 @@ void TableroDch::update(GLuint timeElapsed) {
 	if (timeElapsed >= 27)
 		update();
 }
+
+QuadricEntity::QuadricEntity() {
+	q = gluNewQuadric();
+}
+
+void QuadricEntity::update() {}
+void QuadricEntity::update(GLuint timeElapsed) {}
+
+Sphere::Sphere(GLdouble rr) {
+	r = rr;
+}
+void Sphere::render(glm::dmat4 const& modelViewMat) {
+	uploadMvM(modelViewMat);
+	// Fijar el color con glColor3f(...);
+	glColor3f(0.5, 0.5, 0.5);
+	// Fijar el modo en que se dibuja la entidad con
+	gluQuadricDrawStyle(q, GLU_LINE);
+	gluSphere(q, r, 50, 50);
+}
+
+void Sphere::update() {}
+void Sphere::update(GLuint timeElapsed) {}
+
+
+Cylinder::Cylinder(GLdouble rbase, GLdouble rtop, GLdouble altura, GLuint numLados, GLuint rodajas) {
+	rb = rbase;
+	rt = rtop;
+	h = altura;
+	nl = numLados;
+	ro = rodajas;
+}
+void Cylinder::render(glm::dmat4 const& modelViewMat) {
+	uploadMvM(modelViewMat);
+	// Fijar el color con glColor3f(...);
+	glColor3f(1, 0, 0);
+	// Fijar el modo en que se dibuja la entidad con
+	gluQuadricDrawStyle(q, GLU_FILL);
+	gluCylinder(q, rb, rt, h, nl, ro);
+}
+
+void Cylinder::update() {}
+void Cylinder::update(GLuint timeElapsed) {}
+
+Disk::Disk(GLdouble rInterno, GLdouble rExterno, GLint numLados, GLint anillos) {
+		rInt = rInterno;	rExt = rExterno;	nL = numLados;	a = anillos;
+}
+void Disk::render(glm::dmat4 const& modelViewMat) {
+	uploadMvM(modelViewMat);
+	// Fijar el color con glColor3f(...);
+	glColor3f(0.5, 0.5, 0.5);
+	// Fijar el modo en que se dibuja la entidad con
+	gluQuadricDrawStyle(q, GLU_LINE);
+	gluDisk(q, rInt, rExt, nL, a);
+}
+void Disk::update() {}
+void Disk::update(GLuint timeElapsed) {}
+
+
+PartialDisk::PartialDisk(GLdouble rInterno, GLdouble rExterno, GLint numLados, GLint anillos, GLdouble anguloIni, GLdouble anguloBarrido) {
+	rInt = rInterno;
+	rExt = rExterno;
+	nL = numLados;
+	a = anillos;
+	angIni = anguloIni;
+	angBarrido = anguloBarrido;
+}
+void PartialDisk::render(glm::dmat4 const& modelViewMat) {
+	uploadMvM(modelViewMat);
+	// Fijar el color con glColor3f(...);
+	glColor3f(0.5, 0.5, 0.5);
+	// Fijar el modo en que se dibuja la entidad con
+	gluQuadricDrawStyle(q, GLU_LINE);
+	gluPartialDisk(q, rInt, rExt, nL, a , angIni, angBarrido);
+}
+void PartialDisk::update() {}
+void PartialDisk::update(GLuint timeElapsed) {}
+
+Rotor::Rotor(GLdouble r) {
+	radio = r;
+	base = new Cylinder(radio, radio, 50, 200, 10);
+	rectangulo = new Rectangulo(radio*2, 50);
+	
+}
+
+void Rotor::render(glm::dmat4 const& modelViewMat) {
+
+	uploadMvM(modelViewMat);
+	
+	dmat4 i = dmat4(1.0);
+
+	i = translate(i, dvec3(0, 0, 25));
+	i = rotate(i, radians(anguloGiro), dvec3(0, 0, 1));
+	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
+
+	rectangulo->setModelMat(i);
+	
+	rectangulo->render(modelViewMat);
+
+	base->render(modelViewMat);
+
+}
+void Rotor::update() {
+	
+	/*dmat4 i = dmat4(1.0);
+
+	i = rotate(i, radians(5.0), dvec3(1, 0, 0));
+		
+	rectangulo->setModelMat(i);
+	*/
+	anguloGiro = anguloGiro + 5;
+	
+}
+void Rotor::update(GLuint timeElapsed) {}
+
+
+
