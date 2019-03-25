@@ -343,7 +343,7 @@ void Rectangulo::render(dmat4 const& modelViewMat)
 		uploadMvM(modelViewMat);
 		//glPolygonMode(GL_FRONT, GL_LINE);
 		//glPolygonMode(GL_BACK, GL_FILL);
-		glColor3d(1, 1, 1);
+		glColor3d(0, 0, 0);
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
@@ -1077,6 +1077,9 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) {
 	uploadMvM(modelViewMat);
 	// Fijar el color con glColor3f(...);
 	//glColor3f(1, 0, 0);
+	if (red != -1 && green != -1 & blue != -1) {
+		glColor3f(red, green, blue);
+	}
 	// Fijar el modo en que se dibuja la entidad con
 	gluQuadricDrawStyle(q, GLU_FILL);
 	gluCylinder(q, rb, rt, h, nl, ro);
@@ -1084,6 +1087,26 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) {
 
 void Cylinder::update() {}
 void Cylinder::update(GLuint timeElapsed) {}
+
+Cylinder::Cylinder(GLdouble rbase, GLdouble rtop, GLdouble altura, GLuint numLados, GLuint rodajas, GLdouble rojo, GLdouble verde, GLdouble azul)
+{
+	if (rojo >= 0) red = rojo;
+	else red = 0;
+	
+	if (verde >= 0) green = verde;
+	else green = 0;
+
+	if (azul >= 0 ) blue = azul;
+	else blue = 0;
+
+	rb = rbase;
+	rt = rtop;
+	h = altura;
+	nl = numLados;
+	ro = rodajas;
+	
+}
+
 
 Disk::Disk(GLdouble rInterno, GLdouble rExterno, GLint numLados, GLint anillos) {
 	
@@ -1128,7 +1151,12 @@ Rotor::Rotor(GLdouble r, GLboolean giroHorario, GLboolean colorVerde) {
 	radio = r;
 	giro = giroHorario;
 	verde = colorVerde;
-	base = new Cylinder(radio, radio, 50, 200, 10);
+	if (colorVerde) {
+		base = new Cylinder(radio, radio, 50, 200, 100, 0, 1, 0);
+	}
+	else {
+		base = new Cylinder(radio, radio, 50, 200, 100, 1, 0, 0);
+	}
 	rectangulo = new Rectangulo(radio*2, 50);
 	
 	
@@ -1146,13 +1174,6 @@ void Rotor::render(glm::dmat4 const& modelViewMat) {
 	}
 	else {
 		i = rotate(i, radians(anguloGiro), dvec3(0, 0, 1));
-	}
-
-	if (verde) {
-		glColor3d(0, 1, 0);
-	}
-	else {
-		glColor3d(1, 0, 0);
 	}
 	
 	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
@@ -1172,7 +1193,7 @@ void Rotor::update() {
 		
 	rectangulo->setModelMat(i);
 	*/
-	anguloGiro = anguloGiro + 5;
+	anguloGiro = anguloGiro + 10;
 	
 }
 void Rotor::update(GLuint timeElapsed) {}
@@ -1264,4 +1285,12 @@ void Dron::update() {
 	rotor3->update();
 	rotor4->update();
 }
-void Dron::update(GLuint timeElapsed) {}
+void Dron::update(GLuint timeElapsed) {
+
+	if (timeElapsed >= 20) {
+		rotor1->update();
+		rotor2->update();
+		rotor3->update();
+		rotor4->update();
+	}
+}

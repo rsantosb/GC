@@ -97,7 +97,7 @@ void update()
 	bool need_redisplay = true;
 	GLuint tiempo = glutGet(GLUT_ELAPSED_TIME)- last_updated_tick;
 
-	if (animacion == true && tiempo > 200 ) {
+	if (animacion == true && tiempo > 50 ) {
 		scene.update(glutGet(GLUT_ELAPSED_TIME) - last_updated_tick);
 		last_updated_tick = glutGet(GLUT_ELAPSED_TIME);
 	}

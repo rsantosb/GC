@@ -350,6 +350,8 @@ protected:
 class Cylinder : public QuadricEntity {
 public:
 	Cylinder(GLdouble rbase, GLdouble rtop, GLdouble altura, GLuint numLados, GLuint rodajas); 
+	Cylinder(GLdouble rbase, GLdouble rtop, GLdouble altura, GLuint numLados, GLuint rodajas, GLdouble rojo, GLdouble verde, GLdouble azul);
+
 	void render(glm::dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint timeElapsed);
@@ -359,6 +361,9 @@ protected:
 	GLdouble rt;
 	GLdouble h; 
 	GLuint nl; 
+	GLdouble red = -1;
+	GLdouble green = -1;
+	GLdouble blue = -1;
 	
 };
 
