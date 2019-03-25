@@ -343,7 +343,7 @@ void Rectangulo::render(dmat4 const& modelViewMat)
 		uploadMvM(modelViewMat);
 		//glPolygonMode(GL_FRONT, GL_LINE);
 		//glPolygonMode(GL_BACK, GL_FILL);
-		glColor3d(0, 0, 0);
+		glColor3d(1, 1, 1);
 		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
@@ -784,6 +784,49 @@ void CajaTextura::update() {}
 
 void CajaTextura::update(GLuint timeElapsed) {}
 
+
+CuboConTapas::CuboConTapas(GLdouble l) {
+	mesh = Mesh::generaContCubo(l);
+	base = Mesh::generaRectangulo(l,l);
+	tapa = Mesh::generaRectangulo(l,l);
+	lado = l;
+}
+
+void CuboConTapas::render(dmat4 const& modelViewMat) {
+
+	uploadMvM(modelViewMat);
+
+	mesh->render();
+
+	uploadMvM(modelViewMat);
+
+	dmat4 i = modelMat;
+
+	modelMat = translate(modelMat, dvec3(0, -lado/2, 0));
+	modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+
+
+	uploadMvM(modelViewMat);
+
+	base->render();
+
+	modelMat = i;
+
+	modelMat = translate(modelMat, dvec3(0, lado / 2, 0));
+	modelMat = rotate(modelMat, radians(90.0), dvec3(1, 0, 0));
+
+	uploadMvM(modelViewMat);
+
+	tapa->render();
+
+	modelMat = i;
+
+
+
+}
+void CuboConTapas::update() {}
+void CuboConTapas::update(GLuint timeElapsed) {}
+
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
@@ -1033,7 +1076,7 @@ Cylinder::Cylinder(GLdouble rbase, GLdouble rtop, GLdouble altura, GLuint numLad
 void Cylinder::render(glm::dmat4 const& modelViewMat) {
 	uploadMvM(modelViewMat);
 	// Fijar el color con glColor3f(...);
-	glColor3f(1, 0, 0);
+	//glColor3f(1, 0, 0);
 	// Fijar el modo en que se dibuja la entidad con
 	gluQuadricDrawStyle(q, GLU_FILL);
 	gluCylinder(q, rb, rt, h, nl, ro);
@@ -1043,7 +1086,12 @@ void Cylinder::update() {}
 void Cylinder::update(GLuint timeElapsed) {}
 
 Disk::Disk(GLdouble rInterno, GLdouble rExterno, GLint numLados, GLint anillos) {
-		rInt = rInterno;	rExt = rExterno;	nL = numLados;	a = anillos;
+	
+	rInt = rInterno;
+	rExt = rExterno;
+	nL = numLados;
+	a = anillos;
+
 }
 void Disk::render(glm::dmat4 const& modelViewMat) {
 	uploadMvM(modelViewMat);
@@ -1076,10 +1124,13 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) {
 void PartialDisk::update() {}
 void PartialDisk::update(GLuint timeElapsed) {}
 
-Rotor::Rotor(GLdouble r) {
+Rotor::Rotor(GLdouble r, GLboolean giroHorario, GLboolean colorVerde) {
 	radio = r;
+	giro = giroHorario;
+	verde = colorVerde;
 	base = new Cylinder(radio, radio, 50, 200, 10);
 	rectangulo = new Rectangulo(radio*2, 50);
+	
 	
 }
 
@@ -1090,7 +1141,20 @@ void Rotor::render(glm::dmat4 const& modelViewMat) {
 	dmat4 i = dmat4(1.0);
 
 	i = translate(i, dvec3(0, 0, 25));
-	i = rotate(i, radians(anguloGiro), dvec3(0, 0, 1));
+	if (giro) {
+		i = rotate(i, radians(-anguloGiro), dvec3(0, 0, 1));
+	}
+	else {
+		i = rotate(i, radians(anguloGiro), dvec3(0, 0, 1));
+	}
+
+	if (verde) {
+		glColor3d(0, 1, 0);
+	}
+	else {
+		glColor3d(1, 0, 0);
+	}
+	
 	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
 
 	rectangulo->setModelMat(i);
@@ -1114,4 +1178,90 @@ void Rotor::update() {
 void Rotor::update(GLuint timeElapsed) {}
 
 
+Chasis::Chasis() {
+	cubo = new CuboConTapas(200);
 
+}
+
+void Chasis::render(glm::dmat4 const& modelViewMat) {
+	uploadMvM(modelViewMat);
+
+	glColor3d(0, 0, 1);
+
+	dmat4 i = dmat4(1.0);
+
+	i = translate(i, dvec3(100, 100, 100));
+	i = scale(i, dvec3(1, 0.1, 1));
+
+	cubo->setModelMat(i);
+	cubo->render(modelViewMat);
+}
+
+void Chasis::update() {}
+void Chasis::update(GLuint timeElapsed) {}
+
+Dron::Dron() {
+	chasis = new Chasis();
+	rotor1 = new Rotor(100, true, true); //true verde
+	rotor2 = new Rotor(100, false, true); //true verde
+	rotor3 = new Rotor(100, true, false); //false rojo
+	rotor4 = new Rotor(100, false, false); //false rojo
+}
+
+void Dron::render(glm::dmat4 const& modelViewMat) {
+	
+	uploadMvM(modelViewMat);
+	chasis->render(modelViewMat);
+	//rotor1->render(modelViewMat);
+
+	dmat4 i = dmat4(1.0);
+
+	i = translate(i, dvec3(0, 125, 0));
+	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
+	
+	i = scale(i, dvec3(0.3, 0.3, 0.3));
+
+	//glColor3f(0, 1, 0);
+	rotor1->setModelMat(i);
+	rotor1->render(modelViewMat*i);
+
+	dmat4 j = dmat4(1.0);
+
+	j = translate(j, dvec3(0, 125, 200));
+	j = rotate(j, radians(90.0), dvec3(1, 0, 0));
+	j = scale(j, dvec3(0.3, 0.3, 0.3));
+
+	rotor2->setModelMat(j);
+
+	rotor2->render(modelViewMat*j);
+
+	dmat4 k = dmat4(1.0);
+
+	k = translate(k, dvec3(200, 125, 200));
+	k = rotate(k, radians(90.0), dvec3(1, 0, 0));
+	k = scale(k, dvec3(0.3, 0.3, 0.3));
+
+	rotor3->setModelMat(k);
+
+	rotor3->render(modelViewMat*k);
+
+	dmat4 l = dmat4(1.0);
+
+	l = translate(l, dvec3(200, 125, 0));
+	l = rotate(l, radians(90.0), dvec3(1, 0, 0));
+	l = scale(l, dvec3(0.3, 0.3, 0.3));
+
+	rotor4->setModelMat(l);
+
+	rotor4->render(modelViewMat*l);
+}
+
+
+void Dron::update() {
+
+	rotor1->update();
+	rotor2->update();
+	rotor3->update();
+	rotor4->update();
+}
+void Dron::update(GLuint timeElapsed) {}

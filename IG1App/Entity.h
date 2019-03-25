@@ -216,6 +216,19 @@ public:
 
 };
 
+class CuboConTapas : public Entity
+{
+public:
+	Mesh* base = nullptr;   // Base mesh
+	Mesh* tapa = nullptr;	// Tapa mesh
+	GLdouble lado = 0;
+	CuboConTapas(GLdouble l);
+	virtual void render(dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
+};
+
 //-------------------------------------------------------------------------
 
 class SueloTextura : public Entity
@@ -379,7 +392,7 @@ protected:
 
 class Rotor : public Entity {
 public:
-	Rotor(GLdouble r);
+	Rotor(GLdouble r, GLboolean giroHorario, GLboolean colorVerde);
 	virtual void render(glm::dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint timeElapsed);
@@ -388,7 +401,35 @@ protected:
 	Rectangulo* rectangulo; 
 	GLdouble radio;
 	GLdouble anguloGiro = 0;
+	GLboolean giro;
+	GLboolean verde;
 };
 
+class Chasis : public Entity {
+public: 
+	Chasis();
+	virtual void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+protected:
+	CuboConTapas* cubo;
+	
+};
+
+class Dron : public Entity {
+public:
+	Dron();
+	virtual void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
+protected:
+	Chasis* chasis;
+	Rotor* rotor1;
+	Rotor* rotor2;
+	Rotor* rotor3;
+	Rotor* rotor4;
+
+};
 
 #endif //_H_Entities_H_
