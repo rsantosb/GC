@@ -23,11 +23,14 @@ void Scene::init()
 	grObjects.push_back(new EjesRGB(200.0));
 
 	//grObjects.push_back(new Cylinder(100, 100, 50, 200, 10));
-	//grObjects.push_back(new Rotor(100, false));
+	//grObjects.push_back(new Rotor(100, false, false));
 
 	//grObjects.push_back(new Chasis());
 	//grObjects.push_back(new Chasis());
-	grObjects.push_back(new Dron());
+	//grObjects.push_back(new Dron());
+	
+	//grObjects.push_back(new Cone(100, 50));
+	grObjects.push_back(new Esfera(50, 58, 100));
 	//aspaNoria();
 	//noria(15);
 

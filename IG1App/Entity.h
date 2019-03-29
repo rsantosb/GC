@@ -437,4 +437,29 @@ protected:
 
 };
 
+class Cone : public Entity {
+public:
+	Cone(GLdouble h, GLdouble r);
+
+	virtual void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
+};
+
+class Esfera : public Entity {
+public:
+	Esfera(GLint paralelos, GLint meridianos, GLdouble radio);
+
+	virtual void render(glm::dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
+protected:
+	GLint m; //numero de puntos del perfil y paralelos
+	GLint n; //meridianos de la esfera numero de muestras
+	GLdouble r; //radio
+
+	
+};
 #endif //_H_Entities_H_

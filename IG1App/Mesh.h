@@ -48,6 +48,22 @@ protected:
 	glm::dvec2* texture = nullptr; // textura array
 };
 
+class MBR : public Mesh 
+{
+public:
+	MBR(GLuint puntos, GLuint rotaciones, dvec3* poriginal);
+
+	void vertexBuilding();
+	void normalize();
+	virtual void render();
+
+protected:
+	GLuint m; //numero de puntos del perfil
+	GLuint n; //numero de rotaciones (muestras) que se toman
+	dvec3* perfil; //perfil original en el plano XY (definido de abajo a arriba)
+	dvec3* normals = nullptr; //normals array
+};
+
 //-------------------------------------------------------------------------
 
 #endif //_H_Scene_H_

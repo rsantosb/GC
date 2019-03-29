@@ -1294,3 +1294,68 @@ void Dron::update(GLuint timeElapsed) {
 		rotor4->update();
 	}
 }
+
+Cone::Cone(GLdouble h, GLdouble r)
+{
+	//h altura de cono y r radio de la base
+	int m = 3; //m = numero puntos perfil
+	dvec3* perfil = new dvec3[m];
+	perfil[0] = dvec3(0.0, 0.0, 0.0);
+	perfil[1] = dvec3(r, 0.0, 0.0);
+	perfil[2] = dvec3(0.0, h, 0.0);
+
+	this->mesh = new MBR(m, 50, perfil);
+}
+
+void Cone::render(glm::dmat4 const & modelViewMat)
+{
+	mesh->render();
+}
+
+void Cone::update()
+{
+}
+
+void Cone::update(GLuint timeElapsed)
+{
+}
+
+Esfera::Esfera(GLint paralelos, GLint meridianos, GLdouble radio)
+{
+	m = paralelos; //
+	n = meridianos;
+	r = radio;
+
+	GLdouble x = 0; 
+	GLdouble y = -r;
+	GLdouble incr = 180.0/m;
+	GLdouble ang = -90.0;
+
+	dvec3* perfil = new dvec3[m];
+	//perfil[0] = dvec3(x, y, 0.0);
+	for (int i = 0; i < m-1; i++) {
+
+		perfil[i] = dvec3(x, y, 0.0);
+		ang = ang + incr;
+		x = r * cos(radians(ang));
+		y = r * sin(radians(ang));
+
+		//perfil[i] = dvec3(x, y, 0.0);
+	}
+	perfil[m - 1] = dvec3(0, r, 0.0);
+
+	this->mesh = new MBR(m, n, perfil);
+}
+
+void Esfera::render(glm::dmat4 const & modelViewMat)
+{
+	mesh->render();
+}
+
+void Esfera::update()
+{
+}
+
+void Esfera::update(GLuint timeElapsed)
+{
+}

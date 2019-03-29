@@ -4,6 +4,118 @@ using namespace glm;
 
 //-------------------------------------------------------------------------
 
+MBR::MBR(GLuint puntos, GLuint rotaciones, dvec3* poriginal) {
+	m = puntos;
+	n = rotaciones;
+	perfil = poriginal;
+	vertexBuilding();
+	normalize();
+	render();
+}
+
+void MBR::vertexBuilding() {
+	//numVertices = m * n;
+	vertices = new dvec3[m*n];
+
+	for (int i = 0; i < n; i++) {
+
+		double theta = i * 2 * 3.1416 / n;
+		double c = cos(theta);
+		double s = sin(theta);
+
+		for (int j = 0; j < m; j++) {
+			int indice = i * m + j;
+			//Aplicar la matriz al punto j-ésmo del perfil
+			double x = c * perfil[j][0] + s * perfil[j][2];
+			double z = -s * perfil[j][0] + c * perfil[j][2];
+			dvec3 p = dvec3(x, perfil[j][1], z);
+			vertices[indice] = p;
+		}
+	}
+
+}
+
+void MBR::render() {
+	if (vertices != nullptr) {
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_DOUBLE, 0, vertices);
+
+		//Activación de vertex array colores y texturas
+		/*if (colors != nullptr) {
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(4, GL_DOUBLE, 0, colors);   // number of coordinates per color, type of each coordinate, stride, pointer 
+		}
+
+		if (texture != nullptr) {
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, texture);   // number of coordinates per color, type of each coordinate, stride, pointer 
+		}*/
+
+		if (normals != nullptr) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_DOUBLE, 0, normals);
+
+			primitive = GL_LINE_LOOP; // GL_PLOYGON o GL_LINE_LOOP
+			//se dan índices del vértices de caras cuadrangulares
+			for (int i = 0; i < n; i++) {
+				//Unir muestra i-ésima con (i+1)%n-ésima
+				for (int j = 0; j < m - 1; j++) {
+					//Empezar en esquina inferior izquierda de la cara
+					int indice = i * m + j;
+					unsigned int index[] = { indice, (indice + m) % (n*m),
+											(indice + m + 1) % (n*m),
+											indice + 1 };
+					glDrawElements(primitive, 4, GL_UNSIGNED_INT, index);
+				}
+			}
+		}
+
+		//glDisableClientState(GL_VERTEX_ARRAY);
+		//glDisableClientState(GL_NORMAL_ARRAY);
+		//glDisableClientState(GL_COLOR_ARRAY);
+
+	}
+
+	
+}
+
+void MBR::normalize() {
+
+	normals = new dvec3[m*n];
+	for (int i = 0; i < m*n; i++) {
+		normals[i] = dvec3(0.0, 0.0, 0.0);
+	}
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m - 1; j++) {
+			//Recorrido de todos los vértices
+			//Ojo, i < n (obliga a usar %(n*m))
+			//y j<m-1 (para excluir los vértices del borde superior)
+			int indice = i * m + j;
+			//Por cada cara en la que el vértice ocupa la esquina
+			//inferior izquierdo, se determinan 3 indices i0, i1, i2
+			//de 3 vértices consecutivos de esa cara
+			GLint i0 = indice;
+			GLint i1 = (indice + m) %(n*m);
+			GLint i2 = (indice + 1 + m) % (n*m);
+			GLint i3 = indice + 1; 
+
+			dvec3 aux0 = vertices[i0];
+			dvec3 aux1 = vertices[i1];
+			dvec3 aux2 = vertices[i2];
+
+			dvec3 norm = glm::cross(aux2 - aux1, aux0 - aux1);
+			normals[i0] += norm;
+			normals[i1] += norm;
+			normals[i2] += norm;
+			normals[i3] += norm;
+
+		} // fin del for j
+		// se normalizan todos los vectores normales
+		normals[i] = glm::normalize(normals[i]);
+	}
+}
+
 Mesh ::~Mesh(void) {
 
   delete[] vertices;  vertices = nullptr;
