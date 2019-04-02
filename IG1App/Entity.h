@@ -408,6 +408,7 @@ protected:
 	GLdouble anguloGiro = 0;
 	GLboolean giro;
 	GLboolean verde;
+	
 };
 
 class Chasis : public Entity {
@@ -461,5 +462,21 @@ protected:
 	GLdouble r; //radio
 
 	
+};
+
+class Satelite : public Entity {
+public:
+	Satelite(GLdouble radio);
+
+	virtual void render(dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
+protected:
+	Esfera* esfera;
+	Dron* dron;
+	GLdouble r; //radio
+	GLdouble anguloGiro = 0;
+
 };
 #endif //_H_Entities_H_

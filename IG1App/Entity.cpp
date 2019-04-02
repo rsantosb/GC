@@ -1211,7 +1211,7 @@ void Chasis::render(glm::dmat4 const& modelViewMat) {
 
 	dmat4 i = dmat4(1.0);
 
-	i = translate(i, dvec3(100, 100, 100));
+	//i = translate(i, dvec3(100, 100, 100));
 	i = scale(i, dvec3(1, 0.1, 1));
 
 	cubo->setModelMat(i);
@@ -1237,7 +1237,7 @@ void Dron::render(glm::dmat4 const& modelViewMat) {
 
 	dmat4 i = dmat4(1.0);
 
-	i = translate(i, dvec3(0, 125, 0));
+	i = translate(i, dvec3(-100, (100*0.1)+(50*0.3), -100));
 	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
 	
 	i = scale(i, dvec3(0.3, 0.3, 0.3));
@@ -1248,7 +1248,7 @@ void Dron::render(glm::dmat4 const& modelViewMat) {
 
 	dmat4 j = dmat4(1.0);
 
-	j = translate(j, dvec3(0, 125, 200));
+	j = translate(j, dvec3(-100, (100 * 0.1) + (50 * 0.3), 100));
 	j = rotate(j, radians(90.0), dvec3(1, 0, 0));
 	j = scale(j, dvec3(0.3, 0.3, 0.3));
 
@@ -1258,7 +1258,7 @@ void Dron::render(glm::dmat4 const& modelViewMat) {
 
 	dmat4 k = dmat4(1.0);
 
-	k = translate(k, dvec3(200, 125, 200));
+	k = translate(k, dvec3(100, (100 * 0.1) + (50 * 0.3), 100));
 	k = rotate(k, radians(90.0), dvec3(1, 0, 0));
 	k = scale(k, dvec3(0.3, 0.3, 0.3));
 
@@ -1268,7 +1268,7 @@ void Dron::render(glm::dmat4 const& modelViewMat) {
 
 	dmat4 l = dmat4(1.0);
 
-	l = translate(l, dvec3(200, 125, 0));
+	l = translate(l, dvec3(100, (100 * 0.1) + (50 * 0.3), -100));
 	l = rotate(l, radians(90.0), dvec3(1, 0, 0));
 	l = scale(l, dvec3(0.3, 0.3, 0.3));
 
@@ -1332,7 +1332,7 @@ Esfera::Esfera(GLint paralelos, GLint meridianos, GLdouble radio)
 	GLdouble ang = -90.0;
 
 	dvec3* perfil = new dvec3[m];
-	//perfil[0] = dvec3(x, y, 0.0);
+	
 	for (int i = 0; i < m-1; i++) {
 
 		perfil[i] = dvec3(x, y, 0.0);
@@ -1340,7 +1340,6 @@ Esfera::Esfera(GLint paralelos, GLint meridianos, GLdouble radio)
 		x = r * cos(radians(ang));
 		y = r * sin(radians(ang));
 
-		//perfil[i] = dvec3(x, y, 0.0);
 	}
 	perfil[m - 1] = dvec3(0, r, 0.0);
 
@@ -1358,4 +1357,46 @@ void Esfera::update()
 
 void Esfera::update(GLuint timeElapsed)
 {
+}
+
+Satelite::Satelite(GLdouble radio)
+{
+	r = radio;
+	esfera = new Esfera(50, 50, r);
+	dron = new Dron();
+}
+
+void Satelite::render(dmat4 const & modelViewMat)
+{
+	uploadMvM(modelViewMat);
+
+	esfera->render(modelViewMat);
+
+	dmat4 m = dmat4(1.0);
+	
+	m = rotate(m, radians(anguloGiro), dvec3(0, 0, 1));
+	m = translate(m, dvec3(0, r, 0));
+	
+	m = scale(m, dvec3(0.7, 0.7, 0.7));
+	dron->setModelMat(m);
+
+
+	dron->render(modelViewMat*m);
+
+	
+}
+
+void Satelite::update()
+{
+	anguloGiro = anguloGiro + 1;
+	dron->update();
+}
+
+void Satelite::update(GLuint timeElapsed)
+{
+	if(timeElapsed > 20){
+		anguloGiro = anguloGiro + 3;
+		dron->update();
+		
+	}
 }

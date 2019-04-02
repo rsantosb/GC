@@ -30,7 +30,8 @@ void Scene::init()
 	//grObjects.push_back(new Dron());
 	
 	//grObjects.push_back(new Cone(100, 50));
-	grObjects.push_back(new Esfera(50, 58, 100));
+	//grObjects.push_back(new Esfera(50, 58, 100));
+	grObjects.push_back(new Satelite(200));
 	//aspaNoria();
 	//noria(15);
 
