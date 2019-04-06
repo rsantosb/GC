@@ -22,18 +22,29 @@ void Scene::init()
 	//EjesRGB -> Ejemplo de clase
 	grObjects.push_back(new EjesRGB(200.0));
 
-	//grObjects.push_back(new Cylinder(100, 100, 50, 200, 10));
-	//grObjects.push_back(new Rotor(100, false, false));
-
-	//grObjects.push_back(new Chasis());
-	//grObjects.push_back(new Chasis());
-	//grObjects.push_back(new Dron());
-	
-	//grObjects.push_back(new Cone(100, 50));
-	//grObjects.push_back(new Esfera(50, 58, 100));
-	grObjects.push_back(new Satelite(200));
 	//aspaNoria();
 	//noria(15);
+
+	//grObjects.push_back(new Cylinder(100, 100, 50, 200, 10));
+	
+	//ROTOR
+	//grObjects.push_back(new Rotor(100, false, false));
+
+	//CHASIS
+	//grObjects.push_back(new Chasis());
+
+	//DRON
+	//grObjects.push_back(new Dron());
+	
+	//CONO REVOLUCION
+	//grObjects.push_back(new Cone(100, 50));
+	
+	//ESFERA REVOLUCION
+	//grObjects.push_back(new Esfera(50, 58, 100));
+	
+	//SATELITE
+	grObjects.push_back(new Satelite(200));
+	
 
 }
 //-------------------------------------------------------------------------

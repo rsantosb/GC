@@ -29,6 +29,10 @@ GLuint last_updated_tick = 0;
 
 bool animacion = true;
 
+//Declarar dos variables para guardar las coordenadas de ratón
+glm::dvec2 mCoord;
+int mBot = 0;
+
 //----------- Callbacks ----------------------------------------------------
 
 void display();
@@ -36,6 +40,18 @@ void resize(int newWidth, int newHeight);
 void key(unsigned char key, int x, int y);
 void specialKey(int key, int x, int y);
 void update();
+
+//Añado callbacks de las diapositivas de cámara (17)
+//Se genera cuando se presiona o se suelta el botón del ratón
+//(button) y recoge en coordenadas de ventana (x,y) el momento en que
+//el estado (state) del botón cambió y pasó a estar pulsado o soltado
+void mouse(int button, int state, int x, int y);
+
+//Se genera cuando un botón del ratón se encuentra pulsado y recoge,
+//en coordenadas de la ventana (x,y) el lugar donde se soltó.
+void motion(int x, int y);
+
+void mouseWheel(int n, int d, int x, int y);
 //-------------------------------------------------------------------------
 
 int main(int argc, char *argv[])
@@ -64,6 +80,10 @@ int main(int argc, char *argv[])
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);
   glutIdleFunc(update);
+  //Registramos los nuevos eventos de raton (diap. 18 camara)
+  glutMouseFunc(mouse);
+  glutMotionFunc(motion);
+  glutMouseWheelFunc(mouseWheel);
 
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
@@ -147,7 +167,7 @@ void key(unsigned char key, int x, int y)
 		  animacion = true;
 	  break;
   }
-  case '2':
+  /*case '2':
 	scene.~Scene();
 	scene.cambiar2D();
 	break;
@@ -155,6 +175,10 @@ void key(unsigned char key, int x, int y)
 	scene.~Scene();
 	scene.cambiar3D();
 	break;
+  */
+  case 'c':
+	  camera.setCenital();
+	  break;
   default:
 	need_redisplay = false;
     break;
@@ -192,3 +216,73 @@ void specialKey(int key, int x, int y)
 }
 //-------------------------------------------------------------------------
 
+void mouse(int button, int state, int x, int y) {
+	mBot = button;
+	mCoord = glm::dvec2(x, y);
+
+	//la variable y se refiere a coordenadas de ventana y esta tiene 
+	//origen en la esquina superior izquierda, mientras que en el 
+	//puerto de vista el origen está en la esquina inferior izquierda.
+	//El paso de una a otra es:
+	
+	// y(viewPort) = glutGet(GLUT_WINDOW_HEIGHT) - y ;
+}
+
+void motion(int x, int y) {
+	// GLUT_LEFT_BUTTON / GLUT_RIGHT_BUTTON botones del ratón
+	// GLUT_UP / GLUT_DOWN estado del boton (soltado o pulsado)
+	//Guardamos mCoord cuando se pulsó el botón
+	glm::dvec2 mp = mCoord;
+	mCoord = glm::dvec2(x, y);
+
+	// Calcular el desplazamiento habido
+	mp = mCoord - mp;
+
+	if (mBot == GLUT_LEFT_BUTTON)
+	{
+		//Recuerda que mp.x son radianes. Reducelos a tu gusto
+		camera.orbit(mp.x*0.05, mp.y);
+	}
+	else if (mBot == GLUT_RIGHT_BUTTON)
+	{
+		camera.moveUD(mp.y);
+		camera.moveLR(-mp.x);
+	}
+
+	glutPostRedisplay();
+}
+
+void mouseWheel(int n, int d, int x, int y)
+{
+	//Se identifica cuántes de las teclas posibles
+	// GLUT_ACTIVE_CTRL/ALT/_SHIFT están pulsadas
+	int m = glutGetModifiers();
+
+	if (m == 0) //Si ninguna tecla pulsada,
+	{
+		//desplazar en la dirección de vista d
+
+		if (d == 1)
+		{
+			camera.moveFB(5);
+		}
+		else
+		{
+			camera.moveFB(-5);
+		}
+
+	}
+	else if (m == GLUT_ACTIVE_CTRL)
+	{
+		if (d == 1)
+		{
+			camera.uploadScale(0.1);
+		}
+		else
+		{
+			camera.uploadScale(-0.1);
+		}
+	}
+
+	glutPostRedisplay();
+}
