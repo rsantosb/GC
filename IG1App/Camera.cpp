@@ -18,7 +18,8 @@ void Camera::set2D()
 
 void Camera::set3D() 
 {
-	GLdouble frente = radio * cos(radians(-45.0));
+	ang = -45.0;
+	GLdouble frente = radio * cos(radians(ang));
 	eye= dvec3(frente, frente, frente);
 	look= dvec3(0, 0, 0);
 	up= dvec3(0, 1, 0);
@@ -40,8 +41,8 @@ void Camera::moveLR(GLdouble cs)
 }
 void Camera::moveFB(GLdouble cs)
 {
-	eye += front * cs; // -front??
-	look += front * cs; // -front??
+	eye += -front * cs; 
+	look += -front * cs; 
 	setVM();
 }
 void Camera::moveUD(GLdouble cs)
@@ -118,9 +119,19 @@ void Camera::uploadScale(GLdouble s)
 {
 	factScale -= s;
 	if (factScale < 0) factScale = 0.01;
-	//projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+	projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
 
 	uploadPM();
+}
+
+bool Camera::getOrto()
+{
+	return orto;
+}
+
+void Camera::setOrto(bool boolean)
+{
+	orto = boolean;
 }
 
 //Da valor a u, v, front a partir de las filas de la matriz de vista.
@@ -129,7 +140,7 @@ void Camera::setAxes()
 {
 	u = row(viewMat, 0);
 	v = row(viewMat, 1);
-	front = -row(viewMat, 3);
+	front = -row(viewMat, 2);
 	
 }
 
@@ -137,7 +148,7 @@ void Camera::setAxes()
 //matriz de vista, y actualiza después los ejes con el método anterior
 void Camera::setVM()
 {
-	lookAt(eye, look, up);
+	viewMat = lookAt(eye, look, up);
 	setAxes();
 }
 void Camera::uploadPM()
@@ -159,6 +170,8 @@ void Camera::uploadPM()
 
 
 }
+
+
 //-------------------------------------------------------------------------
 /*
 void Camera::uploadPM() const

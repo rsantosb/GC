@@ -42,8 +42,14 @@ void Scene::init()
 	//ESFERA REVOLUCION
 	//grObjects.push_back(new Esfera(50, 58, 100));
 	
-	//SATELITE
-	grObjects.push_back(new Satelite(200));
+	//SATELITE DRON GIRANDO
+	//grObjects.push_back(new Satelite(200));
+
+	//ESFERA CON DRON
+	EsferaDron* ef = new EsferaDron(100);
+	grObjects.push_back(ef);
+	
+
 	
 
 }
@@ -119,4 +125,18 @@ void Scene::noria(GLuint aspas) {
 		ang = ang + angulo;
 	}
 
+}
+
+void Scene::move(GLuint tecla)
+{
+	switch (tecla) {
+	case GLUT_KEY_UP:
+		 //El dron debe subir
+		
+		break;
+	case GLUT_KEY_DOWN:
+		//El dron debe bajar
+
+		break;
+	}//switch 
 }

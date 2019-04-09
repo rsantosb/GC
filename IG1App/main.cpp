@@ -167,6 +167,16 @@ void key(unsigned char key, int x, int y)
 		  animacion = true;
 	  break;
   }
+  case 'p': {
+	  if (camera.getOrto() == true) {
+		  camera.setOrto(false);
+	  }
+	  else {
+		  camera.setOrto(true);
+	  }
+	  camera.uploadPM();
+	  break;
+  }
   /*case '2':
 	scene.~Scene();
 	scene.cambiar2D();
@@ -201,10 +211,12 @@ void specialKey(int key, int x, int y)
     camera.yaw(1);     // rotate 1 on the Y axis 
     break;
   case GLUT_KEY_UP:
-    camera.roll(1);    // rotate 1 on the Z axis
+    //camera.roll(1);    // rotate 1 on the Z axis
+	scene.move(GLUT_KEY_UP); //true arriba
     break;
   case GLUT_KEY_DOWN:
-    camera.roll(-1);   // rotate -1 on the Z axis
+    //camera.roll(-1);   // rotate -1 on the Z axis
+	scene.move(GLUT_KEY_DOWN); // false abajo
     break;
   default:
     need_redisplay = false;
@@ -241,7 +253,7 @@ void motion(int x, int y) {
 	if (mBot == GLUT_LEFT_BUTTON)
 	{
 		//Recuerda que mp.x son radianes. Reducelos a tu gusto
-		camera.orbit(mp.x*0.05, mp.y);
+		camera.orbit(mp.x*0.5, mp.y);
 	}
 	else if (mBot == GLUT_RIGHT_BUTTON)
 	{
@@ -264,13 +276,12 @@ void mouseWheel(int n, int d, int x, int y)
 
 		if (d == 1)
 		{
-			camera.moveFB(5);
+			camera.moveFB(10);
 		}
 		else
 		{
-			camera.moveFB(-5);
+			camera.moveFB(-10);
 		}
-
 	}
 	else if (m == GLUT_ACTIVE_CTRL)
 	{

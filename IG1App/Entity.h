@@ -479,4 +479,21 @@ protected:
 	GLdouble anguloGiro = 0;
 
 };
+
+class EsferaDron : public Entity {
+public:
+	EsferaDron(GLdouble radio);
+
+	virtual void render(dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
+protected:
+	Esfera* esfera;
+	Dron* dron;
+	GLdouble r; //radio
+	GLdouble anguloGiro = 0;
+
+};
+
 #endif //_H_Entities_H_

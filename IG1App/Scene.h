@@ -27,6 +27,7 @@ public:
 	void cambiar3D();
 	void aspaNoria();
 	void noria(GLuint aspas);
+	void move(GLuint tecla);
 	  
 protected:
 

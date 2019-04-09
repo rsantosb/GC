@@ -1216,6 +1216,7 @@ void Chasis::render(glm::dmat4 const& modelViewMat) {
 
 	cubo->setModelMat(i);
 	cubo->render(modelViewMat);
+
 }
 
 void Chasis::update() {}
@@ -1348,6 +1349,7 @@ Esfera::Esfera(GLint paralelos, GLint meridianos, GLdouble radio)
 
 void Esfera::render(glm::dmat4 const & modelViewMat)
 {
+	glColor3d(0, 0.7, 1);
 	mesh->render();
 }
 
@@ -1375,9 +1377,9 @@ void Satelite::render(dmat4 const & modelViewMat)
 	dmat4 m = dmat4(1.0);
 	
 	m = rotate(m, radians(anguloGiro), dvec3(0, 0, 1));
-	m = translate(m, dvec3(0, r, 0));
+	m = translate(m, dvec3(0, r+5.0, 0));
 	
-	m = scale(m, dvec3(0.7, 0.7, 0.7));
+	m = scale(m, dvec3(0.1, 0.1, 0.1));
 	dron->setModelMat(m);
 
 
@@ -1399,4 +1401,41 @@ void Satelite::update(GLuint timeElapsed)
 		dron->update();
 		
 	}
+}
+
+
+EsferaDron::EsferaDron(GLdouble radio)
+{
+	r = radio;
+	esfera = new Esfera(50, 50, r);
+	dron = new Dron();
+}
+
+void EsferaDron::render(dmat4 const & modelViewMat)
+{
+	uploadMvM(modelViewMat);
+
+	esfera->render(modelViewMat);
+
+	dmat4 m = dmat4(1.0);
+
+	m = translate(m, dvec3(0, r + 5.0, 0));
+
+	m = scale(m, dvec3(0.1, 0.1, 0.1));
+	dron->setModelMat(m);
+
+
+	dron->render(modelViewMat*m);
+
+
+}
+
+void EsferaDron::update()
+{
+
+}
+
+void EsferaDron::update(GLuint timeElapsed)
+{
+
 }

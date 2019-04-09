@@ -55,7 +55,7 @@ void MBR::render() {
 			glEnableClientState(GL_NORMAL_ARRAY);
 			glNormalPointer(GL_DOUBLE, 0, normals);
 
-			primitive = GL_LINE_LOOP; // GL_PLOYGON o GL_LINE_LOOP
+			primitive = GL_POLYGON; // GL_PLOYGON o GL_LINE_LOOP
 			//se dan índices del vértices de caras cuadrangulares
 			for (int i = 0; i < n; i++) {
 				//Unir muestra i-ésima con (i+1)%n-ésima

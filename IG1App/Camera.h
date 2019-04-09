@@ -13,7 +13,7 @@ class Camera {
 public:
 	Camera(Viewport* avp) : vp(avp), viewMat(1.0), projMat(1.0),
 							xRight(avp->getW() / 2.0), xLeft(-xRight), 
-							yTop(avp->getH() / 2.0), yBot(-yTop) { };
+							yTop(avp->getH() / 2.0), yBot(-yTop) {	};
 	~Camera() {};
 	Viewport* getVP() { return vp; }
 
@@ -72,6 +72,10 @@ public:
 
 	// update scale factor and transfers projMat to GPU
 	void uploadScale(GLdouble s); 
+
+	bool getOrto();
+
+	void setOrto(bool boolean);
 
 	
 protected:
