@@ -134,6 +134,31 @@ void Camera::setOrto(bool boolean)
 	orto = boolean;
 }
 
+GLdouble Camera::getxRight()
+{
+	return xRight;
+}
+
+GLdouble Camera::getxLeft()
+{
+	return xLeft;
+}
+
+GLdouble Camera::getyTop()
+{
+	return yTop;
+}
+
+GLdouble Camera::getyBot()
+{
+	return yBot;
+}
+
+void Camera::setVP(Viewport * viewport)
+{
+	vp = viewport;
+}
+
 //Da valor a u, v, front a partir de las filas de la matriz de vista.
 // RECORDEMOS QUE FRONT ES -N (USAMOS ROW())
 void Camera::setAxes()

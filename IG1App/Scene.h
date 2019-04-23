@@ -19,6 +19,7 @@ public:
     Scene() { };
 	~Scene();
     void init(); 
+	void init2();
 
     void render(dmat4 const& modelViewMat);
 	void update();
@@ -28,10 +29,13 @@ public:
 	void aspaNoria();
 	void noria(GLuint aspas);
 	void move(GLuint tecla);
+	void drones();
 	  
 protected:
 
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
+
+	  EsferaDron* esferaDron = new EsferaDron(100);
 };
 
 //-------------------------------------------------------------------------

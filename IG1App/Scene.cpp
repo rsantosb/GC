@@ -45,15 +45,61 @@ void Scene::init()
 	//SATELITE DRON GIRANDO
 	//grObjects.push_back(new Satelite(200));
 
-	//ESFERA CON DRON
-	EsferaDron* ef = new EsferaDron(100);
-	grObjects.push_back(ef);
+	grObjects.push_back(esferaDron);
+
 	
 
 	
 
 }
 //-------------------------------------------------------------------------
+
+
+void Scene::init2()
+{ // OpenGL basic setting
+	glClearColor(0.6f, 0.7f, 0.8f, 1.0);  // background color (alpha=1 -> opaque)
+	glEnable(GL_DEPTH_TEST);  // enable Depth test 
+	glEnable(GL_TEXTURE_2D); // activa las texturas
+
+	// lights
+	// textures  
+	// meshes
+
+	// Graphics objects (entities) of the scene
+
+	//EjesRGB -> Ejemplo de clase
+	grObjects.push_back(new EjesRGB(200.0));
+
+	//aspaNoria();
+	//noria(15);
+
+	//grObjects.push_back(new Cylinder(100, 100, 50, 200, 10));
+
+	//ROTOR
+	//grObjects.push_back(new Rotor(100, false, false));
+
+	//CHASIS
+	//grObjects.push_back(new Chasis());
+
+	//DRON
+	//grObjects.push_back(new Dron());
+
+	//CONO REVOLUCION
+	//grObjects.push_back(new Cone(100, 50));
+
+	//ESFERA REVOLUCION
+	//grObjects.push_back(new Esfera(50, 58, 100));
+
+	//SATELITE DRON GIRANDO
+	//grObjects.push_back(new Satelite(200));
+
+	//grObjects.push_back(esferaDron);
+
+	//DRON CON DRONCITOS
+	grObjects.push_back(new Dronitos());
+
+}
+//------------------------------
 
 Scene::~Scene()
 { // free memory and resources   
@@ -127,16 +173,25 @@ void Scene::noria(GLuint aspas) {
 
 }
 
+
+
 void Scene::move(GLuint tecla)
 {
 	switch (tecla) {
 	case GLUT_KEY_UP:
-		 //El dron debe subir
-		
+		esferaDron->updateNuevo(4);
 		break;
 	case GLUT_KEY_DOWN:
 		//El dron debe bajar
-
+		esferaDron->updateNuevo(3);
 		break;
-	}//switch 
+
+	case GLUT_KEY_RIGHT:
+		esferaDron->updateNuevo(2);
+		break;
+	case GLUT_KEY_LEFT:
+		esferaDron->updateNuevo(1);
+		break;
+	}
+		//switch 
 }

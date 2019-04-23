@@ -77,6 +77,13 @@ public:
 
 	void setOrto(bool boolean);
 
+	GLdouble getxRight();
+	GLdouble getxLeft();
+	GLdouble getyTop();
+	GLdouble getyBot();
+
+	void setVP(Viewport* viewport);
+
 	
 protected:
 	

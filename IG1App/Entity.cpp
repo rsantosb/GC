@@ -1157,65 +1157,100 @@ Rotor::Rotor(GLdouble r, GLboolean giroHorario, GLboolean colorVerde) {
 	else {
 		base = new Cylinder(radio, radio, 50, 200, 100, 1, 0, 0);
 	}
+
+
 	rectangulo = new Rectangulo(radio*2, 50);
-	
-	
+
+	//Colocamos el rectángulo
+
+	/*dmat4 i = rectangulo->getModelMat();
+
+	i = translate(i, dvec3(0, 0, 25));
+
+	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
+
+	rectangulo->setModelMat(i);*/
+
 }
 
 void Rotor::render(glm::dmat4 const& modelViewMat) {
 
 	uploadMvM(modelViewMat);
-	
-	dmat4 i = dmat4(1.0);
 
+	//Habría que comentar esto
+	dmat4 i = dmat4(1.0);
+	
 	i = translate(i, dvec3(0, 0, 25));
+
 	if (giro) {
 		i = rotate(i, radians(-anguloGiro), dvec3(0, 0, 1));
 	}
 	else {
 		i = rotate(i, radians(anguloGiro), dvec3(0, 0, 1));
 	}
-	
+
 	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
-
-	rectangulo->setModelMat(i);
 	
-	rectangulo->render(modelViewMat);
+	rectangulo->render(modelViewMat*i);
 
+	//Y usar esto: 
+	//rectangulo->render(modelViewMat);
 	base->render(modelViewMat);
 
 }
 void Rotor::update() {
 	
-	/*dmat4 i = dmat4(1.0);
+	
+	anguloGiro = anguloGiro + 10;
 
-	i = rotate(i, radians(5.0), dvec3(1, 0, 0));
-		
+	/*
+	dmat4 i = dmat4(1.0);
+
+	i = translate(i, dvec3(0, 0, 25));
+
+	if (giro) {
+		i = rotate(i, radians(-anguloGiro), dvec3(0, 0, 1));
+	}
+	else {
+		i = rotate(i, radians(anguloGiro), dvec3(0, 0, 1));
+	}
+
+	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
+	
 	rectangulo->setModelMat(i);
 	*/
-	anguloGiro = anguloGiro + 10;
 	
 }
-void Rotor::update(GLuint timeElapsed) {}
+void Rotor::update(GLuint timeElapsed) { update(); }
 
 
 Chasis::Chasis() {
 	cubo = new CuboConTapas(200);
 
+	//Colocamos el chasis se descomenta para hacer el cambio
+	/*dmat4 i = dmat4(1.0);
+
+	i = scale(i, dvec3(1, 0.1, 1));
+
+	cubo->setModelMat(i);
+	*/
 }
 
 void Chasis::render(glm::dmat4 const& modelViewMat) {
 	uploadMvM(modelViewMat);
 
 	glColor3d(0, 0, 1);
+	//Se comenta lo siguiente para hacer el cambio
 
 	dmat4 i = dmat4(1.0);
 
-	//i = translate(i, dvec3(100, 100, 100));
 	i = scale(i, dvec3(1, 0.1, 1));
 
-	cubo->setModelMat(i);
-	cubo->render(modelViewMat);
+	cubo->render(modelViewMat*i);
+
+	//Para el cambio se pone esta
+	//cubo->render(modelViewMat);
+
 
 }
 
@@ -1225,26 +1260,44 @@ void Chasis::update(GLuint timeElapsed) {}
 Dron::Dron() {
 	chasis = new Chasis();
 	rotor1 = new Rotor(100, true, true); //true verde
+
+
+	//Coloco el rotor 1 
+	/*
+	dmat4 i = rotor1->getModelMat();
+
+	i = translate(i, dvec3(-100, (100 * 0.1) + (50 * 0.3), -100));
+	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
+
+	i = scale(i, dvec3(0.3, 0.3, 0.3));
+
+	glColor3f(0, 1, 0);
+	rotor1->setModelMat(i);
+	*/
+
 	rotor2 = new Rotor(100, false, true); //true verde
 	rotor3 = new Rotor(100, true, false); //false rojo
 	rotor4 = new Rotor(100, false, false); //false rojo
+	
 }
 
 void Dron::render(glm::dmat4 const& modelViewMat) {
 	
 	uploadMvM(modelViewMat);
-	chasis->render(modelViewMat);
-	//rotor1->render(modelViewMat);
 
+	chasis->render(modelViewMat);
+
+	//Comentar para colocarlos en la constructora
 	dmat4 i = dmat4(1.0);
 
-	i = translate(i, dvec3(-100, (100*0.1)+(50*0.3), -100));
+	i = translate(i, dvec3(-100, (100 * 0.1) + (50 * 0.3), -100));
 	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
-	
+
 	i = scale(i, dvec3(0.3, 0.3, 0.3));
 
 	//glColor3f(0, 1, 0);
-	rotor1->setModelMat(i);
+	//rotor1->setModelMat(i);
+	
 	rotor1->render(modelViewMat*i);
 
 	dmat4 j = dmat4(1.0);
@@ -1276,6 +1329,7 @@ void Dron::render(glm::dmat4 const& modelViewMat) {
 	rotor4->setModelMat(l);
 
 	rotor4->render(modelViewMat*l);
+	
 }
 
 
@@ -1285,6 +1339,7 @@ void Dron::update() {
 	rotor2->update();
 	rotor3->update();
 	rotor4->update();
+	
 }
 void Dron::update(GLuint timeElapsed) {
 
@@ -1293,6 +1348,7 @@ void Dron::update(GLuint timeElapsed) {
 		rotor2->update();
 		rotor3->update();
 		rotor4->update();
+		
 	}
 }
 
@@ -1419,9 +1475,16 @@ void EsferaDron::render(dmat4 const & modelViewMat)
 
 	dmat4 m = dmat4(1.0);
 
+	m = rotate(m, radians(anguloGiro), dvec3(1, 0, 0)); //arriba y abajo
+
+	//m = rotate(m, radians(anguloOtroGiro), dvec3(0, 1, 0)); // GIRA SOBRE SÍ MISMO
+	m = rotate(m, radians(anguloOtroGiro), dvec3(0, 0, 1)); // izquierda y derecha
+
 	m = translate(m, dvec3(0, r + 5.0, 0));
 
 	m = scale(m, dvec3(0.1, 0.1, 0.1));
+
+
 	dron->setModelMat(m);
 
 
@@ -1435,7 +1498,89 @@ void EsferaDron::update()
 
 }
 
-void EsferaDron::update(GLuint timeElapsed)
-{
+void EsferaDron::update(GLuint timeElapsed) {}
 
+void EsferaDron::updateNuevo(GLuint movimiento)
+{
+	if (movimiento == 1) {
+		anguloOtroGiro += 2.0;
+	}
+	else if (movimiento == 2) {
+		anguloOtroGiro -= 2.0;
+	}
+	else if (movimiento == 3) {
+		anguloGiro += 2.0;
+	}
+	else if (movimiento == 4) {
+		anguloGiro -= 2.0;
+	}
+	
+}
+
+Dronitos::Dronitos()
+{
+	principal = new Dron();
+	d1 = new Dron();
+	d2 = new Dron();
+	d3 = new Dron();
+	d4 = new Dron();
+
+}
+
+void Dronitos::render(dmat4 const & modelViewMat)
+{
+	uploadMvM(modelViewMat);
+
+
+	dmat4 m1 = dmat4(1.0);
+
+	m1 = translate(m1, dvec3(-100, 50, -100));
+	m1 = scale(m1, dvec3(0.25, 0.25, 0.25));
+	d1->setModelMat(m1);
+
+	d1->render(modelViewMat*m1);
+
+	dmat4 m2= dmat4(1.0);
+
+	m2 = translate(m2, dvec3(-100, 50, 100));
+	m2 = scale(m2, dvec3(0.25, 0.25, 0.25));
+	d1->setModelMat(m2);
+
+	d2->render(modelViewMat*m2);
+
+	dmat4 m3 = dmat4(1.0);
+
+	m3 = translate(m3, dvec3(100, 50, -100));
+	m3 = scale(m3, dvec3(0.25, 0.25, 0.25));
+	d3->setModelMat(m3);
+
+	d3->render(modelViewMat*m3);
+
+	dmat4 m4 = dmat4(1.0);
+
+	m4 = translate(m4, dvec3(100, 50, 100));
+	m4 = scale(m4, dvec3(0.25, 0.25, 0.25));
+	d4->setModelMat(m4);
+
+	d4->render(modelViewMat*m4);
+
+	principal->render(modelViewMat);
+}
+
+void Dronitos::update()
+{
+	principal->update();
+	d1->update();
+	d2->update();
+	d3->update();
+	d4->update();
+}
+
+void Dronitos::update(GLuint timeElapsed)
+{
+	principal->update();
+	d1->update();
+	d2->update();
+	d3->update();
+	d4->update();
 }

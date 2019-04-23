@@ -487,12 +487,32 @@ public:
 	virtual void render(dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint timeElapsed);
+	void updateNuevo(GLuint control);
+
 
 protected:
 	Esfera* esfera;
 	Dron* dron;
 	GLdouble r; //radio
 	GLdouble anguloGiro = 0;
+	GLdouble anguloOtroGiro = 0;
+};
+
+
+class Dronitos : public Entity {
+public:
+	Dronitos();
+
+	virtual void render(dmat4 const& modelViewMat);
+	virtual void update();
+	virtual void update(GLuint timeElapsed);
+
+protected:
+	Dron* principal;
+	Dron* d1;
+	Dron* d2;
+	Dron* d3;
+	Dron* d4;
 
 };
 
