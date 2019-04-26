@@ -143,20 +143,6 @@ void display()   // double buffering
 		camera2->uploadPM();
 		scene2.render(camera2->getViewMat());
 
-		/*
-		Viewport * vp1 = new Viewport(CLIENT_WIDTH, CLIENT_HEIGHT);
-		vp1->uploadPos((GLint)-CLIENT_WIDTH / 4, (GLint)0);
-		vp1->upload();
-		camera->setVP(vp1);
-		scene.render(camera->getViewMat());
-
-		Viewport * vp2 = new Viewport(CLIENT_WIDTH, CLIENT_HEIGHT);
-		vp2->uploadPos((GLint)CLIENT_WIDTH / 4, (GLint)0);
-		vp2->upload();
-		camera2->setVP(vp2);
-		scene2.render(camera2->getViewMat());
-		*/
-
 	}
 	else {
 		if (baldosas) {

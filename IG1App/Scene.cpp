@@ -110,7 +110,7 @@ Scene::~Scene()
   }
 }
 //-------------------------------------------------------------------------
-
+/*
 void Scene::render(dmat4 const& modelViewMat)
 {
 	for (Entity* el: grObjects)
@@ -126,7 +126,7 @@ void Scene::update() {
 		entity->update();
 	}
 }
-
+*/
 //-------------------------------------------------------------------------
 
 void Scene::cambiar2D() {
@@ -145,11 +145,14 @@ void Scene::cambiar3D() {
 
 }
 
+/*
 void Scene::update(GLuint timeElapsed) {
 	for (Entity* entity : grObjects) {
 		entity->update(timeElapsed);
 	}
 }
+*/
+
 
 void Scene::aspaNoria() {
 	

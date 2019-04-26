@@ -9,6 +9,10 @@
 #include "Mesh.h"
 #include "Texture.h"
 
+#include <vector>
+
+//using namespace std;
+
 //-------------------------------------------------------------------------
 
 class Entity 
@@ -39,6 +43,28 @@ protected:
 
 	// transfers modelViewMat to the GPU
 	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
+};
+
+class CompoundEntity : public Entity
+{
+public:
+
+	std::vector<Entity*> grObjects;
+
+	Entity* getEntity(int i) { return grObjects[i]; }
+
+	CompoundEntity() {}
+	~CompoundEntity() { 
+		for (Entity* it : grObjects) 
+			delete it; 
+		}
+	
+	void render(dmat4 const& modelViewMat);
+	void update();
+	void update(GLuint timeElapsed);
+	
+
+
 };
 
 //-------------------------------------------------------------------------
@@ -394,8 +420,8 @@ protected:
 	GLdouble angIni; 
 	GLdouble angBarrido;
 };
-
-class Rotor : public Entity {
+/*Dejo comentada la clase Rotor que hereda de Entity para crear la que herede de CompoundEntity*/
+/*class Rotor : public Entity {
 public:
 	Rotor(GLdouble r, GLboolean giroHorario, GLboolean colorVerde);
 	virtual void render(glm::dmat4 const& modelViewMat);
@@ -410,6 +436,19 @@ protected:
 	GLboolean verde;
 	
 };
+*/
+class Rotor : public CompoundEntity {
+public:
+	Rotor(GLdouble r, GLboolean giroHorario, GLboolean colorVerde);
+	void update();
+	void update(GLuint timeElapsed);
+protected:
+	Rectangulo* rectangulo; //Lo dejo para usar la animación
+	GLdouble radio;
+	GLdouble anguloGiro = 0;
+	GLboolean giro;
+	GLboolean verde;
+};
 
 class Chasis : public Entity {
 public: 
@@ -422,7 +461,8 @@ protected:
 	
 };
 
-class Dron : public Entity {
+/*Dejo comentada la clase Dron que hereda de Entity para crear la que herede de CompoundEntity*/
+/*class Dron : public Entity {
 public:
 	Dron();
 	virtual void render(glm::dmat4 const& modelViewMat);
@@ -436,6 +476,18 @@ protected:
 	Rotor* rotor3;
 	Rotor* rotor4;
 
+};
+*/
+class Dron : public CompoundEntity {
+public: 
+	Dron();
+	void update();
+	void update(GLuint timeElapsed);
+protected:
+	Rotor* rotor1; // Lo dejo para el update
+	Rotor* rotor2; // Lo dejo para el update
+	Rotor* rotor3; // Lo dejo para el update
+	Rotor* rotor4; // Lo dejo para el update
 };
 
 class Cone : public Entity {
