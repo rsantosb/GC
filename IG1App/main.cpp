@@ -39,6 +39,9 @@ bool animacion = true;
 bool baldosas = false;
 bool twoPorts = false;
 
+GLfloat apagado[] = { 0.0 ,0.0 ,0.0 ,1.0 };
+GLfloat encendido[] = { 0.5, 0.5, 0.5, 1.0 };//{ 1.0, 1.0, 1.0, 1.0 }; // {0.5, 0.5, 0.5, 1.0} Debería ser esta
+
 //Declarar dos variables para guardar las coordenadas de ratón
 glm::dvec2 mCoord;
 int mBot = 0;
@@ -311,6 +314,13 @@ void key(unsigned char key, int x, int y)
 			if (twoPorts) {
 				camera2->yaw(1);
 			}
+			break;
+		case 'm':
+			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, encendido);
+			break;
+		case 'n':
+			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, apagado);
+			break;
 		default:
 			need_redisplay = false;
 			break;

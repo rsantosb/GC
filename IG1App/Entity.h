@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "Material.h"
 
 #include <vector>
 
@@ -512,6 +513,7 @@ protected:
 	GLint m; //numero de puntos del perfil y paralelos
 	GLint n; //meridianos de la esfera numero de muestras
 	GLdouble r; //radio
+	Material* material = new Material(); //atributo de tipo material para el apartado 20
 
 	
 };
@@ -566,6 +568,19 @@ protected:
 	Dron* d3;
 	Dron* d4;
 
+};
+
+class EntityMaterial : public Entity {
+public:
+	EntityMaterial() : Entity() {};
+	virtual ~EntityMaterial() {};
+
+	void setTexture(Texture* tex) { texture = tex; }
+	void setMaterail(Material matl) { material = matl; }
+
+protected:
+	Texture* texture = nullptr;
+	Material material;
 };
 
 #endif //_H_Entities_H_

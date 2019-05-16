@@ -14,6 +14,31 @@ void Scene::init()
 	glEnable(GL_TEXTURE_2D); // activa las texturas
 
 	// lights
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_NORMALIZE);
+
+	GLfloat amb0[] = { 0.0, 0.0, 0.0, 1.0 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb0);
+
+	//EMPIEZA APARTADO  19
+	// Luz es un tipo DirLight que se declara en Scene.h
+	luz = DirLight(); //La creo por lo que se activa
+	luz.setPosDir(fvec3(1.0, 1.0, 0.0)); // Modifico la posición
+	luz.setDiff(fvec4(1.0, 1.0, 1.0, 1.0)); //La difusa
+	luz.setAmb(fvec4(0.2, 0.2, 0.2, 1.0)); //La ambiente
+	luz.setSpec(fvec4(0.5, 0.5, 0.5, 1.0)); // La especular
+	
+	luz.enable();
+
+	//APARTADO 20
+
+	//OJO DESACTIVO ColorMaterial
+	glDisable(GL_COLOR_MATERIAL);
+	//Ahora quito el color de la esfera por revolución.
+
+
+	
 	// textures  
 	// meshes
 
@@ -40,12 +65,15 @@ void Scene::init()
 	//grObjects.push_back(new Cone(100, 50));
 	
 	//ESFERA REVOLUCION
-	//grObjects.push_back(new Esfera(50, 58, 100));
+	grObjects.push_back(new Esfera(50, 58, 100));
+
+	//grObjects.push_back(new Sphere(50));
 	
 	//SATELITE DRON GIRANDO
 	//grObjects.push_back(new Satelite(200));
 
-	grObjects.push_back(esferaDron);
+	//EsferaDron 
+	//grObjects.push_back(esferaDron);
 
 	
 
@@ -110,15 +138,16 @@ Scene::~Scene()
   }
 }
 //-------------------------------------------------------------------------
-/*
+
 void Scene::render(dmat4 const& modelViewMat)
 {
+	luz.upload(modelViewMat);
 	for (Entity* el: grObjects)
 	{
 		el->render(modelViewMat);
 	}
 }
-
+/*
 //-------------------------------------------------------------------------
 
 void Scene::update() {

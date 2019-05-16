@@ -7,6 +7,7 @@
 
 #include "Camera.h"
 #include "Entity.h"
+#include "Light.h"
 //#include "Mesh.h"
 
 #include <vector>
@@ -18,6 +19,7 @@ class Scene	: public CompoundEntity
 public:
     Scene() { };
 	~Scene();
+	void render(dmat4 const & modelViewMat);
     void init(); 
 	void init2();
 
@@ -36,6 +38,8 @@ protected:
 	  //std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
 
 	  EsferaDron* esferaDron = new EsferaDron(100);
+
+	  DirLight luz;
 };
 
 //-------------------------------------------------------------------------

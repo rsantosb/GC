@@ -1077,9 +1077,9 @@ Sphere::Sphere(GLdouble rr) {
 void Sphere::render(glm::dmat4 const& modelViewMat) {
 	uploadMvM(modelViewMat);
 	// Fijar el color con glColor3f(...);
-	glColor3f(0.5, 0.5, 0.5);
+	glColor3f(0.8, 0.4, 0.2);
 	// Fijar el modo en que se dibuja la entidad con
-	gluQuadricDrawStyle(q, GLU_LINE);
+	//gluQuadricDrawStyle(q, GLU_LINE);
 	gluSphere(q, r, 50, 50);
 }
 
@@ -1438,6 +1438,8 @@ Esfera::Esfera(GLint paralelos, GLint meridianos, GLdouble radio)
 	m = paralelos; //
 	n = meridianos;
 	r = radio;
+	
+	//material.setCooper();
 
 	GLdouble x = 0; 
 	GLdouble y = -r;
@@ -1461,7 +1463,11 @@ Esfera::Esfera(GLint paralelos, GLint meridianos, GLdouble radio)
 
 void Esfera::render(glm::dmat4 const & modelViewMat)
 {
-	glColor3d(0, 0.7, 1);
+	//Quito el color para el apartado 20
+	//glColor3f(0.8, 0.4, 0.2);
+	//material->setCooper();
+	material->setGold();
+	material->upload();
 	mesh->render();
 }
 
