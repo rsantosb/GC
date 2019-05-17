@@ -33,6 +33,7 @@ public:
 	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
 	virtual void update() = 0;
 	virtual void update(GLuint timeElapsed) = 0;
+	virtual void move(GLuint tecla);
   
 protected:
 
@@ -64,6 +65,7 @@ public:
 	void render(dmat4 const& modelViewMat);
 	void update();
 	void update(GLuint timeElapsed);
+	void move(GLuint tecla);
 	
 
 
@@ -482,18 +484,21 @@ protected:
 */
 class Dron : public CompoundEntity {
 public: 
+	Dron(bool encendido);
 	Dron();
 	void update();
 	virtual void render(glm::dmat4 const& modelViewMat); //AÑADIDO PARA EL APARTADO 22 luces
 	void update(GLuint timeElapsed);
+	GLuint getLuzId() { if (foco != nullptr) { return foco->getId(); } return -1; }
 protected:
 	Rotor* rotor1; // Lo dejo para el update
 	Rotor* rotor2; // Lo dejo para el update
 	Rotor* rotor3; // Lo dejo para el update
 	Rotor* rotor4; // Lo dejo para el update
 
-	SpotLight* foco;
+	SpotLight* foco = nullptr;
 };
+
 
 class Cone : public Entity {
 public:
@@ -585,6 +590,21 @@ public:
 protected:
 	Texture* texture = nullptr;
 	Material material;
+};
+
+class SateliteCompound : public CompoundEntity {
+public:
+	SateliteCompound(GLdouble radio);
+	//void update();
+	void move(GLuint tecla);
+
+protected:
+	Esfera* esfera;
+	Dron* dron;
+	GLdouble r; //radio
+	GLdouble anguloGiro = 0;
+	GLdouble anguloOtroGiro = 0;
+
 };
 
 #endif //_H_Entities_H_

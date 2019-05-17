@@ -20,7 +20,7 @@ void Scene::init()
 
 	GLfloat amb0[] = { 0.0, 0.0, 0.0, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb0);
-
+	
 	//EMPIEZA APARTADO  19
 	// Luz es un tipo DirLight que se declara en Scene.h
 	luz = new DirLight(); //La creo por lo que se activa
@@ -28,11 +28,11 @@ void Scene::init()
 	luz->setDiff(fvec4(1.0, 1.0, 1.0, 1.0)); //La difusa
 	luz->setAmb(fvec4(0.2, 0.2, 0.2, 1.0)); //La ambiente
 	luz->setSpec(fvec4(0.5, 0.5, 0.5, 1.0)); // La especular
-	
+
 	//luz->enable();
 
 	//APARTADO 20
-
+	
 	minero = new SpotLight(); //Creo el foco de minero
 	minero->setDiff(fvec4(0.4, 0.8, 0.0, 1.0));
 	minero->setSpec(fvec4(0.5, 0.5, 0.5, 1.0));
@@ -40,10 +40,6 @@ void Scene::init()
 	
 	//minero->enable();
 
-
-
-
-	
 	// textures  
 	// meshes
 
@@ -78,7 +74,9 @@ void Scene::init()
 	//grObjects.push_back(new Satelite(200));
 
 	//EsferaDron 
-	grObjects.push_back(esferaDron);
+	//grObjects.push_back(esferaDron);
+
+	grObjects.push_back(new SateliteCompound(100));
 
 	
 
@@ -147,11 +145,14 @@ Scene::~Scene()
 void Scene::render(dmat4 const& modelViewMat)
 {
 	luz->upload(modelViewMat);
-	//minero->upload(dmat4(1.0));
-	for (Entity* el: grObjects)
+	minero->upload(dmat4(1.0));
+	
+	/*for (Entity* el: grObjects)
 	{
 		el->render(modelViewMat);
 	}
+	*/
+	CompoundEntity::render(modelViewMat);
 }
 /*
 //-------------------------------------------------------------------------
@@ -212,7 +213,7 @@ void Scene::noria(GLuint aspas) {
 }
 
 
-
+/*
 void Scene::move(GLuint tecla)
 {
 	switch (tecla) {
@@ -233,3 +234,26 @@ void Scene::move(GLuint tecla)
 	}
 		//switch 
 }
+*/
+
+void Scene::setLuzDireccion(bool encender) {
+	if (encender) {
+		luz->enable();
+	}
+	else {
+		luz->disable();
+	}
+}
+
+void Scene::setLuzMinero(bool encender) {
+	if (encender) {
+		minero->enable();
+	}
+	else {
+		minero->disable();
+	}
+}
+
+
+
+

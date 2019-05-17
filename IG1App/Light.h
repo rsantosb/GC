@@ -8,10 +8,12 @@
 
 //-------------------------------------------------------------------------
 
+
+static GLuint cont = 0; // Para generar un nuevo id cada vez
+
 class Light
 {
 protected:
-	/*static*/ GLuint cont = 0; // Para generar un nuevo id cada vez
 	GLuint id = GL_LIGHT0 + GL_MAX_LIGHTS; // id no válido
 
 	//Atributos lumínicos y geométrico de la fuente de luz
@@ -34,6 +36,7 @@ public:
 	void setAmb(glm::fvec4 amb);
 	void setDiff(glm::fvec4 dif);
 	void setSpec(glm::fvec4 spec);
+	GLuint getId() { return id; };
 
 	virtual void upload(glm::dmat4 const& modelViewMat) = 0;
 };

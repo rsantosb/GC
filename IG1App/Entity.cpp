@@ -11,6 +11,10 @@ using namespace std;
 
 //-------------------------------------------------------------------------
 
+void Entity::move(GLuint tecla)
+{
+}
+
 void Entity::uploadMvM(dmat4 const& modelViewMat) const
 { 
 	dmat4 aMat = modelViewMat * modelMat;
@@ -38,6 +42,13 @@ void CompoundEntity::update() {
 void CompoundEntity::update(GLuint timeElapsed) {
 	for (Entity* entity : grObjects) {
 		entity->update(timeElapsed);
+	}
+}
+
+void CompoundEntity::move(GLuint tecla)
+{
+	for (Entity* entity : grObjects) {
+		entity->move(tecla);
 	}
 }
 
@@ -1316,6 +1327,71 @@ void Chasis::update(GLuint timeElapsed) {}
 
 //Con la nueva clase de la que hereda solo debo quitar el Chasis*. El resto sigue estando
 //Añado al final el push_back de todo.
+Dron::Dron(bool encendido) {
+	Chasis* chasis = new Chasis();
+	rotor1 = new Rotor(100, true, true); //true verde
+	rotor2 = new Rotor(100, false, true); //true verde
+	rotor3 = new Rotor(100, true, false); //false rojo
+	rotor4 = new Rotor(100, false, false); //false rojo
+
+
+	//Coloco el rotor 1 
+
+	dmat4 i = rotor1->getModelMat();
+
+	i = translate(i, dvec3(-100, (100 * 0.1) + (50 * 0.3), -100));
+	i = rotate(i, radians(90.0), dvec3(1, 0, 0));
+	i = scale(i, dvec3(0.3, 0.3, 0.3));
+
+	rotor1->setModelMat(i);
+
+	//Coloco el rotor 2
+
+	dmat4 j = rotor2->getModelMat();
+
+	j = translate(j, dvec3(-100, (100 * 0.1) + (50 * 0.3), 100));
+	j = rotate(j, radians(90.0), dvec3(1, 0, 0));
+	j = scale(j, dvec3(0.3, 0.3, 0.3));
+
+	rotor2->setModelMat(j);
+
+	//Coloco el rotor 3 
+
+	dmat4 k = rotor3->getModelMat();
+
+	k = translate(k, dvec3(100, (100 * 0.1) + (50 * 0.3), 100));
+	k = rotate(k, radians(90.0), dvec3(1, 0, 0));
+	k = scale(k, dvec3(0.3, 0.3, 0.3));
+
+	rotor3->setModelMat(k);
+
+	//Coloco el rotor 4
+
+	dmat4 l = rotor4->getModelMat();
+
+	l = translate(l, dvec3(100, (100 * 0.1) + (50 * 0.3), -100));
+	l = rotate(l, radians(90.0), dvec3(1, 0, 0));
+	l = scale(l, dvec3(0.3, 0.3, 0.3));
+
+	rotor4->setModelMat(l);
+
+	//LUZ DEL DRON
+	foco = new SpotLight(); //Creo el foco
+	foco->setDiff(fvec4(1.0, 1.0, 1.0, 1.0));
+	foco->setSpec(fvec4(0.5, 0.5, 0.5, 1.0));
+	foco->setAmb(fvec4(0.0, 0.0, 0.0, 1));
+	foco->setSpot(fvec3(0.0, 0.0, -1.0), 120, 0);
+
+	foco->enable();
+
+	this->grObjects.push_back(chasis);
+	this->grObjects.push_back(rotor1);
+	this->grObjects.push_back(rotor2);
+	this->grObjects.push_back(rotor3);
+	this->grObjects.push_back(rotor4);
+
+	
+}
 Dron::Dron() {
 	Chasis* chasis = new Chasis();
 	rotor1 = new Rotor(100, true, true); //true verde
@@ -1323,15 +1399,6 @@ Dron::Dron() {
 	rotor3 = new Rotor(100, true, false); //false rojo
 	rotor4 = new Rotor(100, false, false); //false rojo
 	
-	//LUZ DEL DRON
-	foco = new SpotLight(); //Creo el foco de minero
-	foco->setDiff(fvec4(1.0, 1.0, 1.0, 1.0));
-	foco->setSpec(fvec4(0.5, 0.5, 0.5, 1.0));
-	foco->setAmb(fvec4(0.0, 0.0, 0.0, 1));
-	foco->setSpot(fvec3(0.0, 0.0, -1.0), 120, 0);
-	
-	foco->enable();
-
 
 	//Coloco el rotor 1 
 	
@@ -1402,7 +1469,11 @@ void Dron::render(glm::dmat4 const& modelViewMat) {
 	//glDisable(GL_COLOR_MATERIAL);
 
 	dmat4 m = modelViewMat * modelMat;
-	foco->upload(m);
+
+	if (foco != nullptr) {
+		foco->upload(m);
+	}
+	
 	CompoundEntity::render(modelViewMat);
 
 	//glEnable(GL_COLOR_MATERIAL);
@@ -1488,6 +1559,8 @@ void Esfera::render(glm::dmat4 const & modelViewMat)
 	//glColor3f(0.8, 0.4, 0.2);
 	//material->setCooper();
 
+	uploadMvM(modelViewMat);
+
 	glDisable(GL_COLOR_MATERIAL);
 
 	material->setGold();
@@ -1565,7 +1638,7 @@ EsferaDron::EsferaDron(GLdouble radio)
 	r = radio;
 	esfera = new Esfera(50, 50, r);
 
-	dron = new Dron();
+	dron = new Dron(true);
 
 	//Coloco el dron
 
@@ -1698,3 +1771,76 @@ void Dronitos::update(GLuint timeElapsed)
 	d4->update();
 }
 
+SateliteCompound::SateliteCompound(GLdouble radio)
+{
+	r = radio;
+	esfera = new Esfera(50, 50, r);
+
+	dron = new Dron(true);
+
+	//Coloco el dron
+
+	dmat4 m = dmat4(1.0);
+
+	m = rotate(m, radians(anguloGiro), dvec3(1, 0, 0)); //arriba y abajo
+	//m = rotate(m, radians(anguloOtroGiro), dvec3(0, 1, 0)); // GIRA SOBRE SÍ MISMO
+	m = rotate(m, radians(anguloOtroGiro), dvec3(0, 0, 1)); // izquierda y derecha
+	m = translate(m, dvec3(0, r + 25.0, 0));
+	m = scale(m, dvec3(0.1, 0.1, 0.1));
+
+	dron->setModelMat(m);
+
+	this->grObjects.push_back(esfera);
+	this->grObjects.push_back(dron);
+}
+
+/*void SateliteCompound::update()
+{
+	dron->update();
+
+}
+*/
+
+void SateliteCompound::move(GLuint tecla)
+{
+	switch (tecla) {
+	case GLUT_KEY_UP:
+		anguloGiro -= 2.0;
+		break;
+	case GLUT_KEY_DOWN:
+		//El dron debe bajar
+		anguloGiro += 2.0;
+		break;
+	case GLUT_KEY_RIGHT:
+		anguloOtroGiro -= 2.0;
+		break;
+	case GLUT_KEY_LEFT:
+		anguloOtroGiro += 2.0;
+		break;
+	case 9: {
+		GLuint lucecita = dron->getLuzId();
+		if (lucecita != -1) {
+			glDisable(lucecita);
+		}
+		break;
+	}
+	case 8: {
+		GLuint lucezota = dron->getLuzId();
+		if (lucezota != -1) {
+			glEnable(lucezota);
+		}
+		break;
+	}
+	}
+
+	dmat4 m = dmat4(1.0);
+
+	m = rotate(m, radians(anguloGiro), dvec3(1, 0, 0)); //arriba y abajo
+	//m = rotate(m, radians(anguloOtroGiro), dvec3(0, 1, 0)); // GIRA SOBRE SÍ MISMO
+	m = rotate(m, radians(anguloOtroGiro), dvec3(0, 0, 1)); // izquierda y derecha
+	m = translate(m, dvec3(0, r + 25.0, 0));
+	m = scale(m, dvec3(0.1, 0.1, 0.1));
+
+	dron->setModelMat(m);
+	dron->update();
+}

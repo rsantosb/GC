@@ -30,7 +30,9 @@ public:
 	void cambiar3D();
 	void aspaNoria();
 	void noria(GLuint aspas);
-	void move(GLuint tecla);
+	void setLuzDireccion(bool encender);
+	void setLuzMinero(bool encender);
+	//void move(GLuint tecla);
 
 	  
 protected:

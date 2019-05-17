@@ -38,6 +38,9 @@ GLuint last_updated_tick = 0;
 bool animacion = true;
 bool baldosas = false;
 bool twoPorts = false;
+bool luz = true;
+bool minero = true;
+bool dron = true;
 
 GLfloat apagado[] = { 0.0 ,0.0 ,0.0 ,1.0 };
 GLfloat encendido[] = { 0.5, 0.5, 0.5, 1.0 };//{ 1.0, 1.0, 1.0, 1.0 }; // {0.5, 0.5, 0.5, 1.0} Debería ser esta
@@ -283,6 +286,35 @@ void key(unsigned char key, int x, int y)
 			camera->uploadPM();
 			break;
 		}
+		case '1':
+			luz = !luz;
+			scene.setLuzDireccion(luz);
+			break;
+		case '2':
+			minero = !minero;
+			scene.setLuzMinero(minero);
+			break;
+		case '3':
+			if (dron)
+			{
+				dron = false;
+				scene.move(9);
+			}
+			else {
+				dron = true;
+				scene.move(8); //true arriba
+			}
+			break;
+		/*case '3':
+			if (dron) {
+				dron = false;
+				glDisable(GL_LIGHT1);
+			}
+			else {
+				dron = true;
+				glEnable(GL_LIGHT1);
+			}
+			break;*/
 		/*case '2':
 			scene.~Scene();
 			scene.cambiar2D();
