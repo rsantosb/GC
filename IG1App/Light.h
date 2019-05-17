@@ -66,7 +66,7 @@ class SpotLight : public PosLight {
 protected:
 	//Atributos del foco
 	glm::fvec4 direction = { 0, 0, -1, 0 };
-	GLfloat cutoff = 180;
+	GLfloat cutoff = 10;
 	GLfloat exp = 0;
 
 public:

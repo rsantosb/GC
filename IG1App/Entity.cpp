@@ -1322,6 +1322,16 @@ Dron::Dron() {
 	rotor2 = new Rotor(100, false, true); //true verde
 	rotor3 = new Rotor(100, true, false); //false rojo
 	rotor4 = new Rotor(100, false, false); //false rojo
+	
+	//LUZ DEL DRON
+	foco = new SpotLight(); //Creo el foco de minero
+	foco->setDiff(fvec4(1.0, 1.0, 1.0, 1.0));
+	foco->setSpec(fvec4(0.5, 0.5, 0.5, 1.0));
+	foco->setAmb(fvec4(0.0, 0.0, 0.0, 1));
+	foco->setSpot(fvec3(0.0, 0.0, -1.0), 120, 0);
+	
+	foco->enable();
+
 
 	//Coloco el rotor 1 
 	
@@ -1387,6 +1397,17 @@ void Dron::render(glm::dmat4 const& modelViewMat) {
 }
 */
 
+void Dron::render(glm::dmat4 const& modelViewMat) {
+	
+	//glDisable(GL_COLOR_MATERIAL);
+
+	dmat4 m = modelViewMat * modelMat;
+	foco->upload(m);
+	CompoundEntity::render(modelViewMat);
+
+	//glEnable(GL_COLOR_MATERIAL);
+
+}
 void Dron::update() {
 
 	rotor1->update();
@@ -1466,9 +1487,14 @@ void Esfera::render(glm::dmat4 const & modelViewMat)
 	//Quito el color para el apartado 20
 	//glColor3f(0.8, 0.4, 0.2);
 	//material->setCooper();
+
+	glDisable(GL_COLOR_MATERIAL);
+
 	material->setGold();
 	material->upload();
 	mesh->render();
+
+	glEnable(GL_COLOR_MATERIAL);
 }
 
 void Esfera::update()
@@ -1548,7 +1574,7 @@ EsferaDron::EsferaDron(GLdouble radio)
 	m = rotate(m, radians(anguloGiro), dvec3(1, 0, 0)); //arriba y abajo
 	//m = rotate(m, radians(anguloOtroGiro), dvec3(0, 1, 0)); // GIRA SOBRE SÍ MISMO
 	m = rotate(m, radians(anguloOtroGiro), dvec3(0, 0, 1)); // izquierda y derecha
-	m = translate(m, dvec3(0, r + 5.0, 0));
+	m = translate(m, dvec3(0, r + 25.0, 0));
 	m = scale(m, dvec3(0.1, 0.1, 0.1));
 
 	dron->setModelMat(m);
@@ -1589,7 +1615,7 @@ void EsferaDron::updateNuevo(GLuint movimiento)
 	m = rotate(m, radians(anguloGiro), dvec3(1, 0, 0)); //arriba y abajo
 	//m = rotate(m, radians(anguloOtroGiro), dvec3(0, 1, 0)); // GIRA SOBRE SÍ MISMO
 	m = rotate(m, radians(anguloOtroGiro), dvec3(0, 0, 1)); // izquierda y derecha
-	m = translate(m, dvec3(0, r + 5.0, 0));
+	m = translate(m, dvec3(0, r + 25.0, 0));
 	m = scale(m, dvec3(0.1, 0.1, 0.1));
 
 	dron->setModelMat(m);

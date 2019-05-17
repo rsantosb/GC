@@ -9,6 +9,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "Material.h"
+#include "Light.h"
 
 #include <vector>
 
@@ -483,12 +484,15 @@ class Dron : public CompoundEntity {
 public: 
 	Dron();
 	void update();
+	virtual void render(glm::dmat4 const& modelViewMat); //AÑADIDO PARA EL APARTADO 22 luces
 	void update(GLuint timeElapsed);
 protected:
 	Rotor* rotor1; // Lo dejo para el update
 	Rotor* rotor2; // Lo dejo para el update
 	Rotor* rotor3; // Lo dejo para el update
 	Rotor* rotor4; // Lo dejo para el update
+
+	SpotLight* foco;
 };
 
 class Cone : public Entity {

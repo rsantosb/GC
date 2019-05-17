@@ -39,7 +39,8 @@ protected:
 
 	  EsferaDron* esferaDron = new EsferaDron(100);
 
-	  DirLight luz;
+	  DirLight* luz;
+	  SpotLight* minero;
 };
 
 //-------------------------------------------------------------------------
